@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-web';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>куку йопта</Text>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.text}>Ваш номер</Text>
+      <input placeholder='Ваш номер тлф: '></input>
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -15,6 +17,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
+  text: {
+    color: '#FF0000'
+  }
 });
