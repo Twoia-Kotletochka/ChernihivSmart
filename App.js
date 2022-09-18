@@ -1,25 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-web';
+import SignUp from './pages/SignUp'
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Ваш номер</Text>
-      <input placeholder='Ваш номер тлф: '></input>
-      <StatusBar style="auto" />
-    </SafeAreaView>
+    <SignUp />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  text: {
-    color: '#FF0000'
-  }
-});
