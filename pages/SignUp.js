@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, View, StatusBar, TextInput } from 'react-native'
+import { SafeAreaView, Text, View, StatusBar, TextInput, KeyboardAvoidingView } from 'react-native'
 import { signupStyle } from '../styles/signup'
 import { useState } from 'react'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -6,8 +6,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 export default function SignUp() {
     const [number, onChangeText] = useState("+380");
     return (
-        <SafeAreaView style={signupStyle.container}>
-
+        <KeyboardAvoidingView
+            style={signupStyle.container}
+        >
 
 
             <View style={signupStyle.box}>
@@ -28,6 +29,6 @@ export default function SignUp() {
                 barStyle={'light-content'}
                 backgroundColor="#4BB5F5"
             />
-        </SafeAreaView>
+        </KeyboardAvoidingView>
     );
 }

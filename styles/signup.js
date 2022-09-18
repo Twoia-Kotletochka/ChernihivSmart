@@ -5,15 +5,16 @@ export const signupStyle = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     box: {
         alignItems: 'center',
         backgroundColor: 'white',
         width: '90%',
-        height: '28%',
+        height: 170,
         borderRadius: 10,
         elevation: 9,
+
     },
     text: {
         color: '#343436'
