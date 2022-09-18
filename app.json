@@ -23,11 +23,18 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "backgroundColor": "#FFFFFF",
+        "versionCode": 1
+      },
+      "package": "com.ilya243.ChernihivSmart"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "acaae44e-e8dd-4db5-ba9a-4ecb10c23ca8"
+      }
     }
   }
 }

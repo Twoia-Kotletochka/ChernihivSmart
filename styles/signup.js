@@ -14,7 +14,7 @@ export const signupStyle = StyleSheet.create({
         height: 170,
         borderRadius: 10,
         elevation: 9,
-
+        marginBottom: 20
     },
     text: {
         color: '#343436'
@@ -28,6 +28,21 @@ export const signupStyle = StyleSheet.create({
         backgroundColor: '#EEEEEE',
         borderColor: 'white',
         borderRadius: 7,
-        fontSize: 25
+        fontSize: 25,
+    },
+    img: {
+        width: 150,
+        height: 150,
+        marginTop: -120,
+        marginBottom: 20,
+    },
+    button: {
+        height: 40,
+        width: '70%',
+        color: 'red',
+        backgroundColor: '#4BB5F5',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 7,
     }
 })
