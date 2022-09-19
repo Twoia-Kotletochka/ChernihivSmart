@@ -16,7 +16,7 @@ export const signupStyle = StyleSheet.create({
     },
     box_scroll: {
         flex: 2,
-        marginTop: '-30%'
+        marginTop: '-30%',
     }
 
 })

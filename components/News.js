@@ -1,34 +1,48 @@
 import React from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
+import { View, FlatList, StyleSheet, Text } from 'react-native';
 
 const DATA = [
     {
         id: '1',
         title: 'Нема гарячої води',
+        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        date: '24'
     },
     {
         id: '2',
         title: 'ВИмкнули світло',
+        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        date: '25'
     },
     {
         id: '3',
         title: 'Розбито вікна',
+        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        date: '24'
     },
     {
         id: '4',
         title: 'Торнадо',
+        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        date: '24'
     },
     {
         id: '4',
         title: 'Війна',
+        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        date: '24'
     },
     {
         id: '4',
-        title: 'Потом',
+        title: 'Потоп',
+        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        date: '26'
     },
     {
         id: '4',
         title: 'Авіаудар',
+        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        date: '25'
     },
 ];
 
@@ -66,7 +80,7 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     title: {
-        fontSize: 15,
+        fontSize: 16,
     },
 });
 
