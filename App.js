@@ -1,7 +1,8 @@
-import LoginPassword from './pages/LoginPassword'
+import Main from './pages/Main'
+import SignUp from './pages/SignUp'
 
 export default function App() {
   return (
-    <LoginPassword />
+    <Main />
   );
 }

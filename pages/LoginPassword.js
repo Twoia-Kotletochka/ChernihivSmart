@@ -11,9 +11,7 @@ export default function LoginPassword() {
         <KeyboardAvoidingView
             style={signupStyle.container}
         >
-
             <Image source={require("../assets/logo.png")} style={signupStyle.img} />
-
             <View style={signupStyle.box}>
                 <Text style={[signupStyle.text, { fontSize: 35 }]}>Ваш пароль</Text>
                 <TextInput
