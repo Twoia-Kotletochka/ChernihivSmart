@@ -1,25 +1,75 @@
-import { useState } from 'react'
-import { signupStyle } from '../styles/main'
-import { Text, View, StatusBar } from 'react-native'
+import { Text, View, StatusBar, Animated, ScrollView, StyleSheet, SafeAreaView } from 'react-native'
 import News from '../components/News'
 
+const App = () => {
+    const dummyDATA = [
+        'Item1', 'Item1', 'Item1', 'Item1', 'Item1', 'Item1', 'Item1', 'Item1', 'Item1', 'Item1',
+        'Item1', 'Item1', 'Item1', 'Item1', 'Item1', 'Item1', 'Item1', 'Item1', 'Item1', 'Item1', 'Item1', 'Item1'
+    ];
+    // const AnimatedHeaderValue = useRef(new Animated.Value(0)).current
+    let AnimatedHeaderValue = new Animated.Value(0);
 
-export default function Main() {
+    const Header_Max_Height = 250; //Max
+    const Header_Min_Height = 50;
+
+    const animateHeaderBackgroundColor = AnimatedHeaderValue.interpolate({
+        inputRange: [0, Header_Max_Height - Header_Min_Height],
+        outputRange: ['blue', 'red'],
+        extrapolate: 'clamp'
+    });
+
+    const animatedHeaderHeight = AnimatedHeaderValue.interpolate({
+        inputRange: [0, Header_Max_Height - Header_Min_Height],
+        outputRange: [Header_Max_Height, Header_Min_Height],
+        extrapolate: 'clamp'
+    });
 
     return (
-        <View style={signupStyle.container}>
+        <SafeAreaView style={styles.container}>
+            <Animated.View
+                style={[
+                    styles.header,
+                    {
+                        height: animatedHeaderHeight,
+                        backgroundColor: animateHeaderBackgroundColor
+                    }
+                ]}
+            >
+                <Text style={{ fontSize: 18, textAlign: 'center' }}>Headrt card</Text>
+            </Animated.View>
 
-            <View style={signupStyle.box_scroll}>
-
-            </View>
-            <View style={signupStyle.box_panel}>
+            <ScrollView
+                style={{ paddingTop: 250 }}
+                scrollEventThrottle={16}
+                onScroll={Animated.event(
+                    [{ nativeEvent: { contentOffset: { y: AnimatedHeaderValue } } }],
+                    { useNativeDriver: false }
+                )}
+            >
                 <News />
-            </View>
-            <StatusBar
-                animated={true}
-                barStyle={'light-content'}
-                backgroundColor="#4BB5F5"
-            />
-        </View>
+            </ScrollView>
+        </SafeAreaView>
+
     );
-}
+};
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    textStyle: {
+        textAlign: 'center',
+        color: 'black',
+        fontSize: 18,
+        padding: 20,
+    },
+    header: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        left: 0,
+        right: 0,
+        position: 'absolute'
+    }
+});
+
+export default App;

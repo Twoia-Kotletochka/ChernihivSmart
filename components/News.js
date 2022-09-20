@@ -59,7 +59,7 @@ const News = () => {
 
     return (
         <View style={styles.container}>
-            <FlatList
+            <Text
                 data={DATA}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
