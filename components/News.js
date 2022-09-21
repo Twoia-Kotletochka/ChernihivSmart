@@ -44,44 +44,51 @@ const DATA = [
         discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         date: '25'
     },
+    {
+        id: '4',
+        title: 'Авіаудар',
+        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        date: '25'
+    },
+
+    {
+        id: '4',
+        title: 'Авіаудар',
+        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        date: '25'
+    },
+    {
+        id: '4',
+        title: 'Авіаудар',
+        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        date: '25'
+    },
+    {
+        id: '4',
+        title: 'Авіаудар',
+        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        date: '25'
+    }
 ];
 
-const Item = ({ title }) => (
-    <View style={styles.item}>
-        <Text style={styles.title}>{title}</Text>
-    </View>
-);
-
 const News = () => {
-    const renderItem = ({ item }) => (
-        <Item title={item.title} />
-    );
-
     return (
-        <View style={styles.container}>
-            <Text
-                data={DATA}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-            />
-        </View>
+        DATA.map((item, index) => (
+            <Text style={styles.item} key={index}>
+                {item.title}
+            </Text>
+        ))
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
+export const styles = StyleSheet.create({
     item: {
         backgroundColor: '#EEEEEE',
         padding: 20,
         marginVertical: 8,
         marginHorizontal: 16,
-        borderRadius: 10
-    },
-    title: {
-        fontSize: 16,
-    },
-});
+        borderRadius: 10,
+
+    }
+})
 
 export default News;

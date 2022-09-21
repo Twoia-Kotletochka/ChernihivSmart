@@ -1,75 +1,6 @@
 import { Text, View, StatusBar, Animated, ScrollView, StyleSheet, SafeAreaView } from 'react-native'
+import { styles } from '../styles/main'
 import News from '../components/News'
-
-const DATA = [
-    {
-        id: '1',
-        title: 'Нема гарячої води',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: '24'
-    },
-    {
-        id: '2',
-        title: 'ВИмкнули світло',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: '25'
-    },
-    {
-        id: '3',
-        title: 'Розбито вікна',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: '24'
-    },
-    {
-        id: '4',
-        title: 'Торнадо',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: '24'
-    },
-    {
-        id: '4',
-        title: 'Війна',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: '24'
-    },
-    {
-        id: '4',
-        title: 'Потоп',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: '26'
-    },
-    {
-        id: '4',
-        title: 'Авіаудар',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: '25'
-    },
-    {
-        id: '4',
-        title: 'Авіаудар',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: '25'
-    },
-
-    {
-        id: '4',
-        title: 'Авіаудар',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: '25'
-    },
-    {
-        id: '4',
-        title: 'Авіаудар',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: '25'
-    },
-    {
-        id: '4',
-        title: 'Авіаудар',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: '25'
-    }
-];
 
 export default function Main() {
     let AnimatedHeaderValue = new Animated.Value(0);
@@ -77,9 +8,14 @@ export default function Main() {
     const Header_Max_Height = 250;
     const Header_Min_Height = 50;
 
+    const Card_Max_Height = 130;
+    const Card_Min_Height = 0;
+
+    const color = 'blue'
+
     const animateHeaderBackgroundColor = AnimatedHeaderValue.interpolate({
         inputRange: [0, Header_Max_Height - Header_Min_Height],
-        outputRange: ['blue', 'yellow'],
+        outputRange: [color, 'yellow'],
         extrapolate: 'clamp'
     });
 
@@ -89,35 +25,92 @@ export default function Main() {
         extrapolate: 'clamp'
     });
 
+    const animatedCardHeight = AnimatedHeaderValue.interpolate({
+        inputRange: [0, Card_Max_Height - Card_Min_Height],
+        outputRange: [Card_Max_Height, Card_Min_Height],
+        extrapolate: 'clamp'
+    });
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView
-                style={{ paddingTop: 250, overflow: "hidden", borderRadius: 20 }}
+                style={{ paddingTop: 250, overflow: "hidden", borderRadius: 20, backgroundColor: '#FFFFFF' }}
                 scrollEventThrottle={16}
                 onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { y: AnimatedHeaderValue } } }],
                     { useNativeDriver: false }
                 )}
             >
-                {
-                    DATA.map((item, index) => (
-                        <Text style={styles.item} key={index}>
-                            {item.title}
-                        </Text>
-                    ))
-                }
+                <News />
                 <View style={{ paddingBottom: 250 }}></View>
             </ScrollView>
             <Animated.View
                 style={[
                     styles.header,
                     {
-                        height: animatedHeaderHeight,
-                        backgroundColor: animateHeaderBackgroundColor
+                        height: animatedHeaderHeight
                     }
                 ]}
             >
-                <Text style={{ fontSize: 18, textAlign: 'center' }}>Headrt card</Text>
+
+                <View
+                    style={{
+                        width: '100%',
+                        flexDirection: 'row',
+                        alignContent: 'center',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    <View
+                        style={{
+                            backgroundColor: 'red',
+                            width: 50,
+                            height: 45,
+                            marginLeft: 20
+                        }}
+                    ></View>
+
+                    <View
+                        style={{
+                            backgroundColor: 'gray',
+                            width: 50,
+                            height: 45,
+                            marginRight: 20
+                        }}
+                    ></View>
+                </View>
+
+                <ScrollView
+                    horizontal={true}
+
+                >
+                    <Animated.View style={{
+                        backgroundColor: '#FFFFFF',
+                        height: animatedCardHeight,
+                        width: 100,
+                        margin: 20
+                    }}></Animated.View>
+
+                    <Animated.View style={{
+                        backgroundColor: '#FFFFFF',
+                        height: animatedCardHeight,
+                        width: 100,
+                        margin: 20
+                    }}></Animated.View>
+
+                    <Animated.View style={{
+                        backgroundColor: '#FFFFFF',
+                        height: animatedCardHeight,
+                        width: 100,
+                        margin: 20
+                    }}></Animated.View>
+
+                    <Animated.View style={{
+                        backgroundColor: '#FFFFFF',
+                        height: animatedCardHeight,
+                        width: 100,
+                        margin: 20
+                    }}></Animated.View>
+                </ScrollView>
             </Animated.View>
             <StatusBar
                 animated={true}
@@ -128,30 +121,3 @@ export default function Main() {
 
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    textStyle: {
-        textAlign: 'center',
-        color: 'black',
-        fontSize: 18,
-        padding: 20,
-    },
-    header: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        left: 0,
-        right: 0,
-        position: 'absolute'
-    },
-    item: {
-        backgroundColor: '#EEEEEE',
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
-        borderRadius: 10,
-
-    }
-});
