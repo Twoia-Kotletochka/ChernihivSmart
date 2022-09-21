@@ -1,8 +1,8 @@
-import Main from './pages/Main'
+import RegistrPassword from './pages/RegistrPassword'
 import SignUp from './pages/SignUp'
 
 export default function App() {
   return (
-    <Main />
+    <RegistrPassword />
   );
 }
