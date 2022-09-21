@@ -33,7 +33,7 @@ export default function Main() {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView
-                style={{ paddingTop: 250, overflow: "hidden", borderRadius: 20, backgroundColor: '#FFFFFF' }}
+                style={styles.ScrollView_vertical}
                 scrollEventThrottle={16}
                 onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { y: AnimatedHeaderValue } } }],
@@ -43,11 +43,13 @@ export default function Main() {
                 <News />
                 <View style={{ paddingBottom: 250 }}></View>
             </ScrollView>
+
             <Animated.View
                 style={[
                     styles.header,
                     {
-                        height: animatedHeaderHeight
+                        height: animatedHeaderHeight,
+                        backgroundColor: animateHeaderBackgroundColor
                     }
                 ]}
             >
@@ -65,7 +67,8 @@ export default function Main() {
                             backgroundColor: 'red',
                             width: 50,
                             height: 45,
-                            marginLeft: 20
+                            marginLeft: 20,
+                            marginTop: 4
                         }}
                     ></View>
 
@@ -74,14 +77,15 @@ export default function Main() {
                             backgroundColor: 'gray',
                             width: 50,
                             height: 45,
-                            marginRight: 20
+                            marginRight: 20,
+                            marginTop: 4
                         }}
                     ></View>
                 </View>
 
                 <ScrollView
                     horizontal={true}
-
+                    style={styles.ScrollView_horizontal}
                 >
                     <Animated.View style={{
                         backgroundColor: '#FFFFFF',

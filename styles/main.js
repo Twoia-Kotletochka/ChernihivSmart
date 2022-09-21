@@ -16,5 +16,12 @@ export const styles = StyleSheet.create({
         left: 0,
         right: 0,
         position: 'absolute'
+    },
+    ScrollView_vertical: {
+        paddingTop: 250,
+        backgroundColor: '#FFFFFF',
+        // borderRadius: 20
+    },
+    ScrollView_horizontal: {
     }
 })
