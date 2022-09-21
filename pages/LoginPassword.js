@@ -1,7 +1,6 @@
 import { Text, View, StatusBar, TextInput, KeyboardAvoidingView, Image, TouchableHighlight, TouchableOpacity } from 'react-native'
-import { signupStyle } from '../styles/signup'
+import { LoginPasswordStyle } from '../styles/SignUp+LoginPassword'
 import { useState } from 'react'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 export default function LoginPassword() {
@@ -9,10 +8,10 @@ export default function LoginPassword() {
 
     return (
         <KeyboardAvoidingView
-            style={signupStyle.container}
+            style={LoginPasswordStyle.container}
         >
-            <Image source={require("../assets/logo.png")} style={signupStyle.img} />
-            <View style={signupStyle.box}>
+            <Image source={require("../assets/logo.png")} style={LoginPasswordStyle.img} />
+            <View style={LoginPasswordStyle.box}>
                 <Text style={[signupStyle.text, { fontSize: 35 }]}>Ваш пароль</Text>
                 <TextInput
                     style={signupStyle.input}
@@ -22,10 +21,10 @@ export default function LoginPassword() {
                     value={number}
                 />
 
-                <Text style={[signupStyle.text, { fontSize: 12 }]}>Введіть пароль для входу</Text>
+                <Text style={[LoginPasswordStyle.text, { fontSize: 12 }]}>Введіть пароль для входу</Text>
             </View>
             <TouchableOpacity
-                style={signupStyle.button}>
+                style={LoginPasswordStyle.button}>
                 <Text style={{ color: 'white', fontSize: 22 }}>Далі</Text>
             </TouchableOpacity>
 

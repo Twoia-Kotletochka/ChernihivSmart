@@ -1,7 +1,6 @@
-import { Text, View, StatusBar, TextInput, KeyboardAvoidingView, Image, TouchableHighlight, TouchableOpacity } from 'react-native'
-import { signupStyle } from '../styles/signup'
+import { Text, View, StatusBar, TextInput, KeyboardAvoidingView, Image, TouchableOpacity } from 'react-native'
+import { signupStyle } from '../styles/SignUp+LoginPassword'
 import { useState } from 'react'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default function SignUp() {
     const [number, onChangeText] = useState("+380");

@@ -31,8 +31,8 @@ export const signupStyle = StyleSheet.create({
         fontSize: 25,
     },
     img: {
-        width: 150,
-        height: 150,
+        width: 130,
+        height: 130,
         marginTop: -120,
         marginBottom: 20,
     },
