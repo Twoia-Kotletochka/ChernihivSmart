@@ -1,8 +1,6 @@
+import React from 'react'
 import { Text, View, StyleSheet, StatusBar, TextInput, KeyboardAvoidingView, Image, TouchableOpacity } from 'react-native'
 import { useState } from 'react'
-
-
-
 
 export default function RegistrPassword({ navigation }) {
     const [numberFirstPassword, numberSecondPassword, onChangeText] = useState("");

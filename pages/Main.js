@@ -1,3 +1,4 @@
+import React from 'react'
 import { Text, View, StatusBar, Animated, ScrollView, StyleSheet, SafeAreaView } from 'react-native'
 import { styles } from '../styles/main'
 import News from '../components/News'

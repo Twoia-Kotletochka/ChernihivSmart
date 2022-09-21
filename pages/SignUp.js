@@ -1,3 +1,4 @@
+import React from 'react'
 import { Text, View, StatusBar, TextInput, KeyboardAvoidingView, Image, TouchableOpacity, Button } from 'react-native'
 import { SignUp_LoginPassword } from '../styles/SignUp_LoginPassword'
 import { useState } from 'react'
