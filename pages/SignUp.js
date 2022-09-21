@@ -1,30 +1,35 @@
-import { Text, View, StatusBar, TextInput, KeyboardAvoidingView, Image, TouchableOpacity } from 'react-native'
-import { signupStyle } from '../styles/SignUp+LoginPassword'
+import { Text, View, StatusBar, TextInput, KeyboardAvoidingView, Image, TouchableOpacity, Button } from 'react-native'
+import { SignUp_LoginPassword } from '../styles/SignUp_LoginPassword'
 import { useState } from 'react'
 
-export default function SignUp() {
+export default function SignUp({ navigation }) {
     const [number, onChangeText] = useState("+380");
+
+    const loadScenePassword = () => {
+        navigation.navigate('LoginPassword');
+    }
+
     return (
-        <KeyboardAvoidingView
-            style={signupStyle.container}
-        >
+        <KeyboardAvoidingView style={SignUp_LoginPassword.container}>
+            <Image source={require("../assets/logo.png")} style={SignUp_LoginPassword.img} />
 
-            <Image source={require("../assets/logo.png")} style={signupStyle.img} />
-
-            <View style={signupStyle.box}>
-                <Text style={[signupStyle.text, { fontSize: 35 }]}>Ваш номер</Text>
+            <View style={SignUp_LoginPassword.box}>
+                <Text style={[SignUp_LoginPassword.text, { fontSize: 35 }]}>Ваш номер</Text>
                 <TextInput
-                    style={signupStyle.input}
+                    style={SignUp_LoginPassword.input}
                     onChangeText={onChangeText}
                     keyboardType='phone-pad'
                     value={number}
                 />
 
-                <Text style={[signupStyle.text, { fontSize: 12 }]}>Введіть номер телефону для авторизації</Text>
+                <Text style={[SignUp_LoginPassword.text, { fontSize: 12 }]}>Введіть номер телефону для авторизації</Text>
             </View>
             <TouchableOpacity
-                style={signupStyle.button}>
+                style={SignUp_LoginPassword.button}
+                onPress={loadScenePassword}
+            >
                 <Text style={{ color: 'white', fontSize: 22 }}>Далі</Text>
+
             </TouchableOpacity>
 
             <StatusBar

@@ -1,30 +1,35 @@
-import { Text, View, StatusBar, TextInput, KeyboardAvoidingView, Image, TouchableHighlight, TouchableOpacity } from 'react-native'
-import { LoginPasswordStyle } from '../styles/SignUp+LoginPassword'
+import { Text, View, StatusBar, TextInput, KeyboardAvoidingView, Image, TouchableOpacity } from 'react-native'
+import { SignUp_LoginPassword } from '../styles/SignUp_LoginPassword'
 import { useState } from 'react'
 
 
-export default function LoginPassword() {
+export default function LoginPassword({ navigation }) {
     const [number, onChangeText] = useState("");
+
+    const loadScenePassword = () => {
+        navigation.navigate('RegistrPassword');
+    }
 
     return (
         <KeyboardAvoidingView
-            style={LoginPasswordStyle.container}
+            style={SignUp_LoginPassword.container}
         >
-            <Image source={require("../assets/logo.png")} style={LoginPasswordStyle.img} />
-            <View style={LoginPasswordStyle.box}>
-                <Text style={[signupStyle.text, { fontSize: 35 }]}>Ваш пароль</Text>
+            <Image source={require("../assets/logo.png")} style={SignUp_LoginPassword.img} />
+            <View style={SignUp_LoginPassword.box}>
+                <Text style={[SignUp_LoginPassword.text, { fontSize: 35 }]}>Ваш пароль</Text>
                 <TextInput
-                    style={signupStyle.input}
+                    style={SignUp_LoginPassword.input}
                     onChangeText={onChangeText}
                     secureTextEntry={true}
                     keyboardType='password'
                     value={number}
                 />
 
-                <Text style={[LoginPasswordStyle.text, { fontSize: 12 }]}>Введіть пароль для входу</Text>
+                <Text style={[SignUp_LoginPassword.text, { fontSize: 12 }]}>Введіть пароль для входу</Text>
             </View>
             <TouchableOpacity
-                style={LoginPasswordStyle.button}>
+                style={SignUp_LoginPassword.button}
+                onPress={loadScenePassword}>
                 <Text style={{ color: 'white', fontSize: 22 }}>Далі</Text>
             </TouchableOpacity>
 

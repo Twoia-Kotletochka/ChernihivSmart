@@ -4,11 +4,13 @@ import { useState } from 'react'
 
 
 
-export default function RegistrPassword() {
+export default function RegistrPassword({ navigation }) {
     const [numberFirstPassword, numberSecondPassword, onChangeText] = useState("");
     const [isSecureEntry, SetIsSecureEntry] = useState(true);
 
-
+    const loadScenePassword = () => {
+        navigation.navigate('Main');
+    }
     return (
 
         <KeyboardAvoidingView style={registerStyles.registerMainBox}>
@@ -42,7 +44,9 @@ export default function RegistrPassword() {
             </View>
 
             <TouchableOpacity
-                style={registerStyles.registerBoxContainer}>
+                style={registerStyles.registerBoxContainer}
+                onPress={loadScenePassword}
+            >
                 <Text style={{ color: 'white', fontSize: 22 }}>Далі</Text>
             </TouchableOpacity>
 

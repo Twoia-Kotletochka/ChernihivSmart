@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-export const signupStyle = StyleSheet.create({
+export const SignUp_LoginPassword = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
