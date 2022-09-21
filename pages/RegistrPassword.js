@@ -73,7 +73,7 @@ const registerStyles = StyleSheet.create({
         backgroundColor: '#4BB5F5',
         alignSelf: 'center',
         alignItems: 'center',
-        borderRadius: 7,
+        borderRadius: 8,
         width: 300,
     },
     registerContainer: {
