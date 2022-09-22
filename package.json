@@ -19,6 +19,7 @@
     "react-dom": "18.0.0",
     "react-native": "0.69.5",
     "react-native-collapsingtoolbar": "^1.0.3",
+    "react-native-gesture-handler": "~2.5.0",
     "react-native-hide-show-password-input": "^1.2.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-prompt-android": "^1.1.0",

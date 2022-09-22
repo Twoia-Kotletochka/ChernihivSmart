@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler'
 import React from 'react'
 import RegistrPassword from './pages/RegistrPassword'
 import LoginPassword from './pages/LoginPassword'
