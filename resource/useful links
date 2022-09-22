@@ -1,0 +1,7 @@
+https://github.com/EasyCoders-ru/weatherApp - повноцінна прога з погодою
+https://cloud.mail.ru/public/9Xff/cmnQGiGst - архів кок буків з React(Native)
+https://github.com/mdmoin7/react-native-hide-show-password - глазик пароль
+
+cd C:\Users\user\AppData\Local\Android\Sdk\emulator>
+.\emulator.exe -list-avds
+.\emulator.exe -avd "Pixel_3_XL_API_31"

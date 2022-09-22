@@ -16,9 +16,6 @@ export const SignUp_LoginPassword = StyleSheet.create({
         elevation: 9,
         marginBottom: 20
     },
-    text: {
-        color: '#343436'
-    },
     input: {
         height: '30%',
         margin: 12,

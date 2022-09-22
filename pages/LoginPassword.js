@@ -17,7 +17,7 @@ export default function LoginPassword({ navigation }) {
         >
             <Image source={require("../assets/logo.png")} style={SignUp_LoginPassword.img} />
             <View style={SignUp_LoginPassword.box}>
-                <Text style={[SignUp_LoginPassword.text, { fontSize: 35 }]}>Ваш пароль</Text>
+                <Text style={{ color: '#343436', fontSize: 35 }}>Ваш пароль</Text>
                 <TextInput
                     style={SignUp_LoginPassword.input}
                     onChangeText={onChangeText}
@@ -26,7 +26,7 @@ export default function LoginPassword({ navigation }) {
                     value={number}
                 />
 
-                <Text style={[SignUp_LoginPassword.text, { fontSize: 12 }]}>Введіть пароль для входу</Text>
+                <Text style={{ color: '#343436', fontSize: 12 }}>Введіть пароль для входу</Text>
             </View>
             <TouchableOpacity
                 style={SignUp_LoginPassword.button}

@@ -10,39 +10,36 @@ export default function RegistrPassword({ navigation }) {
         navigation.navigate('Main');
     }
     return (
+        <KeyboardAvoidingView style={registerStyles.container}>
 
-        <KeyboardAvoidingView style={registerStyles.registerMainBox}>
+            <Image source={require("../assets/logo.png")} style={registerStyles.img} />
 
-            <Image source={require("../assets/logo.png")} style={registerStyles.registrerImg} />
-
-
-            <View style={registerStyles.registerContainer}>
-
-                <Text style={[registerStyles.registreText, { fontSize: 27 }]}>Створіть пароль</Text>
+            <View style={registerStyles.box}>
+                <Text style={{ marginTop: 20, fontSize: 27 }}>Створіть пароль</Text>
 
                 <TextInput
-                    style={registerStyles.registerInput}
+                    style={registerStyles.input}
                     onChangeText={onChangeText}
                     secureTextEntry={isSecureEntry}
                     keyboardType='password'
-                    placeholder="First Password"
+                    placeholder="Введіть пароль"
                     value={numberFirstPassword}
                 />
 
                 <TextInput
-                    style={registerStyles.registerInput}
+                    style={registerStyles.input}
                     // onChangeText={onChangeText}
                     secureTextEntry={true}
                     keyboardType='password'
-                    placeholder="Second Password"
+                    placeholder="Повторіть пароль"
 
                 // value={numberSecondPassword}
                 />
-                <Text style={[registerStyles.registreText1, { fontSize: 12 }]}>Введіть пароль два рази</Text>
+                <Text style={{ marginBottom: 20, fontSize: 12 }}>Введіть пароль два рази</Text>
             </View>
 
             <TouchableOpacity
-                style={registerStyles.registerBoxContainer}
+                style={registerStyles.button}
                 onPress={loadScenePassword}
             >
                 <Text style={{ color: 'white', fontSize: 22 }}>Далі</Text>
@@ -55,56 +52,50 @@ export default function RegistrPassword({ navigation }) {
             />
         </KeyboardAvoidingView>
     );
-
 }
 
 const registerStyles = StyleSheet.create({
-    registerMainBox: {
+    container: {
         flex: 1,
         backgroundColor: 'white',
-        marginTop: 40,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    registerBoxContainer: {
+    button: {
         height: 40,
+        width: '70%',
         color: 'red',
         backgroundColor: '#4BB5F5',
-        alignSelf: 'center',
         alignItems: 'center',
-        borderRadius: 8,
-        width: 300,
+        justifyContent: 'center',
+        borderRadius: 7,
     },
-    registerContainer: {
+    box: {
         margin: 20,
         alignItems: 'center',
-        justifyContent: 'space-evenly',
-        height: 200,
+        backgroundColor: 'white',
         width: '90%',
+        height: 200,
         borderRadius: 10,
-        elevation: 7,
+        elevation: 9,
+        marginBottom: 20,
+        justifyContent: 'space-evenly',
     },
-    registrerImg: {
+    img: {
         marginTop: -120,
         marginBottom: 5,
         width: 130,
         height: 130,
     },
-
-    registreText: {
-        marginTop: 20,
-    },
-    registreText1: {
-        marginBottom: 20,
-    },
-
-    registerInput: {
-        alignSelf: 'stretch',
-        margin: 20,
-        padding: 5,
+    input: {
+        height: '30%',
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+        width: '80%',
         backgroundColor: '#EEEEEE',
         borderColor: 'white',
-        fontSize: 18,
+        borderRadius: 7,
+        fontSize: 25,
     }
-
 });
