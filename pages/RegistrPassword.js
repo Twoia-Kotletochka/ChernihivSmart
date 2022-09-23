@@ -15,7 +15,7 @@ export default function RegistrPassword({ navigation }) {
             <Image source={require("../assets/logo.png")} style={registerStyles.img} />
 
             <View style={registerStyles.box}>
-                <Text style={{ marginTop: 20, fontSize: 27 }}>Створіть пароль</Text>
+                <Text style={{ fontSize: 27 }}>Створіть пароль</Text>
 
                 <TextInput
                     style={registerStyles.input}
@@ -35,7 +35,7 @@ export default function RegistrPassword({ navigation }) {
 
                 // value={numberSecondPassword}
                 />
-                <Text style={{ marginBottom: 20, fontSize: 12 }}>Введіть пароль два рази</Text>
+                <Text style={{ margin: 5, fontSize: 12 }}>Введіть пароль два рази</Text>
             </View>
 
             <TouchableOpacity
@@ -59,7 +59,7 @@ const registerStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     button: {
         height: 40,
@@ -68,34 +68,32 @@ const registerStyles = StyleSheet.create({
         backgroundColor: '#4BB5F5',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 7,
+        borderRadius: 7
     },
     box: {
         margin: 20,
         alignItems: 'center',
         backgroundColor: 'white',
         width: '90%',
-        height: 200,
+        height: 170,
         borderRadius: 10,
         elevation: 9,
         marginBottom: 20,
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-evenly'
     },
     img: {
         marginTop: -120,
         marginBottom: 5,
         width: 130,
-        height: 130,
+        height: 130
     },
     input: {
         height: '30%',
-        margin: 12,
         borderWidth: 1,
-        padding: 10,
-        width: '80%',
-        backgroundColor: '#EEEEEE',
+        width: '62%',
         borderColor: 'white',
-        borderRadius: 7,
-        fontSize: 25,
+        backgroundColor: 'white',
+        borderBottomColor: 'rgb(204, 204, 204)',
+        fontSize: 20
     }
 });

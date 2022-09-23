@@ -5,7 +5,7 @@ export const SignUp_LoginPassword = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     box: {
         alignItems: 'center',
@@ -21,17 +21,17 @@ export const SignUp_LoginPassword = StyleSheet.create({
         margin: 12,
         borderWidth: 1,
         padding: 10,
-        width: '80%',
-        backgroundColor: '#EEEEEE',
+        width: '62%',
         borderColor: 'white',
-        borderRadius: 7,
-        fontSize: 25,
+        backgroundColor: 'white',
+        borderBottomColor: 'rgb(204, 204, 204)',
+        fontSize: 25
     },
     img: {
         width: 130,
         height: 130,
         marginTop: -120,
-        marginBottom: 20,
+        marginBottom: 20
     },
     button: {
         height: 40,
@@ -40,6 +40,6 @@ export const SignUp_LoginPassword = StyleSheet.create({
         backgroundColor: '#4BB5F5',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 7,
+        borderRadius: 7
     }
 })

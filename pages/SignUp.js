@@ -15,7 +15,7 @@ export default function SignUp({ navigation }) {
             <Image source={require("../assets/logo.png")} style={SignUp_LoginPassword.img} />
 
             <View style={SignUp_LoginPassword.box}>
-                <Text style={{ color: '#343436', fontSize: 35 }}>Ваш номер</Text>
+                <Text style={{ color: '#343436', fontSize: 27 }}>Ваш номер</Text>
                 <TextInput
                     style={SignUp_LoginPassword.input}
                     onChangeText={onChangeText}
