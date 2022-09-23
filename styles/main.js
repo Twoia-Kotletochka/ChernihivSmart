@@ -15,13 +15,18 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         left: 0,
         right: 0,
-        position: 'absolute'
+        position: 'absolute',
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
     },
     ScrollView_vertical: {
         paddingTop: 250,
-        backgroundColor: '#FFFFFF',
-        // borderRadius: 20
+        backgroundColor: 'white',
+        borderRadius: 20,
+
+
     },
     ScrollView_horizontal: {
+
     }
 })
