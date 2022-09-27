@@ -1,46 +1,58 @@
 import React from 'react'
-import { Text, View, StatusBar, ScrollView, StyleSheet, SafeAreaView, Animated } from 'react-native'
-
+import { Text, View, StatusBar, ScrollView, Animated } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
+import { styles } from './styles/main'
 import News from './components/News'
-import Icon_card from './assets/svg/icon_card.svg'
-import Icon_home from './assets/svg/icon_home.svg'
-import Icon_location from './assets/svg/icon_location.svg'
-import Icon_parking from './assets/svg/icon_parking.svg'
+//header
+import Icon_profile from './assets/icon_profile.svg'
+//cards
+import Icon_card from './assets/icon_cards_svg/icon_card.svg'
+import Icon_home from './assets/icon_cards_svg/icon_home.svg'
+import Icon_location from './assets/icon_cards_svg/icon_location.svg'
+import Icon_parking from './assets/icon_cards_svg/icon_parking.svg'
+//weather
+import Icon_weather from './assets/icon_weather/cloud.svg'
+
+let AnimatedOp = new Animated.Value(0);
+
+const animateopacityprofil = AnimatedOp.interpolate({
+  inputRange: [0, 200 - 0], //ругулятор раньше позже 
+  outputRange: [1, 0],
+  extrapolate: 'clamp'
+});
+
+const animateopacityweather = AnimatedOp.interpolate({
+  inputRange: [0, 200 - 0], //ругулятор раньше позже 
+  outputRange: [1, 0],
+  extrapolate: 'clamp'
+});
+
+const animateopacitycard = AnimatedOp.interpolate({
+  inputRange: [0, 100 - 0], //ругулятор раньше позже 
+  outputRange: [1, 0],
+  extrapolate: 'clamp'
+});
+
+const animatedNewsHeight = AnimatedOp.interpolate({
+  inputRange: [0, 300 - 0],
+  outputRange: ['95%', '100%'],
+  extrapolate: 'clamp'
+});
 
 export default function Main() {
-  let AnimatedOp = new Animated.Value(0);
-
-  const animateopacityprofil = AnimatedOp.interpolate({
-    inputRange: [0, 200 - 0], //ругулятор раньше позже 
-    outputRange: [1, 0],
-    extrapolate: 'clamp'
-  });
-
-  const animateopacityweather = AnimatedOp.interpolate({
-    inputRange: [0, 200 - 0], //ругулятор раньше позже 
-    outputRange: [1, 0],
-    extrapolate: 'clamp'
-  });
-
-  const animateopacitycard = AnimatedOp.interpolate({
-    inputRange: [0, 100 - 0], //ругулятор раньше позже 
-    outputRange: [1, 0],
-    extrapolate: 'clamp'
-  });
-
-  const animatedNewsHeight = AnimatedOp.interpolate({
-    inputRange: [0, 300 - 0],
-    outputRange: ['95%', '100%'],
-    extrapolate: 'clamp'
-  });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <LinearGradient
+      colors={['#17153C', '#D5BCA8']}
+      style={styles.container}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+    >
 
       <ScrollView
         scrollEventThrottle={16}
         style={styles.scrollview_vertical}
-
+        showsVerticalScrollIndicator={false}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: AnimatedOp } } }],
           { useNativeDriver: false }
@@ -50,6 +62,7 @@ export default function Main() {
         <ScrollView
           horizontal={true}
           style={styles.scrollview_horizontal}
+          showsHorizontalScrollIndicator={false}
         >
           <Animated.View style={[styles.card, {
             opacity: animateopacitycard,
@@ -89,84 +102,30 @@ export default function Main() {
       </ScrollView>
 
       <View
-        style={{
-          width: '90%',
-          marginTop: 5,
-          flexDirection: 'row',
-          alignContent: 'center',
-          justifyContent: 'space-between',
-          backgroundColor: 'transparent',
-          position: 'absolute',
-        }}
+        style={styles.header}
       >
-        <Animated.View
-          style={[{
-            backgroundColor: 'red',
-            width: 50,
-            height: 50,
-            marginLeft: 5,
-            borderRadius: 100,
-          }, { opacity: animateopacityprofil }]}
-        ></Animated.View>
+        <Animated.View style={[styles.profile, { opacity: animateopacityprofil }]}>
+          <Icon_profile style={{ width: '60%', height: '60%' }} />
+        </Animated.View>
 
         <Animated.View
-          style={[{
-            backgroundColor: 'black',
-            width: 50,
-            height: 50,
-            marginRight: 5,
-            borderRadius: 100,
-          }, { opacity: animateopacityweather }]}
-        ></Animated.View>
+          style={[{ opacity: animateopacityweather },
+          { flexDirection: 'row', alignItems: "center" }]}>
+
+          <Text style={styles.degrees_text}>15°</Text>
+
+          <View style={[styles.weather]}>
+            <Icon_weather style={{ width: '60%', height: '60%' }} />
+          </View>
+        </Animated.View>
       </View>
-
 
       <StatusBar
         animated={true}
         barStyle={'light-content'}
-        backgroundColor="#4BB5F5"
+        backgroundColor="#17153C"
       />
-    </SafeAreaView>
+    </LinearGradient>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  view_news: {
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    backgroundColor: 'white',
-    paddingBottom: 50,
-    width: '95%'
-  },
-  scrollview_horizontal: {
-    height: '100%',
-    width: '100%',
-    marginTop: 150,
-  },
-  scrollview_vertical: {
-    width: '100%',
-    height: '100%',
-  },
-  card: {
-    height: 155,
-    width: 135,
-    marginLeft: 20,
-    marginRight: 10,
-    marginBottom: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-    backgroundColor: 'white',
-    borderRadius: 17,
-  },
-  text_card: {
-    textAlign: 'center'
-  },
-  icon_cards: {
-    width: '40%', height: '40%'
-  }
-})
