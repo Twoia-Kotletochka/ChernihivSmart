@@ -1,5 +1,6 @@
 import React from 'react'
-import { Text, Image, View, StatusBar, ScrollView, StyleSheet, SafeAreaView, Animated } from 'react-native'
+import { Text, View, StatusBar, ScrollView, StyleSheet, SafeAreaView, Animated } from 'react-native'
+
 import News from './components/News'
 import Icon_card from './assets/svg/icon_card.svg'
 import Icon_home from './assets/svg/icon_home.svg'
@@ -10,17 +11,16 @@ export default function Main() {
   let AnimatedOp = new Animated.Value(0);
 
   const animateopacityprofil = AnimatedOp.interpolate({
-    inputRange: [0, 300 - 0], //ругулятор раньше позже 
+    inputRange: [0, 200 - 0], //ругулятор раньше позже 
     outputRange: [1, 0],
     extrapolate: 'clamp'
   });
 
   const animateopacityweather = AnimatedOp.interpolate({
-    inputRange: [0, 300 - 0], //ругулятор раньше позже 
+    inputRange: [0, 200 - 0], //ругулятор раньше позже 
     outputRange: [1, 0],
     extrapolate: 'clamp'
   });
-
 
   const animateopacitycard = AnimatedOp.interpolate({
     inputRange: [0, 100 - 0], //ругулятор раньше позже 
@@ -28,17 +28,19 @@ export default function Main() {
     extrapolate: 'clamp'
   });
 
+  const animatedNewsHeight = AnimatedOp.interpolate({
+    inputRange: [0, 300 - 0],
+    outputRange: ['95%', '100%'],
+    extrapolate: 'clamp'
+  });
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ position: 'absolute', width: '100%', height: '60%' }}>
-        <Image
-          source={require("./assets/svg/grad1.png")}
-          style={{ width: '100%', height: '100%' }} />
-      </View>
 
       <ScrollView
         scrollEventThrottle={16}
         style={styles.scrollview_vertical}
+
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: AnimatedOp } } }],
           { useNativeDriver: false }
@@ -78,8 +80,11 @@ export default function Main() {
           </Animated.View>
         </ScrollView>
 
-        <View style={styles.view_news}>
-          <News />
+        <View style={{ alignItems: 'center' }}>
+          <Animated.View style={[styles.view_news,
+          { width: animatedNewsHeight, }]}>
+            <News />
+          </Animated.View>
         </View>
       </ScrollView>
 
@@ -128,13 +133,14 @@ export default function Main() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   view_news: {
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     backgroundColor: 'white',
-    paddingBottom: 50
+    paddingBottom: 50,
+    width: '95%'
   },
   scrollview_horizontal: {
     height: '100%',
@@ -144,7 +150,6 @@ const styles = StyleSheet.create({
   scrollview_vertical: {
     width: '100%',
     height: '100%',
-
   },
   card: {
     height: 155,

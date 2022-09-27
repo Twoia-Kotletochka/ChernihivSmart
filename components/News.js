@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 
 const DATA = [
     {
