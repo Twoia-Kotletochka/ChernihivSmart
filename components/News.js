@@ -127,7 +127,7 @@ const News = () => {
 export const styles = StyleSheet.create({
     container: {
         backgroundColor: '#EEEEEE',
-        marginVertical: 8,
+        marginVertical: 5,
         marginHorizontal: 16,
         borderRadius: 10,
         flexDirection: 'row',

@@ -11,7 +11,8 @@ export const styles = StyleSheet.create({
         borderTopRightRadius: 20,
         backgroundColor: 'white',
         paddingBottom: 50,
-        width: '95%'
+        width: '95%',
+        paddingTop: 10
     },
     scrollview_horizontal: {
         height: '100%',
