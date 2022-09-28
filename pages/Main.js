@@ -1,128 +1,93 @@
 import React from 'react'
-import { Text, View, StatusBar, Animated, ScrollView, StyleSheet, SafeAreaView } from 'react-native'
+import { Text, View, StatusBar, ScrollView, Animated } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
 import { styles } from '../styles/main'
 import News from '../components/News'
+import Cards from '../components/Cards'
+//header
+import Icon_profile from '../assets/icon_profile.svg'
+
+//weather
+import Icon_weather from '../assets/icon_weather/cloud.svg'
+
+let AnimatedOp = new Animated.Value(0);
+
+const animateopacityprofil = AnimatedOp.interpolate({
+    inputRange: [0, 200 - 0], //ругулятор раньше позже 
+    outputRange: [1, 0],
+    extrapolate: 'clamp'
+});
+
+const animateopacityweather = AnimatedOp.interpolate({
+    inputRange: [0, 200 - 0], //ругулятор раньше позже 
+    outputRange: [1, 0],
+    extrapolate: 'clamp'
+});
+
+const animateopacitycard = AnimatedOp.interpolate({
+    inputRange: [0, 100 - 0], //ругулятор раньше позже 
+    outputRange: [1, 0],
+    extrapolate: 'clamp'
+});
+
+const animatedNewsHeight = AnimatedOp.interpolate({
+    inputRange: [0, 300 - 0],
+    outputRange: ['95%', '100%'],
+    extrapolate: 'clamp'
+});
 
 export default function Main() {
-    let AnimatedHeaderValue = new Animated.Value(0);
-
-    const Header_Max_Height = 250;
-    const Header_Min_Height = 50;
-
-    const Card_Max_Height = 130;
-    const Card_Min_Height = 0;
-
-    const color = 'blue'
-
-    const animateHeaderBackgroundColor = AnimatedHeaderValue.interpolate({
-        inputRange: [0, Header_Max_Height - Header_Min_Height],
-        outputRange: [color, 'yellow'],
-        extrapolate: 'clamp'
-    });
-
-    const animatedHeaderHeight = AnimatedHeaderValue.interpolate({
-        inputRange: [0, Header_Max_Height - Header_Min_Height],
-        outputRange: [Header_Max_Height, Header_Min_Height],
-        extrapolate: 'clamp'
-    });
-
-    const animatedCardHeight = AnimatedHeaderValue.interpolate({
-        inputRange: [0, Card_Max_Height - Card_Min_Height],
-        outputRange: [Card_Max_Height, Card_Min_Height],
-        extrapolate: 'clamp'
-    });
     return (
-        <SafeAreaView style={styles.container}>
+        <LinearGradient
+            colors={['#17153C', '#D5BCA8']}
+            style={styles.container}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+        >
+
             <ScrollView
-                style={styles.ScrollView_vertical}
                 scrollEventThrottle={16}
+                style={styles.scrollview_vertical}
+                showsVerticalScrollIndicator={false}
                 onScroll={Animated.event(
-                    [{ nativeEvent: { contentOffset: { y: AnimatedHeaderValue } } }],
+                    [{ nativeEvent: { contentOffset: { y: AnimatedOp } } }],
                     { useNativeDriver: false }
                 )}
             >
-                <News />
-                <View style={{ paddingBottom: 250 }}></View>
+                <Cards animateopacitycard={animateopacitycard} />
+
+                <View style={{ alignItems: 'center' }}>
+                    <Animated.View style={[styles.view_news,
+                    { width: animatedNewsHeight, }]}>
+                        <News />
+                    </Animated.View>
+                </View>
             </ScrollView>
 
-            <Animated.View
-                style={[
-                    styles.header,
-                    {
-                        height: animatedHeaderHeight,
-                        backgroundColor: animateHeaderBackgroundColor
-                    }
-                ]}
+            <View
+                style={styles.header}
             >
+                <Animated.View style={[styles.profile, { opacity: animateopacityprofil }]}>
+                    <Icon_profile style={{ width: '60%', height: '60%' }} />
+                </Animated.View>
 
-                <View
-                    style={{
-                        width: '100%',
-                        flexDirection: 'row',
-                        alignContent: 'center',
-                        justifyContent: 'space-between',
-                    }}
-                >
-                    <View
-                        style={{
-                            backgroundColor: 'red',
-                            width: 50,
-                            height: 45,
-                            marginLeft: 20,
-                            marginTop: 4
-                        }}
-                    ></View>
+                <Animated.View
+                    style={[{ opacity: animateopacityweather },
+                    { flexDirection: 'row', alignItems: "center" }]}>
 
-                    <View
-                        style={{
-                            backgroundColor: 'gray',
-                            width: 50,
-                            height: 45,
-                            marginRight: 20,
-                            marginTop: 4
-                        }}
-                    ></View>
-                </View>
+                    <Text style={styles.degrees_text}>15°</Text>
 
-                <ScrollView
-                    horizontal={true}
-                    style={styles.ScrollView_horizontal}
-                >
-                    <Animated.View style={{
-                        backgroundColor: '#FFFFFF',
-                        height: animatedCardHeight,
-                        width: 100,
-                        margin: 20
-                    }}></Animated.View>
+                    <View style={[styles.weather]}>
+                        <Icon_weather style={{ width: '60%', height: '60%' }} />
+                    </View>
+                </Animated.View>
+            </View>
 
-                    <Animated.View style={{
-                        backgroundColor: '#FFFFFF',
-                        height: animatedCardHeight,
-                        width: 100,
-                        margin: 20
-                    }}></Animated.View>
-
-                    <Animated.View style={{
-                        backgroundColor: '#FFFFFF',
-                        height: animatedCardHeight,
-                        width: 100,
-                        margin: 20
-                    }}></Animated.View>
-
-                    <Animated.View style={{
-                        backgroundColor: '#FFFFFF',
-                        height: animatedCardHeight,
-                        width: 100,
-                        margin: 20
-                    }}></Animated.View>
-                </ScrollView>
-            </Animated.View>
             <StatusBar
                 animated={true}
                 barStyle={'light-content'}
-                backgroundColor="#4BB5F5"
+                backgroundColor="#17153C"
             />
-        </SafeAreaView>
-
+        </LinearGradient>
     );
 }
