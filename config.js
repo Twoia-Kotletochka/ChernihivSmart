@@ -1,10 +1,9 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import { getFirestore } from 'firebase/firestore';
 
 
-const firebaseConfig = {
+export const firebaseConfig = {
     apiKey: "AIzaSyDp8ymiN4rJdUlQVW0qQ5WwwFrTqsZB9Ns",
     authDomain: "chernihivsmart.firebaseapp.com",
     projectId: "chernihivsmart",
@@ -14,9 +13,10 @@ const firebaseConfig = {
     measurementId: "G-33E33GN4F6"
 };
 
-const Firebase = initializeApp(firebaseConfig)
-const firestore = getFirestore();
-export default [Firebase, firestore]
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
 
 
 // import firebase from 'firebase/compat/app';

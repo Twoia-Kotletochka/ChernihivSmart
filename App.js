@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Text, View } from 'react-native';
 import auth from '@react-native-firebase/auth';
-
-import Stack from './navigation'
-import Loading from './pages/Loading';
-//import SignUp from './pages/SignUp';
+import SignUp from './pages/SignUp';
 
 export default function App() {
   const [initializing, setInitializing] = useState(true);
@@ -21,11 +19,10 @@ export default function App() {
 
   if (initializing) return null;
 
+
   if (!user) {
     return (
-      <View>
-        <Text>Login</Text>
-      </View>
+      <SignUp />
     );
   }
 
