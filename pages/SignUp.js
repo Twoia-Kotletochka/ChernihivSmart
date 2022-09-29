@@ -79,7 +79,7 @@ const SignUp = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={[SignUp_LoginPassword.button, { width: 50 }]} onPress={confirmCode}>
+            <TouchableOpacity style={[SignUp_LoginPassword.button, { width: 50 }]} onPress={loadScenePassword}>
                 <Text style={{ color: 'white', fontSize: 10 }}>Main</Text>
             </TouchableOpacity>
             <StatusBar
