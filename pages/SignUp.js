@@ -3,6 +3,7 @@ import { Text, View, StatusBar, TextInput, KeyboardAvoidingView, Image, Touchabl
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseConfig } from '../config';
 import firebase from 'firebase/compat/app';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { SignUp_LoginPassword } from '../styles/SignUp_LoginPassword';
 
 const SignUp = ({ navigation }) => {
@@ -36,11 +37,23 @@ const SignUp = ({ navigation }) => {
             })
             .catch((error) => {
                 //show an alert in case of error
-                alert(error);
+                alert(code);
             })
 
         //раньше  loadScenePassword(); было тут!
     }
+
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/firebase.User
+            const uid = user.uid;
+        } else {
+            // User is signed out
+            // ...
+        }
+    });
 
     return (
         <KeyboardAvoidingView style={SignUp_LoginPassword.container}>
