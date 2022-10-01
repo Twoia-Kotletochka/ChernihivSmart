@@ -12,13 +12,12 @@ export default function App() {
                 navigation.replace('Main')
             }
             else {
-                navigation.replace('SignUp')
+                navigation.replace('SignIn')
             }
         })
 
         return unsubscribe
     }, [])
-
 
     return (
         <SplashLoading />

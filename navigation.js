@@ -2,7 +2,7 @@ import 'react-native-gesture-handler'
 import React from 'react'
 //import RegistrPassword from './pages/RegistrPassword'
 //import LoginPassword from './pages/LoginPassword'
-import SignUp from './pages/SignUp'
+import SignIn from './pages/SignIn'
 import Main from './pages/Main'
 import Load from './pages/Load'
 
@@ -20,8 +20,8 @@ export default function Navigate() {
                 options={{ headerShown: false }}
             />
             <Stack.Screen
-                name="SignUp"
-                component={SignUp}
+                name="SignIn"
+                component={SignIn}
                 options={{ headerShown: false }}
             />
             <Stack.Screen

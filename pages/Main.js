@@ -47,7 +47,7 @@ export default function Main() {
         auth
             .signOut()
             .then(() => {
-                navigation.replace('SignUp')
+                navigation.replace('SignIn')
             })
             .catch(error => alert(error.message))
     }

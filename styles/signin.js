@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-export const SignUp_LoginPassword = StyleSheet.create({
+export const SignInStyle = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
@@ -45,5 +45,23 @@ export const SignUp_LoginPassword = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 7
+    },
+    loadwindowscreen: {
+        width: '95%',
+        height: '97%',
+        position: 'absolute',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(237, 231, 225, 0.4)',
+        borderRadius: 10
+    },
+    loadwindowmodal: {
+        backgroundColor: 'rgba(108, 122, 137, 0.7)',
+        width: 70,
+        height: 70,
+        justifyContent: 'center',
+        alignContent: 'center',
+        borderRadius: 10
     }
 })
