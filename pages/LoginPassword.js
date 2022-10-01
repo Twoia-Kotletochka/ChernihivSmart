@@ -8,10 +8,6 @@ import { SignUp_LoginPassword } from '../styles/SignUp_LoginPassword'
 
 export default function LoginPassword({ navigation }) {
 
-    const loadScenePassword = () => {
-        navigation.navigate('Main');
-    }
-
     return (
         <KeyboardAvoidingView
             style={SignUp_LoginPassword.container}

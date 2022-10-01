@@ -11,10 +11,13 @@ export const SignUp_LoginPassword = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
         width: '90%',
-        height: 300,
+        height: 150,
         borderRadius: 10,
         elevation: 9,
-        marginBottom: 20
+    },
+    phonebox: {
+        alignItems: 'center',
+        width: '90%',
     },
     input: {
         height: 50,
@@ -30,8 +33,8 @@ export const SignUp_LoginPassword = StyleSheet.create({
     img: {
         width: 130,
         height: 130,
-        marginTop: -120,
-        marginBottom: 20
+        marginTop: -60,
+        marginBottom: 30
     },
     button: {
         marginTop: 10,
