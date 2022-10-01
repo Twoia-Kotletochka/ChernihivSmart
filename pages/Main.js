@@ -1,14 +1,16 @@
 import React from 'react'
-import { Text, View, StatusBar, ScrollView, Animated } from 'react-native'
+import { Text, View, StatusBar, ScrollView, Animated, TouchableOpacity, Alert } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { styles } from '../styles/main'
 import News from '../components/News'
 import Cards from '../components/Cards'
+import { getAuth } from "firebase/auth";
+import { useNavigation } from '@react-navigation/core'
 //header
 import Icon_profile from '../assets/icon_profile.svg'
-
 //weather
 import Icon_weather from '../assets/icon_weather/cloud.svg'
+
 
 let AnimatedOp = new Animated.Value(0);
 
@@ -37,6 +39,19 @@ const animatedNewsHeight = AnimatedOp.interpolate({
 });
 
 export default function Main() {
+
+    const navigation = useNavigation()
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const handleSignOut = () => {
+        auth
+            .signOut()
+            .then(() => {
+                navigation.replace('SignIn')
+            })
+            .catch(error => alert(error.message))
+    }
+
     return (
         <LinearGradient
             colors={['#17153C', '#D5BCA8']}
@@ -54,11 +69,13 @@ export default function Main() {
                     { useNativeDriver: false }
                 )}
             >
+
                 <Cards animateopacitycard={animateopacitycard} />
 
                 <View style={{ alignItems: 'center' }}>
                     <Animated.View style={[styles.view_news,
                     { width: animatedNewsHeight, }]}>
+                        <Text>{user.uid}</Text>
                         <News />
                     </Animated.View>
                 </View>
@@ -67,10 +84,11 @@ export default function Main() {
             <View
                 style={styles.header}
             >
-                <Animated.View style={[styles.profile, { opacity: animateopacityprofil }]}>
-                    <Icon_profile style={{ width: '60%', height: '60%' }} />
-                </Animated.View>
-
+                <TouchableOpacity onPress={handleSignOut}>
+                    <Animated.View style={[styles.profile, { opacity: animateopacityprofil }]}>
+                        <Icon_profile style={{ width: '60%', height: '60%' }} />
+                    </Animated.View>
+                </TouchableOpacity>
                 <Animated.View
                     style={[{ opacity: animateopacityweather },
                     { flexDirection: 'row', alignItems: "center" }]}>
