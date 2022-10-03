@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Text, View, StatusBar, TextInput, KeyboardAvoidingView, Image, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 import { firebaseConfig } from '../config';

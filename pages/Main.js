@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, View, StatusBar, ScrollView, Animated, TouchableOpacity, Alert } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { styles } from '../styles/main'
 import News from '../components/News'
 import Cards from '../components/Cards'
-import { getAuth } from "firebase/auth";
+import { firebase } from '../config'
 import { useNavigation } from '@react-navigation/core'
 //header
 import Icon_profile from '../assets/icon_profile.svg'
@@ -40,17 +40,22 @@ const animatedNewsHeight = AnimatedOp.interpolate({
 
 export default function Main() {
 
-    const navigation = useNavigation()
-    const auth = getAuth();
-    const user = auth.currentUser;
-    const handleSignOut = () => {
-        auth
-            .signOut()
-            .then(() => {
-                navigation.replace('SignIn')
+    const [name, setName] = useState('')
+
+    useEffect(() => {
+        firebase.firestore().collection('users')
+            .doc(firebase.auth().currentUser.uid).get()
+            .then((snapshot) => {
+                if (snapshot.exists) {
+                    setName(snapshot.data())
+                }
+                else {
+                    console.log('User does not exist')
+                }
             })
-            .catch(error => alert(error.message))
-    }
+    }, [])
+
+    const navigation = useNavigation()
 
     return (
         <LinearGradient
@@ -69,13 +74,14 @@ export default function Main() {
                     { useNativeDriver: false }
                 )}
             >
-
                 <Cards animateopacitycard={animateopacitycard} />
 
                 <View style={{ alignItems: 'center' }}>
                     <Animated.View style={[styles.view_news,
                     { width: animatedNewsHeight, }]}>
-                        <Text>{user.uid}</Text>
+                        <Text>
+                            Hello, {name.name}
+                        </Text>
                         <News />
                     </Animated.View>
                 </View>
@@ -84,7 +90,8 @@ export default function Main() {
             <View
                 style={styles.header}
             >
-                <TouchableOpacity onPress={handleSignOut}>
+                <TouchableOpacity
+                    onPress={() => { firebase.auth().signOut() }}>
                     <Animated.View style={[styles.profile, { opacity: animateopacityprofil }]}>
                         <Icon_profile style={{ width: '60%', height: '60%' }} />
                     </Animated.View>
