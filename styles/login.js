@@ -23,7 +23,7 @@ export const LoginStyle = StyleSheet.create({
         height: 50,
         borderWidth: 1,
         marginBottom: 10,
-        width: '70%',
+        width: '80%',
         borderColor: 'white',
         backgroundColor: 'white',
         borderBottomColor: 'rgb(204, 204, 204)',

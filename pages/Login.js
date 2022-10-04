@@ -22,6 +22,7 @@ const Login = () => {
 
     return (
         <SafeAreaView style={LoginStyle.container}>
+
             <Image source={require("../assets/logo.png")} style={LoginStyle.img} />
 
             <View style={LoginStyle.box}>

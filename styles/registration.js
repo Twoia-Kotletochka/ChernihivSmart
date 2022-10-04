@@ -11,7 +11,7 @@ export const RegistrationStyle = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
         width: '90%',
-        height: 380,
+        height: 340,
         borderRadius: 10,
         elevation: 9,
     },
@@ -20,14 +20,14 @@ export const RegistrationStyle = StyleSheet.create({
         width: '90%',
     },
     input: {
-        height: 45,
+        height: 50,
         borderWidth: 1,
-        marginBottom: 10,
-        width: '62%',
+        marginBottom: 5,
+        width: '80%',
         borderColor: 'white',
         backgroundColor: 'white',
         borderBottomColor: 'rgb(204, 204, 204)',
-        fontSize: 25,
+        fontSize: 17,
         textAlign: 'center'
     },
     img: {
@@ -38,8 +38,9 @@ export const RegistrationStyle = StyleSheet.create({
     },
     button: {
         marginTop: 10,
+        marginBottom: 10,
         height: 40,
-        width: '70%',
+        width: '50%',
         color: 'red',
         backgroundColor: '#4BB5F5',
         alignItems: 'center',

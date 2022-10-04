@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { KeyboardAvoidingView, Text, View, StatusBar, TextInput, TouchableOpacity } from 'react-native'
+import { SafeAreaView, Text, View, StatusBar, TextInput, TouchableOpacity } from 'react-native'
 import { RegistrationStyle } from '../styles/registration';
 import { useNavigation } from '@react-navigation/core'
 import { firebase } from '../config'
@@ -44,55 +44,69 @@ const Registration = () => {
     }
 
     return (
-        <KeyboardAvoidingView style={RegistrationStyle.container}>
+        <SafeAreaView style={RegistrationStyle.container}>
             <View style={RegistrationStyle.box}>
                 <View style={RegistrationStyle.inputline}>
                     <TextInput
                         style={RegistrationStyle.input}
+                        placeholder="Ім'я"
                         onChangeText={(name) => setName(name)}
                         autoCorrect={false}
                     />
-                    <Text style={{ color: '#343436', fontSize: 13 }}>Ім'я</Text>
                 </View>
                 <View style={RegistrationStyle.inputline}>
                     <TextInput
                         style={RegistrationStyle.input}
+                        placeholder="Номер телефону"
                         onChangeText={(tel) => setTel(tel)}
                         keyboardType='phone-pad'
                         autoCorrect={false}
                     />
-                    <Text style={{ color: '#343436', fontSize: 13 }}>Номер телефону</Text>
                 </View>
                 <View style={RegistrationStyle.inputline}>
                     <TextInput
                         style={RegistrationStyle.input}
+                        placeholder="Поштова скринька"
                         onChangeText={(email) => setEmail(email)}
                         keyboardType='email-address'
                         autoCorrect={false}
                     />
-                    <Text style={{ color: '#343436', fontSize: 13 }}>Поштова скринька</Text>
                 </View>
                 <View style={RegistrationStyle.inputline}>
                     <TextInput
+                        placeholder="Пароль"
                         style={RegistrationStyle.input}
                         onChangeText={(password) => setPassword(password)}
                         autoCorrect={false}
                         secureTextEntry={false}
                     />
-                    <Text style={{ color: '#343436', fontSize: 13 }}>Пароль</Text>
                 </View>
                 <TouchableOpacity
                     style={RegistrationStyle.button}
                     onPress={() => registerUser(email, password, name, tel)}>
                     <Text style={{ color: 'white', fontSize: 22 }}>Реєстрація</Text>
                 </TouchableOpacity>
+
+                <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+                    <Text
+                        style={{ fontSize: 12 }}>
+                        Ви вже маєте аккаунт?
+                    </Text>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Registration')}>
+                        <Text
+                            style={{ fontSize: 17, color: '#4BB5F5' }}>
+                            Увійти
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             <StatusBar
                 animated={true}
                 barStyle={'light-content'}
                 backgroundColor="#4BB5F5"
             />
-        </KeyboardAvoidingView>
+        </SafeAreaView>
     );
 }
 
