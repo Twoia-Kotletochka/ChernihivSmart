@@ -7,7 +7,7 @@ export default function InfoNet() {
     return (
         <View
             style={styles.container}>
-            <Image source={require("../assets/SplashLoadingLogo.png")} style={styles.img} />
+            <Image source={require("../../assets/SplashLoadingLogo.png")} style={styles.img} />
             <Text style={styles.text}>Відсутнє підключення до інтернету</Text>
             <TouchableOpacity
                 onPress={() => navigation.navigate('Load')}>

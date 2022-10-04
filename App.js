@@ -1,5 +1,5 @@
 import React from 'react'
-import Stack from './navigation'
+import Stack from './pages/navigation'
 
 export default function App() {
   return (

@@ -1,12 +1,12 @@
 import 'react-native-gesture-handler'
 import React from 'react'
 
-import Load from './pages/Load'
-import Login from './pages/Login'
-import Registration from './pages/Registration'
-import Main from './pages/Main'
-import Verify_your_email from './pages/Verify_your_email'
-import InfoNet from './pages/InfoNet'
+import Load from './WaitingPages/Load'
+import Login from './Login'
+import Registration from './Registration'
+import Main from './Main'
+import Verify_your_email from './WaitingPages/Verify_your_email'
+import InfoNet from './WaitingPages/InfoNet'
 
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'

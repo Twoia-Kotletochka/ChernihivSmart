@@ -7,7 +7,7 @@ export default class Loading extends React.Component {
         return (
             <View
                 style={styles.container}>
-                <Image source={require("../assets/SplashLoadingLogo.png")} style={styles.img} />
+                <Image source={require("../../assets/SplashLoadingLogo.png")} style={styles.img} />
                 <ActivityIndicator color='white' size='large' animating={true} />
                 <StatusBar
                     animated={true}
