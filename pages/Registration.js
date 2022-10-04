@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { KeyboardAvoidingView, Text, View, StatusBar, TextInput, Image, TouchableOpacity } from 'react-native'
+import { KeyboardAvoidingView, Text, View, StatusBar, TextInput, TouchableOpacity } from 'react-native'
 import { RegistrationStyle } from '../styles/registration';
+import { useNavigation } from '@react-navigation/core'
 import { firebase } from '../config'
 
 const Registration = () => {
@@ -8,6 +9,8 @@ const Registration = () => {
     const [password, setPassword] = useState('')
     const [name, setName] = useState('')
     const [tel, setTel] = useState('')
+
+    const navigation = useNavigation()
 
     const registerUser = async (email, password, name, tel) => {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -29,6 +32,7 @@ const Registration = () => {
                                 tel,
                                 email
                             })
+                        navigation.replace('Verify_your_email')
                     })
                     .catch((error) => {
                         alert(error.message)

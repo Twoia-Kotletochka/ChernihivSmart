@@ -13,6 +13,7 @@ const Login = () => {
     const loginUser = async (email, password) => {
         try {
             await firebase.auth().signInWithEmailAndPassword(email, password)
+            navigation.replace('Verify_your_email')
         } catch (error) {
             alert(error.message)
         }

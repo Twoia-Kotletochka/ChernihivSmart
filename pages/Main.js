@@ -57,6 +57,11 @@ export default function Main() {
 
     const navigation = useNavigation()
 
+    const signout = () => {
+        firebase.auth().signOut()
+        navigation.replace('Load')
+    }
+
     return (
         <LinearGradient
             colors={['#17153C', '#D5BCA8']}
@@ -91,7 +96,7 @@ export default function Main() {
                 style={styles.header}
             >
                 <TouchableOpacity
-                    onPress={() => { firebase.auth().signOut() }}>
+                    onPress={signout}>
                     <Animated.View style={[styles.profile, { opacity: animateopacityprofil }]}>
                         <Icon_profile style={{ width: '60%', height: '60%' }} />
                     </Animated.View>

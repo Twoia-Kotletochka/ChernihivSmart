@@ -1,11 +1,11 @@
 import React from 'react'
-import { SafeAreaView, ActivityIndicator, StyleSheet, Image, StatusBar } from 'react-native'
+import { View, ActivityIndicator, StyleSheet, Image, StatusBar } from 'react-native'
 
 export default class Loading extends React.Component {
 
     render() {
         return (
-            <SafeAreaView
+            <View
                 style={styles.container}>
                 <Image source={require("../assets/SplashLoadingLogo.png")} style={styles.img} />
                 <ActivityIndicator color='white' size='large' animating={true} />
@@ -14,7 +14,7 @@ export default class Loading extends React.Component {
                     barStyle={'light-content'}
                     backgroundColor="#4BB5F5"
                 />
-            </SafeAreaView>
+            </View>
         )
     }
 }
