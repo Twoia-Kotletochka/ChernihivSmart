@@ -25,36 +25,42 @@ const Login = () => {
             <Image source={require("../assets/logo.png")} style={LoginStyle.img} />
 
             <View style={LoginStyle.box}>
-                <View>
-                    <TextInput
-                        style={LoginStyle.input}
-                        onChangeText={(email) => setEmail(email)}
-                        keyboardType='email-address'
-                        autoCorrect={false}
-                        autoCapitalize='none'
-                    />
 
-                    <Text style={{ color: '#343436', fontSize: 12 }}>Введіть електронний адрес</Text>
-                </View>
+                <TextInput
+                    style={LoginStyle.input}
+                    placeholder='Введіть електронний адрес'
+                    onChangeText={(email) => setEmail(email)}
+                    keyboardType='email-address'
+                    autoCorrect={false}
+                    autoCapitalize='none'
+                />
 
-                <View style={[LoginStyle.phonebox, {}]}>
-                    <TextInput
-                        style={[LoginStyle.input, { width: 100, }]}
-                        onChangeText={(password) => setPassword(password)}
-                        autoCorrect={false}
-                        autoCapitalize='none'
-                        secureTextEntr={false}
-                    />
-                    <Text style={{ color: '#343436', fontSize: 12 }}>Введіть пароль</Text>
+                <TextInput
+                    style={[LoginStyle.input]}
+                    placeholder='Введіть пароль'
+                    onChangeText={(password) => setPassword(password)}
+                    autoCorrect={false}
+                    autoCapitalize='none'
+                    secureTextEntr={false}
+                />
 
-                    <TouchableOpacity
-                        style={LoginStyle.button}
-                        onPress={() => loginUser(email, password)}>
-                        <Text style={{ color: 'white', fontSize: 22 }}>Увійти</Text>
-                    </TouchableOpacity>
+                <TouchableOpacity
+                    style={LoginStyle.button}
+                    onPress={() => loginUser(email, password)}>
+                    <Text style={{ color: 'white', fontSize: 22 }}>Увійти</Text>
+                </TouchableOpacity>
+
+                <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+                    <Text
+                        style={{ fontSize: 12 }}>
+                        Ви новий користувач?
+                    </Text>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('Registration')}>
-                        <Text style={{ color: '#343436', fontSize: 10 }}>Реєстрація</Text>
+                        <Text
+                            style={{ fontSize: 17, color: '#4BB5F5' }}>
+                            Зареєструватися
+                        </Text>
                     </TouchableOpacity>
                 </View>
             </View>
