@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-export const SignInStyle = StyleSheet.create({
+export const RegistrationStyle = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
@@ -11,23 +11,23 @@ export const SignInStyle = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
         width: '90%',
-        height: 150,
+        height: 340,
         borderRadius: 10,
         elevation: 9,
     },
-    phonebox: {
+    inputline: {
         alignItems: 'center',
         width: '90%',
     },
     input: {
         height: 50,
         borderWidth: 1,
-        marginBottom: 10,
-        width: '62%',
+        marginBottom: 5,
+        width: '80%',
         borderColor: 'white',
         backgroundColor: 'white',
         borderBottomColor: 'rgb(204, 204, 204)',
-        fontSize: 25,
+        fontSize: 17,
         textAlign: 'center'
     },
     img: {
@@ -38,30 +38,13 @@ export const SignInStyle = StyleSheet.create({
     },
     button: {
         marginTop: 10,
+        marginBottom: 10,
         height: 40,
-        width: '70%',
+        width: '50%',
         color: 'red',
         backgroundColor: '#4BB5F5',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 7
     },
-    loadwindowscreen: {
-        width: '95%',
-        height: '97%',
-        position: 'absolute',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(237, 231, 225, 0.4)',
-        borderRadius: 10
-    },
-    loadwindowmodal: {
-        backgroundColor: 'rgba(108, 122, 137, 0.7)',
-        width: 70,
-        height: 70,
-        justifyContent: 'center',
-        alignContent: 'center',
-        borderRadius: 10
-    }
 })

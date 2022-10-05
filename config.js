@@ -1,20 +1,18 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
-//import { initializeApp, getApps, getApp } from "firebase/app";
-
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
 export const firebaseConfig = {
-    apiKey: "AIzaSyDp8ymiN4rJdUlQVW0qQ5WwwFrTqsZB9Ns",
-    authDomain: "chernihivsmart.firebaseapp.com",
-    projectId: "chernihivsmart",
-    storageBucket: "chernihivsmart.appspot.com",
-    messagingSenderId: "164102240264",
-    appId: "1:164102240264:web:68f87e84708a9745b839bd",
-    measurementId: "G-33E33GN4F6"
+    apiKey: "AIzaSyCt57E8FwSRjKmXDFX88Vbw1XQO8S1Ks2k",
+    authDomain: "chesmart-4e30c.firebaseapp.com",
+    projectId: "chesmart-4e30c",
+    storageBucket: "chesmart-4e30c.appspot.com",
+    messagingSenderId: "1023454700500",
+    appId: "1:1023454700500:web:b2c66aebbf7f7ba01a2c41",
+    measurementId: "G-4QZH6ZH18E"
 };
-
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
-//getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+
+export { firebase };

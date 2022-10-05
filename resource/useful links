@@ -4,7 +4,7 @@ https://github.com/mdmoin7/react-native-hide-show-password - глазик пар
 
 eas build -p android --profile preview
 
-cd C:\Users\user\AppData\Local\Android\Sdk\emulator>
+cd C:\Users\user\AppData\Local\Android\Sdk\emulator
 .\emulator.exe -list-avds
 .\emulator.exe -avd "Pixel_3_XL_API_31"
 
