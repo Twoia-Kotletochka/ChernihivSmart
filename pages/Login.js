@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, View, StatusBar, TextInput, Image, TouchableOpacity, SafeAreaView, ActivityIndicator } from 'react-native';
+import { Text, View, StatusBar, TextInput, Image, TouchableOpacity, SafeAreaView, ActivityIndicator, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/core'
 import { LoginStyle } from '../styles/login';
 import { firebase } from '../config'
@@ -15,10 +15,23 @@ const Login = () => {
             await firebase.auth().signInWithEmailAndPassword(email, password)
             navigation.replace('Verify_your_email')
         } catch (error) {
-            alert(error.message)
+            if (error.message === 'Firebase: Error (auth/invalid-email).') {
+                Alert.alert("Помилка", "Помилка в написанні електронної адреси.")
+            }
+            else if (error.message === 'Firebase: Error (auth/wrong-password).') {
+                Alert.alert("Помилка", "Не правильний пароль")
+            }
+            else if (error.message === 'Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).') {
+                Alert.alert("Помилка", "Загато невдалих спроб входу. Ви можете негайно відновити його,скинувши пароль, або спробувати ще раз пізніше.")
+            }
+            else if (error.message === 'Firebase: Error (auth/user-not-found).') {
+                Alert.alert("Помилка", "Такого користувача не існує")
+            }
+            else { Alert.alert(error.message) }
+
+            //console.log(error.message)
         }
     }
-
 
     return (
         <SafeAreaView style={LoginStyle.container}>
@@ -34,12 +47,14 @@ const Login = () => {
                     keyboardType='email-address'
                     autoCorrect={false}
                     autoCapitalize='none'
+                    maxLength={55}
                 />
 
                 <TextInput
                     style={[LoginStyle.input]}
                     placeholder='Введіть пароль'
                     onChangeText={(password) => setPassword(password)}
+                    keyboardType='visible-password'
                     autoCorrect={false}
                     autoCapitalize='none'
                     secureTextEntr={false}

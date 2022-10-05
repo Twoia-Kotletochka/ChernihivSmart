@@ -1,8 +1,8 @@
 import React from 'react'
-import Login from './pages/Registration'
+import Stack from './pages/navigation'
 
 export default function App() {
   return (
-    <Login />
+    <Stack />
   );
 }

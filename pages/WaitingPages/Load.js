@@ -3,6 +3,9 @@ import { useNavigation } from '@react-navigation/core'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import NetInfo from "@react-native-community/netinfo";
 import SplashLoading from './SplashLoading'
+
+
+
 export default function App() {
     const navigation = useNavigation()
     const auth = getAuth();
@@ -16,9 +19,11 @@ export default function App() {
                     try {
                         if (user) {
                             if (user.emailVerified === true) {
+                                console.log("Юзер тру " + user.emailVerified)
                                 navigation.replace('Main')
                             }
                             else {
+                                console.log("Юзер нноо " + user.emailVerified)
                                 navigation.replace('Verify_your_email')
                             }
                         }

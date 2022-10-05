@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { SafeAreaView, Text, View, StatusBar, TextInput, TouchableOpacity } from 'react-native'
+import { SafeAreaView, Text, View, StatusBar, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { RegistrationStyle } from '../styles/registration';
 import { useNavigation } from '@react-navigation/core'
 import { firebase } from '../config'
@@ -20,9 +20,10 @@ const Registration = () => {
                     url: 'https://chesmart-4e30c.firebaseapp.com',
                 })
                     .then(() => {
-                        alert('Verification email sent')
+                        Alert.alert("Попередження", 'Підтвердіть ваш аккаунт. Лист відправлено на пошту.')
                     }).catch((error) => {
                         alert(error.message)
+                        //console.log("Error Підтвердження аккаунта.")
                     })
                     .then(() => {
                         firebase.firestore().collection('users')
@@ -30,16 +31,22 @@ const Registration = () => {
                             .set({
                                 name,
                                 tel,
-                                email
+                                email,
+                                password
                             })
                         navigation.replace('Verify_your_email')
                     })
                     .catch((error) => {
                         alert(error.message)
+                        //console.log("Error collection('users')")
                     })
             })
             .catch((error => {
-                alert(error.message)
+                if (error.message === 'Firebase: Password should be at least 6 characters (auth/weak-password).') {
+                    Alert.alert("Помилка", "Довжина пароля має бути мінімум 6 символів.")
+                }
+                else { alert(error.message) }
+                //console.log(error.message)
             }))
     }
 
@@ -52,6 +59,7 @@ const Registration = () => {
                         placeholder="Ім'я"
                         onChangeText={(name) => setName(name)}
                         autoCorrect={false}
+                        maxLength={10}
                     />
                 </View>
                 <View style={RegistrationStyle.inputline}>
@@ -61,6 +69,7 @@ const Registration = () => {
                         onChangeText={(tel) => setTel(tel)}
                         keyboardType='phone-pad'
                         autoCorrect={false}
+                        maxLength={13}
                     />
                 </View>
                 <View style={RegistrationStyle.inputline}>
@@ -70,6 +79,7 @@ const Registration = () => {
                         onChangeText={(email) => setEmail(email)}
                         keyboardType='email-address'
                         autoCorrect={false}
+                        maxLength={55}
                     />
                 </View>
                 <View style={RegistrationStyle.inputline}>
@@ -93,7 +103,7 @@ const Registration = () => {
                         Ви вже маєте аккаунт?
                     </Text>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Registration')}>
+                        onPress={() => navigation.navigate('Login')}>
                         <Text
                             style={{ fontSize: 17, color: '#4BB5F5' }}>
                             Увійти
