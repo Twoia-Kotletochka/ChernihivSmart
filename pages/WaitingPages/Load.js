@@ -4,8 +4,6 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import NetInfo from "@react-native-community/netinfo";
 import SplashLoading from './SplashLoading'
 
-
-
 export default function App() {
     const navigation = useNavigation()
     const auth = getAuth();
@@ -31,7 +29,12 @@ export default function App() {
                             navigation.replace('Login')
                         }
                     } catch (error) {
-                        alert(error.message)
+                        if (error.message === 'Firebase error : Error (auth/network-request-failed).') {
+                            Alert.alert("Помилка", "Проблеми з підключенням до мережі")
+                        }
+                        else {
+                            alert(error.message)
+                        }
                     }
                 }
                 else {
