@@ -45,6 +45,9 @@ const Registration = () => {
                 if (error.message === 'Firebase: Password should be at least 6 characters (auth/weak-password).') {
                     Alert.alert("Помилка", "Довжина пароля має бути мінімум 6 символів.")
                 }
+                else if (error.message === 'Firebase error : Error (auth/network-request-failed).') {
+                    Alert.alert("Помилка", "Проблеми з підключенням до мережі")
+                }
                 else { alert(error.message) }
                 //console.log(error.message)
             }))

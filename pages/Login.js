@@ -27,9 +27,12 @@ const Login = () => {
             else if (error.message === 'Firebase: Error (auth/user-not-found).') {
                 Alert.alert("Помилка", "Такого користувача не існує")
             }
+            else if (error.message === 'Firebase error : Error (auth/network-request-failed).') {
+                Alert.alert("Помилка", "Проблеми з підключенням до мережі")
+            }
             else { Alert.alert(error.message) }
 
-            //console.log(error.message)
+            console.log(error.message)
         }
     }
 

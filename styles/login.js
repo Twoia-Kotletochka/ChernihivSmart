@@ -13,7 +13,7 @@ export const LoginStyle = StyleSheet.create({
         width: '90%',
         height: 230,
         borderRadius: 10,
-        elevation: 9,
+        elevation: 9
     },
     phonebox: {
         alignItems: 'center',
