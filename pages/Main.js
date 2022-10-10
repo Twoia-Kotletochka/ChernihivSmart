@@ -62,6 +62,11 @@ export default function Main() {
         navigation.replace('Load')
     }
 
+    const go_weather = () => {
+        firebase.auth().signOut()
+        navigation.replace('Weather')
+    }
+
     return (
         <LinearGradient
             colors={['#17153C', '#D5BCA8']}
@@ -101,16 +106,20 @@ export default function Main() {
                         <Icon_profile style={{ width: '60%', height: '60%' }} />
                     </Animated.View>
                 </TouchableOpacity>
-                <Animated.View
-                    style={[{ opacity: animateopacityweather },
-                    { flexDirection: 'row', alignItems: "center" }]}>
 
-                    <Text style={styles.degrees_text}>15°</Text>
+                <TouchableOpacity
+                    onPress={go_weather}>
+                    <Animated.View
+                        style={[{ opacity: animateopacityweather },
+                        { flexDirection: 'row', alignItems: "center" }]}>
 
-                    <View style={[styles.weather]}>
-                        <Icon_weather style={{ width: '60%', height: '60%' }} />
-                    </View>
-                </Animated.View>
+                        <Text style={styles.degrees_text}>15°</Text>
+
+                        <View style={[styles.weather]}>
+                            <Icon_weather style={{ width: '60%', height: '60%' }} />
+                        </View>
+                    </Animated.View>
+                </TouchableOpacity>
             </View>
 
             <StatusBar
