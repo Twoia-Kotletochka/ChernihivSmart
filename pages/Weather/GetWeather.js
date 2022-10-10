@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, ActivityIndicator, Alert } from "react-native";
 import axios from 'axios'
 import Weather from './Weather';
+import Loading from "../WaitingPages/SplashLoading";
 
 const WEATHER_API_KEY = "384c2107b3553c438c95a12941f30d51";
 const BASE_WEATHER_URL = `https://api.openweathermap.org/data/2.5/weather?`;
@@ -31,7 +32,7 @@ export default class extends React.Component {
     render() {
         const { isLoading, temp, condition } = this.state;
         return (
-            <Weather temp={Math.round(temp)} condition={condition} />
+            isLoading ? <Loading /> : <Weather temp={Math.round(temp)} condition={condition} />
         );
     }
 }
