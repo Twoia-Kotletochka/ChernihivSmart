@@ -105,9 +105,14 @@ const News = () => {
     const [data, setData] = useState(null);
 
     useEffect(() => {
-        database.ref('news/').once('value').then((snapshot) => {
+        const ref = database.ref('news/');
+        const listener = ref.on('value', (snapshot) => {
             setData(snapshot.val());
         });
+
+        return () => {
+            ref.off('value', listener);
+        };
     }, []);
 
     if (!data) {
