@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Text, View, StatusBar, ScrollView, Animated, StyleSheet } from 'react-native'
+import { Text, View, StatusBar, ScrollView, Animated, StyleSheet, TouchableOpacity } from 'react-native'
 import { Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient'
 import { styles } from '../../styles/main'
 import { weather } from '../../styles/weather'
+import { useNavigation } from '@react-navigation/core'
 import News from '../../components/News'
 
 let AnimatedOp = new Animated.Value(0);
@@ -33,13 +34,10 @@ const animatedNewsHeight = AnimatedOp.interpolate({
     extrapolate: 'clamp'
 });
 
-
-
 Weather.propTypes = {
     temp: PropTypes.number.isRequired,
     condition: PropTypes.oneOf(["Thunderstorm", "Drizzle", "Rain", "Snow", "Clear", "Clouds"]).isRequired,
 }
-
 
 const weatherOptions = {
     Thunderstorm: {
@@ -62,8 +60,12 @@ const weatherOptions = {
     },
 }
 
-
 export default function Weather({ temp, condition }) {
+    const navigation = useNavigation()
+
+    const go_main = () => {
+        navigation.navigate('Main')
+    }
 
     return (
         <LinearGradient
@@ -100,21 +102,18 @@ export default function Weather({ temp, condition }) {
                 <Text style={{ color: '#EEEEEE', alignSelf: 'center', marginTop: 5, fontSize: 22 }}>Чернігів</Text>
             </Animated.View>
 
-
-            <View
-                style={weather.header}
-            >
-
+            <View style={weather.header}>
                 <Animated.View
                     style={[{ opacity: animateopacityweather }, {}]}>
-
-                    <View style={[weather.weather]}>
-                        <Entypo name="cross" size={27} color="white" />
-
-                    </View>
+                    <TouchableOpacity
+                    // пофикситы
+                        onPress={go_main}> 
+                        <View style={[weather.weather]}>
+                            <Entypo name="cross" size={27} color="white" />
+                        </View>
+                    </TouchableOpacity>
                 </Animated.View>
             </View>
-
             <StatusBar
                 animated={true}
                 barStyle={'light-content'}

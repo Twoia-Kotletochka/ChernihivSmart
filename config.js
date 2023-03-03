@@ -5,6 +5,7 @@ import "firebase/compat/firestore";
 export const firebaseConfig = {
     apiKey: "AIzaSyCt57E8FwSRjKmXDFX88Vbw1XQO8S1Ks2k",
     authDomain: "chesmart-4e30c.firebaseapp.com",
+    databaseURL: "https://chesmart-4e30c-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "chesmart-4e30c",
     storageBucket: "chesmart-4e30c.appspot.com",
     messagingSenderId: "1023454700500",

@@ -11,7 +11,6 @@ import Icon_profile from '../assets/icon_profile.svg'
 //weather
 import Icon_weather from '../assets/icon_weather/cloud.svg'
 
-
 let AnimatedOp = new Animated.Value(0);
 
 const animateopacityprofil = AnimatedOp.interpolate({
@@ -39,7 +38,6 @@ const animatedNewsHeight = AnimatedOp.interpolate({
 });
 
 export default function Main() {
-
     const [name, setName] = useState('')
 
     useEffect(() => {
@@ -64,10 +62,12 @@ export default function Main() {
 
     const go_weather = () => {
         firebase.auth().signOut()
-        navigation.replace('Weather')
+        navigation.navigate('Weather')
     }
 
+
     return (
+
         <LinearGradient
             colors={['#17153C', '#D5BCA8']}
             style={styles.container}
@@ -92,7 +92,9 @@ export default function Main() {
                         <Text>
                             Hello, {name.name}
                         </Text>
+
                         <News />
+
                     </Animated.View>
                 </View>
             </ScrollView>
