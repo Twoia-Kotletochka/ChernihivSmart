@@ -10,92 +10,12 @@ const DATA = [
     {
         id: '1',
         icon: 'light',
-        title1: 'Нема гарячої води',
-        title2: 'Не панікуйте',
-        title3: 'Дякуємо за очікування',
+        title: 'Нема гарячої води',
+        subtext: 'Не панікуйте',
+        subtext_mini: 'Дякуємо за очікування',
         discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: 'годину тому'
-    },
-    {
-        id: '2',
-        icon: 'light',
-        title1: 'Нема гарячої води',
-        title2: 'Не панікуйте',
-        title3: 'Дякуємо за очікування',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: 'годину тому'
-    },
-    {
-        id: '3',
-        icon: 'light',
-        title1: 'Нема гарячої води',
-        title2: 'Не панікуйте',
-        title3: 'Дякуємо за очікування',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: 'годину тому'
-    },
-    {
-        id: '4',
-        icon: 'light',
-        title1: 'Нема гарячої води',
-        title2: 'Не панікуйте',
-        title3: 'Дякуємо за очікування',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: 'годину тому'
-    },
-    {
-        id: '5',
-        icon: 'light',
-        title1: 'Нема гарячої води',
-        title2: 'Не панікуйте',
-        title3: 'Дякуємо за очікування',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: 'годину тому'
-    },
-    {
-        id: '6',
-        icon: 'light',
-        title1: 'Нема гарячої води',
-        title2: 'Не панікуйте',
-        title3: 'Дякуємо за очікування',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: 'годину тому'
-    },
-    {
-        id: '7',
-        icon: 'light',
-        title1: 'Нема гарячої води',
-        title2: 'Не панікуйте',
-        title3: 'Дякуємо за очікування',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: 'годину тому'
-    },
-    {
-        id: '8',
-        icon: 'light',
-        title1: 'Нема гарячої води',
-        title2: 'Не панікуйте',
-        title3: 'Дякуємо за очікування',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: 'годину тому'
-    },
-    {
-        id: '9',
-        icon: 'light',
-        title1: 'Нема гарячої води',
-        title2: 'Не панікуйте',
-        title3: 'Дякуємо за очікування',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: 'годину тому'
-    },
-    {
-        id: '10',
-        icon: 'light',
-        title1: 'Нема світла',
-        title2: 'Панікуйте',
-        title3: 'Дякуємо за очікування',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: 'годину тому'
+        date: 'годину тому',
+        datefull:'23.01.2023 12:51'
     },
 ];
 
@@ -123,9 +43,27 @@ const News = () => {
     Object.keys(data).forEach((key) => {
         const value = data[key];
         databaseContent.push(
-            <Text key={key}>
-                id: {value.id}, name: {value.name}
+            <View style={styles.container}>
+                <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                    <View style={styles.icon_board}>
+                        <Icon_water style={{ width: '80%', height: '80%' }} />
+                    </View>
+                    <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2 }}>
+                        {value.name}
+                    </Text>
+                </View>
+                {/* <View style={{ flexDirection: 'column', paddingTop: 5 }}>
+            <Text style={styles.title1}>
+                {item.title1}
             </Text>
+            <Text style={styles.title2}>
+                {item.title2}
+            </Text>
+            <Text style={styles.title3}>
+                {item.title3}
+            </Text>
+        </View> */}
+            </View>
         );
     });
 
@@ -133,30 +71,6 @@ const News = () => {
         <View>{databaseContent}</View>
     );
 }
-
-// return (Object.keys(items).map((key) => (
-//     <View style={styles.container} key={key}>
-//         <View style={{ marginLeft: 5, paddingTop: 15 }}>
-//             <View style={styles.icon_board}>
-//                 <Icon_water style={{ width: '80%', height: '80%' }} />
-//             </View>
-//             <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2 }}>
-//                 {items[key].name}
-//             </Text>
-//         </View>
-//         {/* <View style={{ flexDirection: 'column', paddingTop: 5 }}>
-//             <Text style={styles.title1}>
-//                 {item.title1}
-//             </Text>
-//             <Text style={styles.title2}>
-//                 {item.title2}
-//             </Text>
-//             <Text style={styles.title3}>
-//                 {item.title3}
-//             </Text>
-//         </View> */}
-//     </View>
-// )));
 
 export const styles = StyleSheet.create({
     container: {
