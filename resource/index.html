@@ -24,6 +24,21 @@
     .dat {
       width: 40px;
     }
+
+    #newsList {
+      padding-left: 3px;
+      padding-top: 0px;
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    #newsList div {
+      border-bottom: 1px solid black;
+      border-top: 1px solid black;
+      border-left: 1px solid black;
+      padding-left: 5px;
+      width: 300px;
+    }
   </style>
   <h2>Add news</h1>
     <!--<input type="text" id="messageid">-->
@@ -145,7 +160,7 @@
           ref.child(lastid).set(userData);
         }
 
-       
+
         // var dbRef = firebase.database().ref("news/");
         // dbRef.orderByChild("timestamp").limitToLast(10).on("value", function (data) {
         //   newsList.innerHTML = '';
@@ -172,7 +187,7 @@
         // });
 
         var newsList = document.getElementById("newsList");
-        database.ref('news/').on('value', function (snapshot) {
+        database.ref('news/').orderByKey().on('value', function (snapshot) {
           newsList.innerHTML = '';
           snapshot.forEach(function (childSnapshot) {
             var news = childSnapshot.val();
