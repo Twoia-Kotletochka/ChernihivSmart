@@ -8,7 +8,7 @@
 <body>
   <style>
     body {
-      background-color: dimgrey;
+      background-color: rgb(221, 203, 203);
     }
 
     .container {
@@ -77,14 +77,14 @@
       <div class="column" style="width: 30%;">
         <label for="discription">Детальний опис</label><br>
         <textarea id="discription" cols="40" rows="3" style="resize: both; overflow: auto;"></textarea>
-        <label for="data">дата.година:хвидина</label><br>
+        <!-- <label for="data">дата.година:хвидина</label><br>
         <div class="data">
           <input type="number" name="day" id="day" class="dat">.
           <input type="number" name="hours" id="hours" class="dat">:
           <input type="number" name="minutes" id="minutes" class="dat">
         </div>
         <label for="datafull">Повна дата й час(строкове поле)</label><br>
-        <input type="text" name="datafull" id="datefull">
+        <input type="text" name="datafull" id="datefull"> -->
       </div>
     </div>
 
@@ -127,11 +127,11 @@
           var subtext_mini = document.getElementById("subtext_mini").value;
 
           var discription = document.getElementById("discription").value;
-          var day = document.getElementById("day").value;
-          var hours = document.getElementById("hours").value;
-          var minutes = document.getElementById("minutes").value;
+          //var day = document.getElementById("day").value;
+          //var hours = document.getElementById("hours").value;
+          //var minutes = document.getElementById("minutes").value;
 
-          var datefull = document.getElementById("datefull").value;
+          //var datefull = document.getElementById("datefull").value;
           var ref = firebase.database().ref("news");
           let num = 0
           // database.ref('news/').limitToLast(1).once('value')
@@ -221,7 +221,7 @@
             div.innerHTML += "<br/>"
             div.appendChild(document.createTextNode(news.discription));
             div.innerHTML += "<br/>"
-            div.appendChild(document.createTextNode("День: " + news.day + ". " + news.hours + ":" + news.minutes + "(" + news.datefull + ")"));
+            div.appendChild(document.createTextNode(news.datefull));
             var p = document.createElement("p");
 
             newsList.appendChild(div);
