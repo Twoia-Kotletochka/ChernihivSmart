@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native';
-import Icon_water from '../assets/icon_news_svg/water.svg'
 import Icon_arrow from '../assets/icon_news_svg/arrow.svg'
+
+import Icon_water from '../assets/icon_news_svg/water.svg'
+import Icon_gas from '../assets/icon_news_svg/gas.svg'
+import Icon_light from '../assets/icon_news_svg/light.svg'
+//hot water
 
 import { firebase } from '../config'
 import { Component } from 'react/cjs/react.development';
@@ -15,13 +19,27 @@ const DATA = [
         subtext_mini: 'Дякуємо за очікування',
         discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         date: 'годину тому',
-        datefull:'23.01.2023 12:51'
+        datefull: '23.01.2023 12:51'
     },
 ];
 
 const database = firebase.database();
 
+
+
 const News = () => {
+    //в майбутньому додати в плашку новини годну тому або 5 хв тому й так далі
+    //ця функція вказує поточний час на тлф
+    // const [time, setTime] = useState(new Date());
+
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         setTime(new Date());
+    //     }, 1000);
+    //     return () => clearInterval(interval);
+    // }, []);
+
+
     const [data, setData] = useState(null);
 
     useEffect(() => {
@@ -39,30 +57,45 @@ const News = () => {
         return <View><Text>Loading...</Text></View>;
     }
 
+    const iconfunc = (icon) => {
+        if (icon === "light") {
+            return <Icon_light style={{ width: '80%', height: '80%' }} />
+        }
+        else if (icon === "gas") {
+            return <Icon_gas style={{ width: '80%', height: '80%' }} />
+        }
+        else if (icon === "water") {
+            return <Icon_water style={{ width: '80%', height: '80%' }} />
+        }
+        else if (icon === "hot_water") {
+            //return <Icon_water style={{ width: '80%', height: '80%' }} />
+        }
+    }
+
     const databaseContent = [];
-    Object.keys(data).forEach((key) => {
+    Object.keys(data).reverse().forEach((key) => {
         const value = data[key];
         databaseContent.push(
             <View style={styles.container}>
                 <View style={{ marginLeft: 5, paddingTop: 15 }}>
                     <View style={styles.icon_board}>
-                        <Icon_water style={{ width: '80%', height: '80%' }} />
+                        {iconfunc(value.icon)}
                     </View>
                     <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2 }}>
-                        {value.name}
+                        {value.datefull}
                     </Text>
                 </View>
-                {/* <View style={{ flexDirection: 'column', paddingTop: 5 }}>
-            <Text style={styles.title1}>
-                {item.title1}
-            </Text>
-            <Text style={styles.title2}>
-                {item.title2}
-            </Text>
-            <Text style={styles.title3}>
-                {item.title3}
-            </Text>
-        </View> */}
+                <View style={{ flexDirection: 'column', paddingTop: 5 }}>
+                    <Text style={styles.title1}>
+                        {value.title}
+                    </Text>
+                    <Text style={styles.title2}>
+                        {value.subtext}
+                    </Text>
+                    <Text style={styles.title3}>
+                        {value.subtext_mini}
+                    </Text>
+                </View>
             </View>
         );
     });
