@@ -8,24 +8,8 @@ import Icon_light from '../assets/icon_news_svg/light.svg'
 //hot water
 
 import { firebase } from '../config'
-import { Component } from 'react/cjs/react.development';
-
-const DATA = [
-    {
-        id: '1',
-        icon: 'light',
-        title: 'Нема гарячої води',
-        subtext: 'Не панікуйте',
-        subtext_mini: 'Дякуємо за очікування',
-        discription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        date: 'годину тому',
-        datefull: '23.01.2023 12:51'
-    },
-];
 
 const database = firebase.database();
-
-
 
 const News = () => {
     //в майбутньому додати в плашку новини годну тому або 5 хв тому й так далі
