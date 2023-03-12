@@ -5,7 +5,7 @@ import Icon_arrow from '../assets/icon_news_svg/arrow.svg'
 import Icon_water from '../assets/icon_news_svg/water.svg'
 import Icon_gas from '../assets/icon_news_svg/gas.svg'
 import Icon_light from '../assets/icon_news_svg/light.svg'
-//hot water
+import Icon_hot_water from '../assets/icon_news_svg/hot_water'
 
 import { firebase } from '../config'
 
@@ -52,7 +52,7 @@ const News = () => {
             return <Icon_water style={{ width: '80%', height: '80%' }} />
         }
         else if (icon === "hot_water") {
-            //return <Icon_water style={{ width: '80%', height: '80%' }} />
+            return <Icon_hot_water style={{ width: '80%', height: '80%' }} />
         }
     }
 
@@ -60,7 +60,7 @@ const News = () => {
     Object.keys(data).reverse().forEach((key) => {
         const value = data[key];
         databaseContent.push(
-            <View style={styles.container}>
+            <View key={key} style={styles.container}>
                 <View style={{ marginLeft: 5, paddingTop: 15 }}>
                     <View style={styles.icon_board}>
                         {iconfunc(value.icon)}
