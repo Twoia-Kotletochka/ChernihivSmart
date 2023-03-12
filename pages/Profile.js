@@ -12,6 +12,8 @@ import Icon_adres from '../assets/icon_profile/adres.svg'
 import Icon_card from '../assets/icon_profile/card.svg'
 import Icon_notification from '../assets/icon_profile/notification.svg'
 import Icon_lock from '../assets/icon_profile/lock.svg'
+import Icon_question from '../assets/icon_profile/question.svg'
+import Icon_support from '../assets/icon_profile/support.svg'
 
 let AnimatedOp = new Animated.Value(0);
 const animateopacityprofil = AnimatedOp.interpolate({
@@ -44,7 +46,10 @@ const Profile = () => {
     const go_main = () => {
         navigation.navigate('Main')
     }
-
+    const signout = () => {
+        firebase.auth().signOut()
+        navigation.replace('Load')
+    }
     return (
         <LinearGradient
             colors={['#17153C', '#D5BCA8']}
@@ -75,8 +80,8 @@ const Profile = () => {
                 <View style={{ alignItems: 'center' }}>
                     <Animated.View style={[styles.view_news,
                     { width: animatedNewsHeight, }]}>
-                        <Text style={{ fontSize: 24 }}>Налаштування</Text>
-                        <View style={styles.container2}>
+                        <Text style={{ fontSize: 24, marginLeft: 20, }}>Налаштування</Text>
+                        <TouchableOpacity style={styles.container2}>
                             <View style={{ marginLeft: 5, paddingTop: 15 }}>
                                 <View style={styles.icon_board}>
                                     {<Icon_adres style={{ width: '80%', height: '80%' }} />}
@@ -87,9 +92,9 @@ const Profile = () => {
                                 <Text style={styles.title2}>Запишіть свою адресу, щоб ми могли сповіщати</Text>
                                 <Text style={styles.title2}>вас про те, що відбувається у вас вдома</Text>
                             </View>
-                        </View>
+                        </TouchableOpacity>
 
-                        <View style={styles.container2}>
+                        <TouchableOpacity style={styles.container2}>
                             <View style={{ marginLeft: 5, paddingTop: 15 }}>
                                 <View style={styles.icon_board}>
                                     {<Icon_card style={{ width: '75%', height: '75%' }} />}
@@ -100,9 +105,9 @@ const Profile = () => {
                                 <Text style={styles.title2}>Вкажіть свою картку, щоб здійснювати</Text>
                                 <Text style={styles.title2}>миттєву оплату в сервісі</Text>
                             </View>
-                        </View>
+                        </TouchableOpacity>
 
-                        <View style={styles.container2}>
+                        <TouchableOpacity style={styles.container2}>
                             <View style={{ marginLeft: 5, paddingTop: 15 }}>
                                 <View style={styles.icon_board}>
                                     {<Icon_notification style={{ width: '80%', height: '80%' }} />}
@@ -113,9 +118,9 @@ const Profile = () => {
                                 <Text style={styles.title2}>Налаштуйте повідомлення як вам зручно</Text>
                                 <Text style={styles.title2}></Text>
                             </View>
-                        </View>
+                        </TouchableOpacity>
 
-                        <View style={styles.container2}>
+                        <TouchableOpacity style={styles.container2}>
                             <View style={{ marginLeft: 5, paddingTop: 15 }}>
                                 <View style={styles.icon_board}>
                                     {<Icon_lock style={{ width: '70%', height: '70%' }} />}
@@ -126,7 +131,43 @@ const Profile = () => {
                                 <Text style={styles.title2}>Створіть пароль для безпечного</Text>
                                 <Text style={styles.title2}>користування програмою</Text>
                             </View>
-                        </View>
+                        </TouchableOpacity>
+
+                        <Text style={{ fontSize: 24, marginLeft: 20, }}>FAQ</Text>
+
+                        <TouchableOpacity style={styles.container2}>
+                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                                <View style={styles.icon_board}>
+                                    {<Icon_question style={{ width: '70%', height: '70%' }} />}
+                                </View>
+                            </View>
+                            <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
+                                <Text style={styles.title1}>Часті запитання</Text>
+                                <Text style={styles.title2}>Тут відповіді на запитання, які</Text>
+                                <Text style={styles.title2}>найчастіше виникають у користувачів</Text>
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.container2}>
+                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                                <View style={styles.icon_board}>
+                                    {<Icon_support style={{ width: '70%', height: '70%' }} />}
+                                </View>
+                            </View>
+                            <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
+                                <Text style={styles.title1}>Підтримка</Text>
+                                <Text style={styles.title2}>Зв'яжіться з нами, якщо виникла проблема</Text>
+                                <Text style={styles.title2}></Text>
+                            </View>
+                        </TouchableOpacity>
+
+
+                        <TouchableOpacity style={[styles.container2, { justifyContent: 'center', alignContent: 'center', marginTop: 25 }]}
+                            onPress={signout}>
+                            <View style={{ paddingTop: 10, paddingBottom: 10, }}>
+                                <Text style={{ fontSize: 18 }}>Вихід</Text>
+                            </View>
+                        </TouchableOpacity>
                     </Animated.View>
                 </View>
             </ScrollView>

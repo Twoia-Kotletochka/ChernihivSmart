@@ -57,11 +57,6 @@ export default function Main() {
 
     const navigation = useNavigation()
 
-    const signout = () => {
-        firebase.auth().signOut()
-        navigation.replace('Load')
-    }
-
     const go_profile = () => {
         //firebase.auth().signOut()
         navigation.navigate('Profile')

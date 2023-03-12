@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Icon_arrow from '../assets/icon_news_svg/arrow.svg'
 
 import Icon_water from '../assets/icon_news_svg/water.svg'
@@ -60,7 +60,7 @@ const News = () => {
     Object.keys(data).reverse().forEach((key) => {
         const value = data[key];
         databaseContent.push(
-            <View key={key} style={styles.container}>
+            <TouchableOpacity key={key} style={styles.container}>
                 <View style={{ marginLeft: 5, paddingTop: 15 }}>
                     <View style={styles.icon_board}>
                         {iconfunc(value.icon)}
@@ -80,7 +80,7 @@ const News = () => {
                         {value.subtext_mini}
                     </Text>
                 </View>
-            </View>
+            </TouchableOpacity>
         );
     });
 
