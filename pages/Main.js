@@ -39,7 +39,9 @@ const animatedNewsHeight = AnimatedOp.interpolate({
 
 export default function Main() {
     const [name, setName] = useState('')
-
+    // <Text>
+    // Hello, {name.name}
+    // </Text>
     useEffect(() => {
         firebase.firestore().collection('users')
             .doc(firebase.auth().currentUser.uid).get()
@@ -60,6 +62,11 @@ export default function Main() {
         navigation.replace('Load')
     }
 
+    const go_profile = () => {
+        //firebase.auth().signOut()
+        navigation.navigate('Profile')
+    }
+
     const go_weather = () => {
         firebase.auth().signOut()
         navigation.navigate('Weather')
@@ -67,7 +74,6 @@ export default function Main() {
 
 
     return (
-
         <LinearGradient
             colors={['#17153C', '#D5BCA8']}
             style={styles.container}
@@ -89,12 +95,7 @@ export default function Main() {
                 <View style={{ alignItems: 'center' }}>
                     <Animated.View style={[styles.view_news,
                     { width: animatedNewsHeight, }]}>
-                        <Text>
-                            Hello, {name.name}
-                        </Text>
-
                         <News />
-
                     </Animated.View>
                 </View>
             </ScrollView>
@@ -103,7 +104,7 @@ export default function Main() {
                 style={styles.header}
             >
                 <TouchableOpacity
-                    onPress={signout}>
+                    onPress={go_profile}>
                     <Animated.View style={[styles.profile, { opacity: animateopacityprofil }]}>
                         <Icon_profile style={{ width: '60%', height: '60%' }} />
                     </Animated.View>

@@ -8,6 +8,7 @@ import Main from './Main'
 import Verify_your_email from './WaitingPages/Verify_your_email'
 import InfoNet from './WaitingPages/InfoNet'
 import Weather from './Weather/GetWeather'
+import Profile from './Profile'
 
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
@@ -50,6 +51,11 @@ export default function Navigate() {
             <Stack.Screen
                 name='Weather'
                 component={Weather}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='Profile'
+                component={Profile}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>

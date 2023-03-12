@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ActivityIndicator, StyleSheet, Image, StatusBar } from 'react-native'
+import { View, ActivityIndicator, StyleSheet, Image, StatusBar, Text } from 'react-native'
 
 export default class Loading extends React.Component {
 
@@ -8,6 +8,9 @@ export default class Loading extends React.Component {
             <View
                 style={styles.container}>
                 <Image source={require("../../assets/SplashLoadingLogo.png")} style={styles.img} />
+                <View style={styles.view_text}>
+                    <Text style={styles.text}>Почекай ще хвильку</Text>
+                </View>
                 <ActivityIndicator color='white' size='large' animating={true} />
                 <StatusBar
                     animated={true}
@@ -28,6 +31,18 @@ const styles = StyleSheet.create({
     img: {
         width: 100,
         height: 155,
-        marginBottom: 150
+        marginBottom: 100
+    },
+    text: {
+        color: 'white',
+        fontSize: 18
+    },
+    view_text: {
+        marginBottom: 20,
+        padding: 3,
+        borderColor: 'white',
+        borderWidth: 1.5,
+        borderRadius: 10,
+        alignContent: 'center',
     }
 })
