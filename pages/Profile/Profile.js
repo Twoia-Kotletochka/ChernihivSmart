@@ -42,9 +42,6 @@ const animatedNewsHeight = AnimatedOp.interpolate({
 const Profile = () => {
     const [name, setName] = useState('')
     const [tel, setTel] = useState('')
-
-    const [show, setShow] = useState(false)
-
     const navigation = useNavigation()
 
     useEffect(() => {
@@ -63,7 +60,7 @@ const Profile = () => {
 
     const go_main = () => { navigation.navigate('Main') }
     const signout = () => { firebase.auth().signOut(); navigation.replace('Load'); }
-    const go_address = () => { navigation.navigate('AddAddress'); }
+    const go_address = () => { navigation.navigate('Address'); }
 
     return (
         <LinearGradient
