@@ -38,10 +38,6 @@ const animatedNewsHeight = AnimatedOp.interpolate({
 });
 
 export default function Main() {
-    const [name, setName] = useState('')
-    // <Text>
-    // Hello, {name.name}
-    // </Text>
     useEffect(() => {
         firebase.firestore().collection('users')
             .doc(firebase.auth().currentUser.uid).get()

@@ -49,7 +49,7 @@ const Registration = () => {
                     Alert.alert("Помилка", "Проблеми з підключенням до мережі")
                 }
                 else { alert(error.message) }
-                //console.log(error.message)
+                console.log(error.message)
             }))
     }
 

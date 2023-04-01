@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View, StatusBar, TextInput, TouchableOpacity, ScrollView, Animated, SafeAreaView } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
-import { Entypo } from '@expo/vector-icons';
+import { Text, View, StatusBar, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
 import { firebase } from '../../config'
 import { style } from '../../styles/addaddress';
 
 import { Ionicons } from '@expo/vector-icons';
-
 
 const AddAddress = () => {
     const [street, setStreet] = useState('')
@@ -16,26 +13,35 @@ const AddAddress = () => {
 
     const navigation = useNavigation()
 
+    const currentUser = firebase.auth().currentUser;
+    const uid = currentUser.uid;
+    const userDoc = firebase.firestore().collection('users').doc(uid);
     const go_main = () => {
         navigation.navigate('Address')
     }
 
+    const add = () => {
+        userDoc.update({
+            street: street,
+            house: house,
+            rooms: rooms
+        })
+            .then(() => {
+                console.log('Адресу успішно додано!');
+                Alert.alert('Адресу успішно додано!')
+                navigation.navigate('Address')
+            })
+            .catch((error) => {
+                console.error('Error adding address: ', error);
+                Alert.alert('Відбулась помилка!', error)
+            });
 
-    // db.collection('users').doc(uid).collection('data').add({
-    //     name: 'John',
-    //     age: 30,
-    //   })
-    //   .then(() => {
-    //     console.log('Данные успешно добавлены');
-    //   })
-    //   .catch((error) => {
-    //     console.error('Ошибка при добавлении данных: ', error);
-    //   });
+    }
 
     return (
         <SafeAreaView style={style.container}>
-            <Ionicons style={{marginBottom: 20}} name="md-home" size={110} color='#4BB5F5' />
-        
+            <Ionicons style={{ marginBottom: 20 }} name="md-home" size={110} color='#4BB5F5' />
+
             <View style={style.box}>
                 <View style={style.inputline}>
                     <TextInput

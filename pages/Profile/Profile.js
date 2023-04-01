@@ -74,7 +74,7 @@ const Profile = () => {
                 scrollEventThrottle={16}
                 style={styles.scrollview_vertical}
                 showsVerticalScrollIndicator={false}
-                onScroll={Animated.event(''
+                onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { y: AnimatedOp } } }],
                     { useNativeDriver: false }
                 )}
@@ -85,7 +85,7 @@ const Profile = () => {
                             <Icon_profile style={{ width: '60%', height: '60%' }} />
                         </View>
                         <Text style={styles.text_name}>{name.name}</Text>
-                        <Text style={styles.text_tel}>+{name.tel}</Text>
+                        <Text style={styles.text_tel}>{tel.tel}</Text>
                     </View>
                 </Animated.View>
 

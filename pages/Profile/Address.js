@@ -6,15 +6,9 @@ import { useNavigation } from '@react-navigation/core'
 import { firebase } from '../../config'
 import { styles } from '../../styles/address';
 
-import { EvilIcons } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import Icon_profile from '../../assets/icon_profile.svg'
+import Icon_home from '../../assets/icon_cards_svg/icon_home.svg'
+import Icon_add from '../../assets/icon_profile/icon_add.svg'
 import Icon_adres from '../../assets/icon_profile/adres.svg'
-import Icon_card from '../../assets/icon_profile/card.svg'
-import Icon_notification from '../../assets/icon_profile/notification.svg'
-import Icon_lock from '../../assets/icon_profile/lock.svg'
-import Icon_question from '../../assets/icon_profile/question.svg'
-import Icon_support from '../../assets/icon_profile/support.svg'
 
 let AnimatedOp = new Animated.Value(0);
 
@@ -23,6 +17,7 @@ const animateopacityprofil = AnimatedOp.interpolate({
     outputRange: [1, 0],
     extrapolate: 'clamp'
 });
+
 const animateopacityweather = AnimatedOp.interpolate({
     inputRange: [0, 200 - 0], //ругулятор раньше позже 
     outputRange: [1, 0],
@@ -48,8 +43,27 @@ const Address = () => {
 
     const navigation = useNavigation()
 
+    useEffect(() => {
+        firebase.firestore().collection('users')
+            .doc(firebase.auth().currentUser.uid).get()
+            .then((snapshot) => {
+                if (snapshot.exists) {
+                    setStreet(snapshot.data())
+                    setHouse(snapshot.data())
+                    setRooms(snapshot.data())
+                }
+                else {
+                    console.log('User does not exist')
+                }
+            })
+    }, [])
+
     const go_main = () => {
         navigation.navigate('Profile')
+    }
+
+    const go_addaddress = () => {
+        navigation.navigate('AddAddress')
     }
 
     return (
@@ -64,15 +78,18 @@ const Address = () => {
                 scrollEventThrottle={16}
                 style={styles.scrollview_vertical}
                 showsVerticalScrollIndicator={false}
-                onScroll={Animated.event(''
-                [{ nativeEvent: { contentOffset: { y: AnimatedOp } } }],
+                onScroll={Animated.event(
+                    [{ nativeEvent: { contentOffset: { y: AnimatedOp } } }],
                     { useNativeDriver: false }
                 )}
             >
                 <Animated.View style={[styles.profile_containe, { opacity: animateopacityprofile, }]}>
                     <View style={styles.profile_container}>
                         <View style={styles.profile_container_card}>
-
+                            <Icon_home style={styles.icon_cards} />
+                            <Text style={{ fontSize: 20, marginBottom: 5, marginTop: 5 }}>Мої адреси</Text>
+                            <Text>За цими адресами ви будете отримувати</Text>
+                            <Text>сповіщення від комунальних служб</Text>
                         </View>
                     </View>
                 </Animated.View>
@@ -80,7 +97,7 @@ const Address = () => {
                 <View style={{ alignItems: 'center' }}>
                     <Animated.View style={[styles.view_news,
                     { width: animatedNewsHeight, }]}>
-                        <Text style={{ fontSize: 24, marginLeft: 20, }}>Налаштування</Text>
+                        {/* <Text style={{ fontSize: 24, marginLeft: 20, }}>Налаштування</Text> */}
                         <TouchableOpacity style={styles.container2}>
                             <View style={{ marginLeft: 5, paddingTop: 15 }}>
                                 <View style={styles.icon_board}>
@@ -88,83 +105,24 @@ const Address = () => {
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
+                                <Text style={styles.title1}>Вул. - {street.street}</Text>
+                                <View style={{ flexDirection: 'row', justifyContent: 'flex-start', }}>
+                                    <Text style={styles.title2}>Дім - {house.house}</Text>
+                                    <Text style={[styles.title2, { marginLeft: 30 }]}>Кв. - {rooms.rooms}</Text>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.container2} onPress={go_addaddress}>
+                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                                <View style={styles.icon_board}>
+                                    {<Icon_add style={{ width: '80%', height: '80%' }} />}
+                                </View>
+                            </View>
+                            <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
                                 <Text style={styles.title1}>Адреса</Text>
                                 <Text style={styles.title2}>Запишіть свою адресу, щоб ми могли сповіщати</Text>
                                 <Text style={styles.title2}>вас про те, що відбувається у вас вдома</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.container2}>
-                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
-                                <View style={styles.icon_board}>
-                                    {<Icon_card style={{ width: '75%', height: '75%' }} />}
-                                </View>
-                            </View>
-                            <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
-                                <Text style={styles.title1}>Картка</Text>
-                                <Text style={styles.title2}>Вкажіть свою картку, щоб здійснювати</Text>
-                                <Text style={styles.title2}>миттєву оплату в сервісі</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.container2}>
-                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
-                                <View style={styles.icon_board}>
-                                    {<Icon_notification style={{ width: '80%', height: '80%' }} />}
-                                </View>
-                            </View>
-                            <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
-                                <Text style={styles.title1}>Сповіщення</Text>
-                                <Text style={styles.title2}>Налаштуйте повідомлення як вам зручно</Text>
-                                <Text style={styles.title2}></Text>
-                            </View>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.container2}>
-                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
-                                <View style={styles.icon_board}>
-                                    {<Icon_lock style={{ width: '70%', height: '70%' }} />}
-                                </View>
-                            </View>
-                            <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
-                                <Text style={styles.title1}>Безпека</Text>
-                                <Text style={styles.title2}>Створіть пароль для безпечного</Text>
-                                <Text style={styles.title2}>користування програмою</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                        <Text style={{ fontSize: 24, marginLeft: 20, }}>FAQ</Text>
-
-                        <TouchableOpacity style={styles.container2}>
-                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
-                                <View style={styles.icon_board}>
-                                    {<Icon_question style={{ width: '70%', height: '70%' }} />}
-                                </View>
-                            </View>
-                            <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
-                                <Text style={styles.title1}>Часті запитання</Text>
-                                <Text style={styles.title2}>Тут відповіді на запитання, які</Text>
-                                <Text style={styles.title2}>найчастіше виникають у користувачів</Text>
-                            </View>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.container2}>
-                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
-                                <View style={styles.icon_board}>
-                                    {<Icon_support style={{ width: '70%', height: '70%' }} />}
-                                </View>
-                            </View>
-                            <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
-                                <Text style={styles.title1}>Підтримка</Text>
-                                <Text style={styles.title2}>Зв'яжіться з нами, якщо виникла проблема</Text>
-                                <Text style={styles.title2}></Text>
-                            </View>
-                        </TouchableOpacity>
-
-
-                        <TouchableOpacity style={[styles.container2, { justifyContent: 'center', alignContent: 'center', marginTop: 25 }]}
-                        >
-                            <View style={{ paddingTop: 10, paddingBottom: 10, }}>
-                                <Text style={{ fontSize: 18 }}>Вихід</Text>
                             </View>
                         </TouchableOpacity>
                     </Animated.View>

@@ -43,6 +43,7 @@ export const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingBottom: 50,
         width: '95%',
+        height: 650,
         paddingTop: 10
     },
     profile_container: {
@@ -52,10 +53,10 @@ export const styles = StyleSheet.create({
     },
     profile_container_card: {
         marginTop: 70,
-        marginBottom: 10,
+        marginBottom: 20,
         backgroundColor: 'white',
-        width: 280,
-        height: 170,
+        width: 320,
+        height: 200,
         borderRadius: 15,
         alignItems: 'center',
         justifyContent: 'center',
@@ -93,5 +94,9 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginRight: 20,
 
+    },
+    icon_cards: {
+        width: 65,
+        height: 65
     }
 })
