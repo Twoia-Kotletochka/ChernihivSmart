@@ -8,7 +8,9 @@ import Main from './Main'
 import Verify_your_email from './WaitingPages/Verify_your_email'
 import InfoNet from './WaitingPages/InfoNet'
 import Weather from './Weather/GetWeather'
-import Profile from './Profile'
+import Profile from './Profile/Profile'
+import AddAddress from './Profile/AddAddress'
+import Address from './Profile/Address'
 
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
@@ -56,6 +58,16 @@ export default function Navigate() {
             <Stack.Screen
                 name='Profile'
                 component={Profile}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='Address'
+                component={Address}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='AddAddress'
+                component={AddAddress}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>
