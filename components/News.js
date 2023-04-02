@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Icon_arrow from '../assets/icon_news_svg/arrow.svg'
+
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+
 
 import Icon_water from '../assets/icon_news_svg/water.svg'
 import Icon_gas from '../assets/icon_news_svg/gas.svg'
@@ -35,10 +38,14 @@ const News = () => {
         return () => {
             ref.off('value', listener);
         };
-    }, []);
+    }, []); 0
 
     if (!data) {
-        return <View><Text>Loading...</Text></View>;
+        return (
+            <View style={{ height: 600 }}>
+                <ActivityIndicator color='#4BB5F5' size='large' animating={true} style={{ marginTop: 60 }} />
+            </View>
+        )
     }
 
     const iconfunc = (icon) => {
@@ -70,13 +77,13 @@ const News = () => {
                     </Text>
                 </View>
                 <View style={{ flexDirection: 'column', paddingTop: 5 }}>
-                    <Text style={styles.title1}>
+                    <Text style={{ fontSize: RFValue(18) }}>
                         {value.title}
                     </Text>
-                    <Text style={styles.title2}>
+                    <Text style={{ fontSize: RFValue(15) }}>
                         {value.subtext}
                     </Text>
-                    <Text style={styles.title3}>
+                    <Text style={{ fontSize: RFValue(13) }}>
                         {value.subtext_mini}
                     </Text>
                 </View>
@@ -96,15 +103,6 @@ export const styles = StyleSheet.create({
         marginHorizontal: 16,
         borderRadius: 10,
         flexDirection: 'row',
-    },
-    title1: {
-        fontSize: 20,
-    },
-    title2: {
-        fontSize: 15,
-    },
-    title3: {
-        fontSize: 10,
     },
     icon_board: {
         width: 50,

@@ -26,13 +26,11 @@ const animateopacityweather = AnimatedOp.interpolate({
     outputRange: [1, 0],
     extrapolate: 'clamp'
 });
-
 const animateopacityprofile = AnimatedOp.interpolate({
     inputRange: [0, 100 - 0], //ругулятор раньше позже 
     outputRange: [1, 0],
     extrapolate: 'clamp'
 });
-
 const animatedNewsHeight = AnimatedOp.interpolate({
     inputRange: [0, 300 - 0],
     outputRange: ['95%', '100%'],

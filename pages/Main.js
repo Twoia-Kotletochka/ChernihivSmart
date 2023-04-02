@@ -5,6 +5,8 @@ import { styles } from '../styles/main'
 import News from '../components/News'
 import Cards from '../components/Cards'
 import { firebase } from '../config'
+
+
 import { useNavigation } from '@react-navigation/core'
 //header
 import Icon_profile from '../assets/icon_profile.svg'
@@ -38,19 +40,6 @@ const animatedNewsHeight = AnimatedOp.interpolate({
 });
 
 export default function Main() {
-    useEffect(() => {
-        firebase.firestore().collection('users')
-            .doc(firebase.auth().currentUser.uid).get()
-            .then((snapshot) => {
-                if (snapshot.exists) {
-                    setName(snapshot.data())
-                }
-                else {
-                    console.log('User does not exist')
-                }
-            })
-    }, [])
-
     const navigation = useNavigation()
 
     const go_profile = () => {
