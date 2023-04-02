@@ -17,25 +17,31 @@ const AddAddress = () => {
     const uid = currentUser.uid;
     const userDoc = firebase.firestore().collection('users').doc(uid);
     const go_main = () => {
-        navigation.navigate('Address')
+        navigation.navigate('Profile')
     }
 
+
     const add = () => {
-        userDoc.update({
-            street: street,
-            house: house,
-            rooms: rooms
-        })
+        userDocSnapshot = userDoc.get();
+        const addressMap = userDocSnapshot.data().address;
+        const addressCount = addressMap.size;
+
+        const map = "map" + parseInt(addressCount + 1);
+
+        userDoc.set({
+            address: { map : { street: street, house: house, rooms: rooms} }
+        }, { merge: true })
             .then(() => {
                 console.log('Адресу успішно додано!');
                 Alert.alert('Адресу успішно додано!')
-                navigation.navigate('Address')
+
             })
             .catch((error) => {
                 console.error('Error adding address: ', error);
                 Alert.alert('Відбулась помилка!', error)
             });
 
+        navigation.navigate('Profile')
     }
 
     return (

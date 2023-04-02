@@ -38,25 +38,7 @@ const animatedNewsHeight = AnimatedOp.interpolate({
 
 const Address = () => {
     const navigation = useNavigation()
-    const myMap = new Map();
     const [data, setData] = useState(null);
-
-    const currentUser = firebase.auth().currentUser;
-    const uid = currentUser.uid;
-    var docRef = firebase.firestore().collection('users').doc(uid);
-
-    // docRef.get().then(function (doc) {
-    //     if (doc.exists) {
-    //         // Отримання даних з map в середині map
-    //         var street = doc.data().address.map1.street;
-    //         setStreet(street);
-    //         console.log("User's age: ", street);
-    //     } else {
-    //         console.log("No such document!");
-    //     }
-    // }).catch(function (error) {
-    //     console.log("Error getting document:", error);
-    // });
 
     useEffect(() => {
         firebase.firestore().collection('users')

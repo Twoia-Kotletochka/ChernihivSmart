@@ -61,13 +61,13 @@ export default function Navigate() {
                 options={{ headerShown: false }}
             />
             <Stack.Screen
-                name='Address'
-                component={Address}
+                name='AddAddress'
+                component={AddAddress}
                 options={{ headerShown: false }}
             />
             <Stack.Screen
-                name='AddAddress'
-                component={AddAddress}
+                name='Address'
+                component={Address}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>
