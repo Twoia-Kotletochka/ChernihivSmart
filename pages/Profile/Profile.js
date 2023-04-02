@@ -99,7 +99,7 @@ const Profile = () => {
                             </View>
                             <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
                                 <Text style={styles.title1}>Адреса</Text>
-                                <Text style={styles.title2}>Запишіть свою адресу, щоб ми могли сповіщати</Text>
+                                <Text style={styles.title2}>Запишіть адресу, щоб ми могли сповіщати</Text>
                                 <Text style={styles.title2}>вас про те, що відбувається у вас вдома</Text>
                             </View>
                         </TouchableOpacity>

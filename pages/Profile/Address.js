@@ -37,20 +37,34 @@ const animatedNewsHeight = AnimatedOp.interpolate({
 });
 
 const Address = () => {
-    const [street, setStreet] = useState('')
-    const [house, setHouse] = useState('')
-    const [rooms, setRooms] = useState('')
-
     const navigation = useNavigation()
+
+    const [data, setData] = useState(null);
+
+    const currentUser = firebase.auth().currentUser;
+    const uid = currentUser.uid;
+    var docRef = firebase.firestore().collection('users').doc(uid);
+
+    // docRef.get().then(function (doc) {
+    //     if (doc.exists) {
+    //         // Отримання даних з map в середині map
+    //         var street = doc.data().address.map1.street;
+    //         setStreet(street);
+    //         console.log("User's age: ", street);
+    //     } else {
+    //         console.log("No such document!");
+    //     }
+    // }).catch(function (error) {
+    //     console.log("Error getting document:", error);
+    // });
 
     useEffect(() => {
         firebase.firestore().collection('users')
             .doc(firebase.auth().currentUser.uid).get()
             .then((snapshot) => {
                 if (snapshot.exists) {
-                    setStreet(snapshot.data())
-                    setHouse(snapshot.data())
-                    setRooms(snapshot.data())
+                    setData(snapshot.data().address);
+                    //console.log(snapshot.data().address)
                 }
                 else {
                     console.log('User does not exist')
@@ -66,89 +80,117 @@ const Address = () => {
         navigation.navigate('AddAddress')
     }
 
-    return (
-        <LinearGradient
-            colors={['#17153C', '#D5BCA8']}
-            style={styles.container}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-        >
-
-            <ScrollView
-                scrollEventThrottle={16}
-                style={styles.scrollview_vertical}
-                showsVerticalScrollIndicator={false}
-                onScroll={Animated.event(
-                    [{ nativeEvent: { contentOffset: { y: AnimatedOp } } }],
-                    { useNativeDriver: false }
-                )}
+    if (data !== null && data !== undefined) {
+        const outerKeys = Array.from(data.keys());
+        
+        return (
+            <LinearGradient
+                colors={['#17153C', '#D5BCA8']}
+                style={styles.container}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
             >
-                <Animated.View style={[styles.profile_containe, { opacity: animateopacityprofile, }]}>
-                    <View style={styles.profile_container}>
-                        <View style={styles.profile_container_card}>
-                            <Icon_home style={styles.icon_cards} />
-                            <Text style={{ fontSize: 20, marginBottom: 5, marginTop: 5 }}>Мої адреси</Text>
-                            <Text>За цими адресами ви будете отримувати</Text>
-                            <Text>сповіщення від комунальних служб</Text>
+
+                <ScrollView
+                    scrollEventThrottle={16}
+                    style={styles.scrollview_vertical}
+                    showsVerticalScrollIndicator={false}
+                    onScroll={Animated.event(
+                        [{ nativeEvent: { contentOffset: { y: AnimatedOp } } }],
+                        { useNativeDriver: false }
+                    )}
+                >
+                    <Animated.View style={[styles.profile_containe, { opacity: animateopacityprofile, }]}>
+                        <View style={styles.profile_container}>
+                            <View style={styles.profile_container_card}>
+                                <Icon_home style={styles.icon_cards} />
+                                <Text style={{ fontSize: 20, marginBottom: 5, marginTop: 5 }}>Мої адреси</Text>
+                                <Text>За цими адресами ви будете отримувати</Text>
+                                <Text>сповіщення від комунальних служб</Text>
+                            </View>
                         </View>
+                    </Animated.View>
+
+                    <View style={{ alignItems: 'center' }}>
+                        <Animated.View style={[styles.view_news,
+                        { width: animatedNewsHeight, }]}>
+                            {/* <Text style={{ fontSize: 24, marginLeft: 20, }}>Налаштування</Text> */}
+
+                            {outerKeys.map((outerKey) => {
+                                const innerMap = data.get(outerKey); // отримуємо внутрішню map
+                                const innerKeys = Object.keys(innerMap); // створюємо масив ключів внутрішньої map
+                                return (
+                                    <View key={outerKey}>
+                                        <Text>{outerKey}</Text> // відображаємо зовнішній ключ
+                                        {innerKeys.map((innerKey) => {
+                                            const value = innerMap[innerKey]; // отримуємо значення по ключу внутрішньої map
+                                            return (
+                                                <View key={`${outerKey}-${innerKey}`}>
+                                                    <Text>
+                                                        {innerKey}: {value}
+                                                    </Text> // відображаємо ключ та значення з внутрішньої map
+                                                </View>
+                                            );
+                                        })}
+                                    </View>
+                                );
+                            })}
+
+
+
+                            <TouchableOpacity style={styles.container2}>
+                                <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                                    <View style={styles.icon_board}>
+                                        {<Icon_adres style={{ width: '80%', height: '80%' }} />}
+                                    </View>
+                                </View>
+                                <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
+                                    {/* <Text style={styles.title1}>Вул. - {value.map1.street}</Text>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'flex-start', }}>
+                                                <Text style={styles.title2}>Дім - {house}</Text>
+                                                <Text style={[styles.title2, { marginLeft: 30 }]}>Кв. - {rooms}</Text>
+                                            </View> */}
+                                </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.container2} onPress={go_addaddress}>
+                                <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                                    <View style={styles.icon_board}>
+                                        {<Icon_add style={{ width: '80%', height: '80%' }} />}
+                                    </View>
+                                </View>
+                                <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
+                                    <Text style={styles.title1}>Адреса</Text>
+                                    <Text style={styles.title2}>Запишіть свою адресу, щоб ми могли сповіщати</Text>
+                                    <Text style={styles.title2}>вас про те, що відбувається у вас вдома</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </Animated.View>
                     </View>
-                </Animated.View>
+                </ScrollView>
 
-                <View style={{ alignItems: 'center' }}>
-                    <Animated.View style={[styles.view_news,
-                    { width: animatedNewsHeight, }]}>
-                        {/* <Text style={{ fontSize: 24, marginLeft: 20, }}>Налаштування</Text> */}
-                        <TouchableOpacity style={styles.container2}>
-                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
-                                <View style={styles.icon_board}>
-                                    {<Icon_adres style={{ width: '80%', height: '80%' }} />}
-                                </View>
-                            </View>
-                            <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
-                                <Text style={styles.title1}>Вул. - {street.street}</Text>
-                                <View style={{ flexDirection: 'row', justifyContent: 'flex-start', }}>
-                                    <Text style={styles.title2}>Дім - {house.house}</Text>
-                                    <Text style={[styles.title2, { marginLeft: 30 }]}>Кв. - {rooms.rooms}</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.container2} onPress={go_addaddress}>
-                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
-                                <View style={styles.icon_board}>
-                                    {<Icon_add style={{ width: '80%', height: '80%' }} />}
-                                </View>
-                            </View>
-                            <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
-                                <Text style={styles.title1}>Адреса</Text>
-                                <Text style={styles.title2}>Запишіть свою адресу, щоб ми могли сповіщати</Text>
-                                <Text style={styles.title2}>вас про те, що відбувається у вас вдома</Text>
+                <View style={styles.header}>
+                    <Animated.View
+                        style={[{ opacity: animateopacityweather }, {}]}>
+                        <TouchableOpacity
+                            onPress={go_main}
+                        >
+                            <View style={[styles.button_back]}>
+                                <Entypo name="cross" size={27} color="white" />
                             </View>
                         </TouchableOpacity>
                     </Animated.View>
                 </View>
-            </ScrollView>
 
-            <View style={styles.header}>
-                <Animated.View
-                    style={[{ opacity: animateopacityweather }, {}]}>
-                    <TouchableOpacity
-                        onPress={go_main}
-                    >
-                        <View style={[styles.button_back]}>
-                            <Entypo name="cross" size={27} color="white" />
-                        </View>
-                    </TouchableOpacity>
-                </Animated.View>
-            </View>
-
-            <StatusBar
-                animated={true}
-                barStyle={'light-content'}
-                backgroundColor="#17153C"
-            />
-        </LinearGradient>
-    );
+                <StatusBar
+                    animated={true}
+                    barStyle={'light-content'}
+                    backgroundColor="#17153C"
+                />
+            </LinearGradient>
+        );
+    }
 }
+
 
 export default Address;

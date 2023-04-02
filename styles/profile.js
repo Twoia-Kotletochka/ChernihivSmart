@@ -82,7 +82,7 @@ export const styles = StyleSheet.create({
         fontSize: 18,
     },
     title2: {
-        fontSize: 11,
+        fontSize: 10,
     },
     icon_board: {
         width: 50,

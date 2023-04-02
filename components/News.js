@@ -80,10 +80,10 @@ const News = () => {
                     <Text style={{ fontSize: RFValue(18) }}>
                         {value.title}
                     </Text>
-                    <Text style={{ fontSize: RFValue(15) }}>
+                    <Text style={{ fontSize: RFValue(12) }}>
                         {value.subtext}
                     </Text>
-                    <Text style={{ fontSize: RFValue(13) }}>
+                    <Text style={{ fontSize: RFValue(11) }}>
                         {value.subtext_mini}
                     </Text>
                 </View>
