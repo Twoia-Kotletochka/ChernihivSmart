@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Component } from 'react'
 import { Text, View, StatusBar, TouchableOpacity, ScrollView, Animated, Alert } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Entypo } from '@expo/vector-icons';
@@ -37,13 +37,18 @@ const animatedNewsHeight = AnimatedOp.interpolate({
     extrapolate: 'clamp'
 });
 
+
+
+
+
 const Address = () => {
     let count = 0;
     const databaseContent = [];
     const navigation = useNavigation()
     const [data, setData] = useState(null);
 
-    useEffect(() => {
+
+    const showaddress = (databaseContent, data) => {
         firebase.firestore().collection('users')
             .doc(firebase.auth().currentUser.uid)
             .get()
@@ -55,7 +60,36 @@ const Address = () => {
                     console.log('User does not exist')
                 }
             })
-    }, [])
+
+        if (data) {
+            Object.keys(data).sort().forEach((key) => {
+                const value = data[key];
+                databaseContent.push(
+                    <View key={key} style={styles.container2}>
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={[styles.icon_board, { marginRight: 20 }]}>
+                                <Icon_adres style={{ width: '80%', height: '80%' }} />
+                            </View>
+                            <View>
+                                <Text style={styles.title1}>Вул. - {value.street}</Text>
+                                <View style={{ flexDirection: 'row', }}>
+                                    <Text style={styles.title2}>Дім - {value.house}</Text>
+                                    <Text style={[styles.title2, { marginLeft: 30 }]}>Кв. - {value.rooms}</Text>
+                                </View>
+                            </View>
+                        </View>
+                        <TouchableOpacity style={{ marginRight: 5 }} onPress={() => delete_address(key)}>
+                            <View style={styles.icon_basket}>
+                                <Icon_basket style={{ width: '54%', height: '54%' }} />
+                            </View>
+                        </TouchableOpacity>
+                    </View >
+                );
+            })
+        }
+    }
+
+    showaddress(databaseContent, data);
 
     const go_main = () => {
         navigation.navigate('Profile')
@@ -67,16 +101,18 @@ const Address = () => {
         firebase.firestore().collection('users')
             .doc(firebase.auth().currentUser.uid)
             .update({
-                [temp]: firebase.firestore.FieldValue.delete()
+                [temp]: firebase.firestore.FieldValue.delete(),
             })
             .then(function () {
+                showaddress(databaseContent, data)
                 console.log("Поле успешно удалено из Map в Firestore!");
             })
             .catch(function (error) {
+                showaddress(databaseContent, data)
                 console.error("Ошибка при удалении поля в Map Firestore: ", error);
             });
 
-        navigation.navigate('Address')
+
     }
 
     const go_addaddress = () => {
@@ -94,32 +130,7 @@ const Address = () => {
             navigation.navigate('AddAddress')
     }
 
-    if (data) {
-        Object.keys(data).sort().forEach((key) => {
-            const value = data[key];
-            databaseContent.push(
-                <View key={key} style={styles.container2}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <View style={[styles.icon_board, { marginRight: 20 }]}>
-                            <Icon_adres style={{ width: '80%', height: '80%' }} />
-                        </View>
-                        <View>
-                            <Text style={styles.title1}>Вул. - {value.street}</Text>
-                            <View style={{ flexDirection: 'row', }}>
-                                <Text style={styles.title2}>Дім - {value.house}</Text>
-                                <Text style={[styles.title2, { marginLeft: 30 }]}>Кв. - {value.rooms}</Text>
-                            </View>
-                        </View>
-                    </View>
-                    <TouchableOpacity style={{ marginRight: 5 }} onPress={() => delete_address(key)}>
-                        <View style={styles.icon_basket}>
-                            <Icon_basket style={{ width: '54%', height: '54%' }} />
-                        </View>
-                    </TouchableOpacity>
-                </View >
-            );
-        })
-    }
+
 
     return (
         <LinearGradient

@@ -53,7 +53,6 @@ const AddAddress = () => {
         }, { merge: true })
             .then(() => {
                 console.log('Адресу успішно додано!');
-                Alert.alert('Адресу успішно додано!')
 
             })
             .catch((error) => {
@@ -61,7 +60,7 @@ const AddAddress = () => {
                 Alert.alert('Відбулась помилка!', error)
             });
 
-        navigation.navigate('Profile')
+        navigation.navigate('Address')
     }
 
     return (
