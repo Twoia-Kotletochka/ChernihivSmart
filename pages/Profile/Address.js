@@ -37,10 +37,6 @@ const animatedNewsHeight = AnimatedOp.interpolate({
     extrapolate: 'clamp'
 });
 
-
-
-
-
 const Address = () => {
     let count = 0;
     const databaseContent = [];

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Text, View, StatusBar, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
+import uuid from 'react-native-uuid';
 import { firebase } from '../../config'
 import { style } from '../../styles/addaddress';
 
@@ -14,14 +15,13 @@ const AddAddress = () => {
 
     const navigation = useNavigation()
 
-    const go_main = () => {
-        navigation.navigate('Profile')
+    const go_address = () => {
+        navigation.navigate('Address')
     }
 
     const currentUser = firebase.auth().currentUser;
     const uid = currentUser.uid;
     const userDoc = firebase.firestore().collection('users').doc(uid);
-    var map = ""
 
     userDoc.get()
         .then((doc) => {
@@ -45,7 +45,7 @@ const AddAddress = () => {
         });
 
     const add = () => {
-        map = "map" + ((count / 3) + 1)
+        let map = uuid.v4()
         console.log(map);
 
         userDoc.set({
@@ -106,7 +106,7 @@ const AddAddress = () => {
 
                 <TouchableOpacity
                     style={style.button}
-                    onPress={go_main}>
+                    onPress={go_address}>
                     <Text style={{ color: 'white', fontSize: 22 }}>Назад</Text>
                 </TouchableOpacity>
             </View>
