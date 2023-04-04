@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View, StatusBar, TextInput, TouchableOpacity, ScrollView, Animated, SafeAreaView } from 'react-native'
+import { Text, View, StatusBar, TouchableOpacity, ScrollView, Animated, Alert } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core'
@@ -9,6 +9,7 @@ import { styles } from '../../styles/address';
 import Icon_home from '../../assets/icon_cards_svg/icon_home.svg'
 import Icon_add from '../../assets/icon_profile/icon_add.svg'
 import Icon_adres from '../../assets/icon_profile/adres.svg'
+import Icon_basket from '../../assets/icon_profile/basket.svg'
 
 let AnimatedOp = new Animated.Value(0);
 
@@ -37,12 +38,15 @@ const animatedNewsHeight = AnimatedOp.interpolate({
 });
 
 const Address = () => {
+    let count = 0;
+    const databaseContent = [];
     const navigation = useNavigation()
     const [data, setData] = useState(null);
 
     useEffect(() => {
         firebase.firestore().collection('users')
-            .doc(firebase.auth().currentUser.uid).get()
+            .doc(firebase.auth().currentUser.uid)
+            .get()
             .then((snapshot) => {
                 if (snapshot.exists) {
                     setData(snapshot.data().address);
@@ -57,29 +61,62 @@ const Address = () => {
         navigation.navigate('Profile')
     }
 
-    const go_addaddress = () => {
-        navigation.navigate('AddAddress')
+    const delete_address = (key) => {
+        console.log(key)
+        let temp = "address." + key
+        firebase.firestore().collection('users')
+            .doc(firebase.auth().currentUser.uid)
+            .update({
+                [temp]: firebase.firestore.FieldValue.delete()
+            })
+            .then(function () {
+                console.log("Поле успешно удалено из Map в Firestore!");
+            })
+            .catch(function (error) {
+                console.error("Ошибка при удалении поля в Map Firestore: ", error);
+            });
+
+        navigation.navigate('Address')
     }
 
-    const databaseContent = [];
+    const go_addaddress = () => {
+        Object.keys(data).forEach((key) => {
+            // Цикл по вложенному Map
+            Object.keys(data[key]).forEach(() => {
+                count++;
+            });
+        });
+        console.log(`Кількість об'єктів всередині map : ${(count / 3)}`);
+        if ((count / 3) >= 5) {
+            Alert.alert('Додано максимальну кількість адрес')
+        }
+        else
+            navigation.navigate('AddAddress')
+    }
+
     if (data) {
-        Object.keys(data).reverse().forEach((key) => {
+        Object.keys(data).sort().forEach((key) => {
             const value = data[key];
             databaseContent.push(
-                <TouchableOpacity style={styles.container2}>
-                    <View style={{ marginLeft: 5, paddingTop: 15 }}>
-                        <View style={styles.icon_board}>
-                            {<Icon_adres style={{ width: '80%', height: '80%' }} />}
+                <View key={key} style={styles.container2}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={[styles.icon_board, { marginRight: 20 }]}>
+                            <Icon_adres style={{ width: '80%', height: '80%' }} />
+                        </View>
+                        <View>
+                            <Text style={styles.title1}>Вул. - {value.street}</Text>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Text style={styles.title2}>Дім - {value.house}</Text>
+                                <Text style={[styles.title2, { marginLeft: 30 }]}>Кв. - {value.rooms}</Text>
+                            </View>
                         </View>
                     </View>
-                    <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
-                        <Text style={styles.title1}>Вул. - {value.street}</Text>
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', }}>
-                            <Text style={styles.title2}>Дім - {value.house}</Text>
-                            <Text style={[styles.title2, { marginLeft: 30 }]}>Кв. - {value.rooms}</Text>
+                    <TouchableOpacity style={{ marginRight: 5 }} onPress={() => delete_address(key)}>
+                        <View style={styles.icon_basket}>
+                            <Icon_basket style={{ width: '54%', height: '54%' }} />
                         </View>
-                    </View>
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                </View >
             );
         })
     }
@@ -116,18 +153,16 @@ const Address = () => {
                     <Animated.View style={[styles.view_news,
                     { width: animatedNewsHeight, }]}>
                         {/* <Text style={{ fontSize: 24, marginLeft: 20, }}>Налаштування</Text> */}
-
                         {databaseContent}
-
-                        <TouchableOpacity style={styles.container2} onPress={go_addaddress}>
+                        <TouchableOpacity style={styles.container2_static} onPress={go_addaddress}>
                             <View style={{ marginLeft: 5, paddingTop: 15 }}>
-                                <View style={styles.icon_board}>
+                                <View style={styles.icon_board_static}>
                                     {<Icon_add style={{ width: '80%', height: '80%' }} />}
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'column', paddingTop: 5, paddingBottom: 15 }}>
-                                <Text style={styles.title1}>Адреса</Text>
-                                <Text style={styles.title2}>Запишіть свою адресу, щоб ми могли сповіщати</Text>
+                                <Text style={styles.title1}>Додати адресу</Text>
+                                <Text style={styles.title2}>Додайте свою адресу, щоб ми могли сповіщати</Text>
                                 <Text style={styles.title2}>вас про те, що відбувається у вас вдома</Text>
                             </View>
                         </TouchableOpacity>
@@ -138,9 +173,7 @@ const Address = () => {
             <View style={styles.header}>
                 <Animated.View
                     style={[{ opacity: animateopacityweather }, {}]}>
-                    <TouchableOpacity
-                        onPress={go_main}
-                    >
+                    <TouchableOpacity onPress={go_main}>
                         <View style={[styles.button_back]}>
                             <Entypo name="cross" size={27} color="white" />
                         </View>

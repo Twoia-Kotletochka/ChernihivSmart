@@ -7,29 +7,49 @@ import { style } from '../../styles/addaddress';
 import { Ionicons } from '@expo/vector-icons';
 
 const AddAddress = () => {
+    let count = 0;
     const [street, setStreet] = useState('')
     const [house, setHouse] = useState('')
     const [rooms, setRooms] = useState('')
 
     const navigation = useNavigation()
 
-    const currentUser = firebase.auth().currentUser;
-    const uid = currentUser.uid;
-    const userDoc = firebase.firestore().collection('users').doc(uid);
     const go_main = () => {
         navigation.navigate('Profile')
     }
 
+    const currentUser = firebase.auth().currentUser;
+    const uid = currentUser.uid;
+    const userDoc = firebase.firestore().collection('users').doc(uid);
+    var map = ""
+
+    userDoc.get()
+        .then((doc) => {
+            if (doc.exists) {
+                const addressObject = doc.data().address;
+                // Цикл по первому Map
+                Object.keys(addressObject).forEach((key) => {
+                    // Цикл по вложенному Map
+                    Object.keys(addressObject[key]).forEach(() => {
+                        count++;
+                    });
+                });
+
+                console.log(`Кількість об'єктів всередині map : ${(count / 3)}`);
+            } else {
+                console.log('Документ не знайдено');
+            }
+        })
+        .catch((error) => {
+            console.error('Помилка отримання документа:', error);
+        });
 
     const add = () => {
-        userDocSnapshot = userDoc.get();
-        const addressMap = userDocSnapshot.data().address;
-        const addressCount = addressMap.size;
-
-        const map = "map" + parseInt(addressCount + 1);
+        map = "map" + ((count / 3) + 1)
+        console.log(map);
 
         userDoc.set({
-            address: { map : { street: street, house: house, rooms: rooms} }
+            address: { [map]: { street: street, house: house, rooms: rooms } }
         }, { merge: true })
             .then(() => {
                 console.log('Адресу успішно додано!');

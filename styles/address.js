@@ -73,6 +73,16 @@ export const styles = StyleSheet.create({
         fontSize: 14,
     },
     container2: {
+        height: 75,
+        backgroundColor: '#EEEEEE',
+        marginVertical: 5,
+        marginHorizontal: 16,
+        borderRadius: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    container2_static: {
         backgroundColor: '#EEEEEE',
         marginVertical: 5,
         marginHorizontal: 16,
@@ -92,8 +102,23 @@ export const styles = StyleSheet.create({
         borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',
+        marginLeft: 10
+    },
+    icon_board_static: {
+        width: 50,
+        height: 50,
+        backgroundColor: 'white',
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
         marginRight: 20,
-
+    },
+    icon_basket: {
+        width: 50,
+        height: 50,
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     icon_cards: {
         width: 65,
