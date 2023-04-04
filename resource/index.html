@@ -8,7 +8,8 @@
 <body>
   <style>
     body {
-      background-color: rgb(221, 203, 203);
+      /* background-color: rgb(221, 203, 203); */
+      background-color: rgb(100, 97, 97);
     }
 
     .container {
@@ -77,14 +78,20 @@
       <div class="column" style="width: 30%;">
         <label for="discription">Детальний опис</label><br>
         <textarea id="discription" cols="40" rows="3" style="resize: both; overflow: auto;"></textarea>
-        <!-- <label for="data">дата.година:хвидина</label><br>
-        <div class="data">
-          <input type="number" name="day" id="day" class="dat">.
-          <input type="number" name="hours" id="hours" class="dat">:
-          <input type="number" name="minutes" id="minutes" class="dat">
-        </div>
-        <label for="datafull">Повна дата й час(строкове поле)</label><br>
-        <input type="text" name="datafull" id="datefull"> -->
+        <br />
+        <br />
+        <label for="discription">Якщо новина конкретним адресатам або на всю вулицю</label><br>
+
+        <label for="title">Вулиця</label><br>
+        <input maxlength="25" id="street" cols="30" rows="1"
+          style="resize: both; overflow: auto; width: 300px;"></textarea>
+        <br />
+        <label for="subtext">Будинок</label><br>
+        <input maxlength="10" id="house" cols="30" style="resize: both; overflow: auto; width: 80px;"></textarea>
+        <br />
+        <label for="subtext_mini">Квартира</label><br>
+        <input maxlength="10" id="rooms" cols="30" rows="1"
+          style="resize: both; overflow: auto; width: 45px;"></textarea>
       </div>
     </div>
 
@@ -126,12 +133,12 @@
           var subtext = document.getElementById("subtext").value;
           var subtext_mini = document.getElementById("subtext_mini").value;
 
-          var discription = document.getElementById("discription").value;
-          //var day = document.getElementById("day").value;
-          //var hours = document.getElementById("hours").value;
-          //var minutes = document.getElementById("minutes").value;
+          var street = document.getElementById("street").value;
+          var house = document.getElementById("house").value;
+          var rooms = document.getElementById("rooms").value;
 
-          //var datefull = document.getElementById("datefull").value;
+          var discription = document.getElementById("discription").value;
+
           var ref = firebase.database().ref("news");
           let num = 0
           // database.ref('news/').limitToLast(1).once('value')
@@ -140,6 +147,7 @@
           //     lastid = parseInt(num) + 1;
 
           //   });
+
           let lastid = 0
           database.ref('news/').limitToLast(1).on('child_added', function (snapshot) {
             let num = snapshot.key; //получение ключа последней записи в таблице
@@ -162,19 +170,38 @@
           var dateString = ('0' + date).slice(-2) + '.' +
             ('0' + month).slice(-2) + '.' + year;
 
-          var userData = {
-            icon: icon,
 
-            title: title,
-            subtext: subtext,
-            subtext_mini: subtext_mini,
+          if (street !== "") {
+            var userData = {
+              icon: icon,
 
-            discription: discription,
-            //day: day,
-            //hours: hours,
-            //minutes: minutes,
-            datefull: timeString + " " + dateString
-          };
+              title: title,
+              subtext: subtext,
+              subtext_mini: subtext_mini,
+              discription: discription,
+
+              street: street,
+              house: house,
+              rooms: rooms,
+              datefull: timeString + " " + dateString
+            };
+          }
+
+          if (street === "") {
+            var userData = {
+              icon: icon,
+
+              title: title,
+              subtext: subtext,
+              subtext_mini: subtext_mini,
+              discription: discription,
+
+              datefull: timeString + " " + dateString
+            };
+          }
+
+
+
           console.log(timeString + " " + dateString)
           ref.child(lastid).set(userData);
         }
@@ -212,16 +239,26 @@
             var news = childSnapshot.val();
             var div = document.createElement("div");
             div.appendChild(document.createTextNode(news.icon));
-            div.innerHTML += "<br/>"
+            div.innerHTML += "<br/> Заголовок: "
             div.appendChild(document.createTextNode(news.title));
-            div.innerHTML += "<br/>"
+            div.innerHTML += "<br/>  Підтекст: "
             div.appendChild(document.createTextNode(news.subtext));
-            div.innerHTML += "<br/>"
+            div.innerHTML += "<br/> Менший підтекст: "
             div.appendChild(document.createTextNode(news.subtext_mini));
-            div.innerHTML += "<br/>"
+            div.innerHTML += "<br/>  Опис: "
             div.appendChild(document.createTextNode(news.discription));
             div.innerHTML += "<br/>"
             div.appendChild(document.createTextNode(news.datefull));
+
+            if (news.street !== undefined) {
+              div.innerHTML += "<br/> <br/> Вулиця:"
+              div.appendChild(document.createTextNode(news.street));
+              div.innerHTML += "<br/> Будинок:"
+              div.appendChild(document.createTextNode(news.house));
+              div.innerHTML += "<br/> Квартира:"
+              div.appendChild(document.createTextNode(news.rooms));
+            }
+
             var p = document.createElement("p");
 
             newsList.appendChild(div);

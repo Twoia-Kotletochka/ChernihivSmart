@@ -28,6 +28,7 @@ const News = () => {
 
 
     const [data, setData] = useState(null);
+    const [data_uid, setData_uid] = useState(null);
 
     useEffect(() => {
         const ref = database.ref('news/');
@@ -38,7 +39,21 @@ const News = () => {
         return () => {
             ref.off('value', listener);
         };
-    }, []); 0
+    }, []);
+
+    useEffect(() => {
+        firebase.firestore().collection('users')
+            .doc(firebase.auth().currentUser.uid).get()
+            .then((snapshot) => {
+                if (snapshot.exists) {
+                    setData_uid(snapshot.data().address);
+                }
+                else {
+                    console.log('User does not exist')
+                }
+            })
+    }, [])
+
 
     if (!data) {
         return (
@@ -66,29 +81,57 @@ const News = () => {
     const databaseContent = [];
     Object.keys(data).reverse().forEach((key) => {
         const value = data[key];
-        databaseContent.push(
-            <TouchableOpacity key={key} style={styles.container}>
-                <View style={{ marginLeft: 5, paddingTop: 15 }}>
-                    <View style={styles.icon_board}>
-                        {iconfunc(value.icon)}
+        console.log(value.street)
+        if (value.street !== undefined) {
+            databaseContent.push(
+                <TouchableOpacity key={key} style={styles.container}>
+                    <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                        <View style={styles.icon_board}>
+                            {iconfunc(value.icon)}
+                        </View>
+                        <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2 }}>
+                            {value.datefull}
+                        </Text>
                     </View>
-                    <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2 }}>
-                        {value.datefull}
-                    </Text>
-                </View>
-                <View style={{ flexDirection: 'column', paddingTop: 5 }}>
-                    <Text style={{ fontSize: RFValue(18) }}>
-                        {value.title}
-                    </Text>
-                    <Text style={{ fontSize: RFValue(12) }}>
-                        {value.subtext}
-                    </Text>
-                    <Text style={{ fontSize: RFValue(11) }}>
-                        {value.subtext_mini}
-                    </Text>
-                </View>
-            </TouchableOpacity>
-        );
+                    <View style={{ flexDirection: 'column', paddingTop: 5 }}>
+                        <Text style={{ fontSize: RFValue(18) }}>
+                            {value.title}
+                        </Text>
+                        <Text style={{ fontSize: RFValue(12) }}>
+                            {value.subtext}
+                        </Text>
+                        <Text style={{ fontSize: RFValue(11) }}>
+                            {value.subtext_mini}
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+            )
+        }
+        else if (value.street === undefined) {
+            databaseContent.push(
+                <TouchableOpacity key={key} style={styles.container}>
+                    <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                        <View style={styles.icon_board}>
+                            {iconfunc(value.icon)}
+                        </View>
+                        <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2 }}>
+                            {value.datefull}
+                        </Text>
+                    </View>
+                    <View style={{ flexDirection: 'column', paddingTop: 5 }}>
+                        <Text style={{ fontSize: RFValue(18) }}>
+                            {value.title}
+                        </Text>
+                        <Text style={{ fontSize: RFValue(12) }}>
+                            {value.subtext}
+                        </Text>
+                        <Text style={{ fontSize: RFValue(11) }}>
+                            {value.subtext_mini}
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+            );
+        }
     });
 
     return (

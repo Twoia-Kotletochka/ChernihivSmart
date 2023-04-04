@@ -47,7 +47,6 @@ const AddAddress = () => {
     const add = () => {
         let map = uuid.v4()
         console.log(map);
-
         userDoc.set({
             address: { [map]: { street: street, house: house, rooms: rooms } }
         }, { merge: true })
