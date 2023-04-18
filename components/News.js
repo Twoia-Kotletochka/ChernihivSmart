@@ -25,21 +25,11 @@ const News = () => {
     //     }, 1000);
     //     return () => clearInterval(interval);
     // }, []);
-
+    const databaseContent = [];
+    const data_uidArr = [];
 
     const [data, setData] = useState(null);
     const [data_uid, setData_uid] = useState(null);
-
-    useEffect(() => {
-        const ref = database.ref('news/');
-        const listener = ref.on('value', (snapshot) => {
-            setData(snapshot.val());
-        });
-
-        return () => {
-            ref.off('value', listener);
-        };
-    }, []);
 
     useEffect(() => {
         firebase.firestore().collection('users')
@@ -52,7 +42,16 @@ const News = () => {
                     console.log('User does not exist')
                 }
             })
-    }, [])
+
+        const ref = database.ref('news/');
+        const listener = ref.on('value', (snapshot) => {
+            setData(snapshot.val());
+        });
+
+        return () => {
+            ref.off('value', listener);
+        };
+    }, []);
 
 
     if (!data) {
@@ -78,34 +77,42 @@ const News = () => {
         }
     }
 
-    const databaseContent = [];
+    if (data_uid) {
+        Object.keys(data_uid).reverse().forEach((key) => {
+            data_uidArr.push(data_uid[key].street)
+        })
+    }
+    
     Object.keys(data).reverse().forEach((key) => {
         const value = data[key];
         console.log(value.street)
         if (value.street !== undefined) {
-            databaseContent.push(
-                <TouchableOpacity key={key} style={styles.container}>
-                    <View style={{ marginLeft: 5, paddingTop: 15 }}>
-                        <View style={styles.icon_board}>
-                            {iconfunc(value.icon)}
+            if (data_uidArr.some(element => element === data[key].street)) {
+
+                databaseContent.push(
+                    <TouchableOpacity key={key} style={styles.container}>
+                        <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                            <View style={styles.icon_board}>
+                                {iconfunc(value.icon)}
+                            </View>
+                            <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2 }}>
+                                {value.datefull}
+                            </Text>
                         </View>
-                        <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2 }}>
-                            {value.datefull}
-                        </Text>
-                    </View>
-                    <View style={{ flexDirection: 'column', paddingTop: 5 }}>
-                        <Text style={{ fontSize: RFValue(18) }}>
-                            {value.title}
-                        </Text>
-                        <Text style={{ fontSize: RFValue(12) }}>
-                            {value.subtext}
-                        </Text>
-                        <Text style={{ fontSize: RFValue(11) }}>
-                            {value.subtext_mini}
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-            )
+                        <View style={{ flexDirection: 'column', paddingTop: 5 }}>
+                            <Text style={{ fontSize: RFValue(18) }}>
+                                {value.title}
+                            </Text>
+                            <Text style={{ fontSize: RFValue(12) }}>
+                                {value.subtext}
+                            </Text>
+                            <Text style={{ fontSize: RFValue(11) }}>
+                                {value.subtext_mini}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                )
+            }
         }
         else if (value.street === undefined) {
             databaseContent.push(
