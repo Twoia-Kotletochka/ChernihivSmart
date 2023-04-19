@@ -90,7 +90,7 @@ const News = () => {
             if (data_uidArr.some(element => element === data[key].street)) {
 
                 databaseContent.push(
-                    <TouchableOpacity key={key} style={styles.container}>
+                    <TouchableOpacity key={key} style={styles.container2}>
                         <View style={{ marginLeft: 5, paddingTop: 15 }}>
                             <View style={styles.icon_board}>
                                 {iconfunc(value.icon)}
@@ -149,6 +149,13 @@ const News = () => {
 export const styles = StyleSheet.create({
     container: {
         backgroundColor: '#EEEEEE',
+        marginVertical: 5,
+        marginHorizontal: 16,
+        borderRadius: 10,
+        flexDirection: 'row',
+    },
+    container2: {
+        backgroundColor: '#BCE0FF',
         marginVertical: 5,
         marginHorizontal: 16,
         borderRadius: 10,

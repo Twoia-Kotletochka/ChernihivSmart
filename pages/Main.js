@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Text, View, StatusBar, ScrollView, Animated, TouchableOpacity, Alert } from 'react-native'
+import React, { useCallback, useState } from 'react'
+import { Text, View, StatusBar, ScrollView, Animated, TouchableOpacity, RefreshControl } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { styles } from '../styles/main'
 import News from '../components/News'
@@ -41,6 +41,8 @@ const animatedNewsHeight = AnimatedOp.interpolate({
 
 export default function Main() {
     const navigation = useNavigation()
+    const [refreshing, setRefreshing] = useState(false);
+    const [counter, setCounter] = useState(0);
 
     const go_profile = () => {
         //firebase.auth().signOut()
@@ -51,6 +53,14 @@ export default function Main() {
         firebase.auth().signOut()
         navigation.navigate('Weather')
     }
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+
+        //
+
+        setRefreshing(false);
+    }, []);
 
 
     return (
@@ -69,6 +79,12 @@ export default function Main() {
                     [{ nativeEvent: { contentOffset: { y: AnimatedOp } } }],
                     { useNativeDriver: false }
                 )}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
             >
                 <Cards animateopacitycard={animateopacitycard} />
 
