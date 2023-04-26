@@ -1,7 +1,8 @@
 import React, { useCallback, useState, useEffect } from 'react'
-import { Text, View, StatusBar, ScrollView, Animated, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native'
+import { Text, View, StatusBar, ScrollView, Animated, TouchableOpacity, RefreshControl, ActivityIndicator, Modal, Pressable } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { styles } from '../styles/main'
+import { styles_modal } from '../styles/modalMain'
 import News from '../components/News'
 import Cards from '../components/Cards'
 import { firebase } from '../config'
@@ -45,16 +46,19 @@ const animatedNewsHeight = AnimatedOp.interpolate({
     outputRange: ['95%', '100%'],
     extrapolate: 'clamp'
 });
+
 export default function Main() {
-    const database = firebase.database();
+    const database = firebase.database()
     const navigation = useNavigation()
-    const [refreshing, setRefreshing] = useState(false);
-    const data_uidArr = [];
-    const databaseContent = [];
-    //const push = [];
-    //const [databaseContent, setDatabaseContent] = useState([]);
-    const [data, setData] = useState(null);
-    const [data_uid, setData_uid] = useState(null);
+    const [refreshing, setRefreshing] = useState(false)
+    const [kkey, setKkey] = useState(1)
+    const data_uidArr = []
+    const databaseContent = []
+    //const push = []
+    //const [databaseContent, setDatabaseContent] = useState([])
+    const [data, setData] = useState(null)
+    const [data_uid, setData_uid] = useState(null)
+    const [modalVisible, setModalVisible] = useState(false)
 
     useEffect(() => {
         const ref = database.ref('news/');
@@ -67,20 +71,23 @@ export default function Main() {
     }, []);
 
     const go_profile = () => {
-        //firebase.auth().signOut()
         navigation.navigate('Profile')
     }
 
     const go_weather = () => {
-        firebase.auth().signOut()
         navigation.navigate('Weather')
     }
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-
+        //
         setRefreshing(false);
     }, []);
+
+    const showModal = (key) => {
+        setKkey(key);
+        setModalVisible(true);
+    }
 
     const iconfunc = (icon) => {
         if (icon === "light") {
@@ -95,10 +102,10 @@ export default function Main() {
         else if (icon === "hot_water") {
             return <Icon_hot_water style={{ width: '80%', height: '80%' }} />
         }
-        else if(icon === "news"){
+        else if (icon === "news") {
             return <Icon_news style={{ width: '80%', height: '80%' }} />
         }
-        else if(icon === "achtung"){
+        else if (icon === "achtung") {
             return <Icon_achtung style={{ width: '80%', height: '80%' }} />
         }
     }
@@ -119,11 +126,10 @@ export default function Main() {
 
     Object.keys(data).reverse().forEach((key) => {
         const value = data[key];
-        console.log(value.title)
         if (value.street !== undefined) {
             if (data_uidArr.some(element => element === data[key].street)) {
                 databaseContent.push(
-                    <TouchableOpacity key={key} style={styles.container2}>
+                    <TouchableOpacity key={key} style={styles.container2} onPress={() => showModal(key)}>
                         <View style={{ marginLeft: 5, paddingTop: 15 }}>
                             <View style={styles.icon_board}>
                                 {iconfunc(value.icon)}
@@ -150,7 +156,7 @@ export default function Main() {
 
         else if (value.street === undefined) {
             databaseContent.push(
-                <TouchableOpacity key={key} style={styles.container1}>
+                <TouchableOpacity key={key} style={styles.container1} onPress={() => showModal(key)}>
                     <View style={{ marginLeft: 5, paddingTop: 15 }}>
                         <View style={styles.icon_board}>
                             {iconfunc(value.icon)}
@@ -211,8 +217,27 @@ export default function Main() {
                         refreshing={refreshing}
                         onRefresh={onRefresh}
                     />
-                }
-            >
+                }>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                        Alert.alert('Modal has been closed.');
+                        setModalVisible(!modalVisible);
+                    }}>
+                    <View style={styles_modal.centeredView}>
+                        <View style={styles_modal.modalView}>
+                            <Text style={styles_modal.modalText}>{data[kkey].title}</Text>
+                            <Pressable
+                                style={[styles_modal.button, styles_modal.buttonClose]}
+                                onPress={() => setModalVisible(!modalVisible)}>
+                                <Text style={styles_modal.textStyle}>Hide Modal</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                </Modal>
+
                 <Cards animateopacitycard={animateopacitycard} />
 
                 <View style={{ alignItems: 'center' }}>

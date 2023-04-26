@@ -12,13 +12,17 @@ export const styles = StyleSheet.create({
         marginHorizontal: 16,
         borderRadius: 10,
         flexDirection: 'row',
+        borderWidth: 2.5,
+        borderColor:"#4B9CE4"
     },
     container2: {
-        backgroundColor: '#BCE0FF',
+        backgroundColor: '#EEEEEE',
         marginVertical: 5,
         marginHorizontal: 16,
         borderRadius: 10,
         flexDirection: 'row',
+        borderWidth: 2.5,
+        borderColor:"#E9B5BC"
     },
     icon_board: {
         width: 50,
