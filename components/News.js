@@ -15,16 +15,6 @@ import { firebase } from '../config'
 const database = firebase.database();
 
 const News = () => {
-    //в майбутньому додати в плашку новини годну тому або 5 хв тому й так далі
-    //ця функція вказує поточний час на тлф
-    // const [time, setTime] = useState(new Date());
-
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         setTime(new Date());
-    //     }, 1000);
-    //     return () => clearInterval(interval);
-    // }, []);
     const databaseContent = [];
     const data_uidArr = [];
 

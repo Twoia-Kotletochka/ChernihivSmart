@@ -6,6 +6,30 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%', height: '100%'
     },
+    container1: {
+        backgroundColor: '#EEEEEE',
+        marginVertical: 5,
+        marginHorizontal: 16,
+        borderRadius: 10,
+        flexDirection: 'row',
+    },
+    container2: {
+        backgroundColor: '#BCE0FF',
+        marginVertical: 5,
+        marginHorizontal: 16,
+        borderRadius: 10,
+        flexDirection: 'row',
+    },
+    icon_board: {
+        width: 50,
+        height: 50,
+        backgroundColor: 'white',
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 20,
+
+    },
     view_news: {
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,

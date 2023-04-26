@@ -1,11 +1,16 @@
-import React, { useCallback, useState } from 'react'
-import { Text, View, StatusBar, ScrollView, Animated, TouchableOpacity, RefreshControl } from 'react-native'
+import React, { useCallback, useState, useEffect } from 'react'
+import { Text, View, StatusBar, ScrollView, Animated, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { styles } from '../styles/main'
 import News from '../components/News'
 import Cards from '../components/Cards'
 import { firebase } from '../config'
 
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import Icon_water from '../assets/icon_news_svg/water.svg'
+import Icon_gas from '../assets/icon_news_svg/gas.svg'
+import Icon_light from '../assets/icon_news_svg/light.svg'
+import Icon_hot_water from '../assets/icon_news_svg/hot_water'
 
 import { useNavigation } from '@react-navigation/core'
 //header
@@ -38,11 +43,25 @@ const animatedNewsHeight = AnimatedOp.interpolate({
     outputRange: ['95%', '100%'],
     extrapolate: 'clamp'
 });
-
 export default function Main() {
+    const database = firebase.database();
     const navigation = useNavigation()
     const [refreshing, setRefreshing] = useState(false);
-    const [counter, setCounter] = useState(0);
+    const data_uidArr = [];
+    const databaseContent = [];
+    //const [databaseContent, setDatabaseContent] = useState([]);
+    const [data, setData] = useState(null);
+    const [data_uid, setData_uid] = useState(null);
+
+    useEffect(() => {
+        const ref = database.ref('news/');
+        const listener = ref.on('value', (snapshot) => {
+            setData(snapshot.val());
+        });
+        return () => {
+            ref.off('value', listener);
+        };
+    }, []);
 
     const go_profile = () => {
         //firebase.auth().signOut()
@@ -57,11 +76,114 @@ export default function Main() {
     const onRefresh = useCallback(() => {
         setRefreshing(true);
 
-        //
-
         setRefreshing(false);
     }, []);
 
+    const iconfunc = (icon) => {
+        if (icon === "light") {
+            return <Icon_light style={{ width: '80%', height: '80%' }} />
+        }
+        else if (icon === "gas") {
+            return <Icon_gas style={{ width: '80%', height: '80%' }} />
+        }
+        else if (icon === "water") {
+            return <Icon_water style={{ width: '80%', height: '80%' }} />
+        }
+        else if (icon === "hot_water") {
+            return <Icon_hot_water style={{ width: '80%', height: '80%' }} />
+        }
+    }
+
+    if (data_uid) {
+        Object.keys(data_uid).reverse().forEach((key) => {
+            data_uidArr.push(data_uid[key].street)
+        })
+    }
+
+    if (!data) {
+        return (
+            <View style={{ height: 600 }}>
+                <ActivityIndicator color='#4BB5F5' size='large' animating={true} style={{ marginTop: 60 }} />
+            </View>
+        )
+    }
+    async function showData() {
+         Object.keys(data).reverse().forEach((key) => {
+            const value = data[key];
+            console.log(value.title)
+            if (value.street !== undefined) {
+                if (data_uidArr.some(element => element === data[key].street)) {
+                     databaseContent.push(
+                        <TouchableOpacity key={key} style={styles.container2}>
+                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                                <View style={styles.icon_board}>
+                                     {iconfunc(value.icon)}
+                                </View>
+                                <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2 }}>
+                                    {value.datefull}
+                                </Text>
+                            </View>
+                            <View style={{ flexDirection: 'column', paddingTop: 5 }}>
+                                <Text style={{ fontSize: RFValue(18) }}>
+                                    {value.title}
+                                </Text>
+                                <Text style={{ fontSize: RFValue(12) }}>
+                                    {value.subtext}
+                                </Text>
+                                <Text style={{ fontSize: RFValue(11) }}>
+                                    {value.subtext_mini}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    )
+                }
+            }
+            else if (value.street === undefined) {
+                databaseContent.push(
+                    <TouchableOpacity key={key} style={styles.container1}>
+                        <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                            <View style={styles.icon_board}>
+                                {iconfunc(value.icon)}
+                            </View>
+                            <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2 }}>
+                                {value.datefull}
+                            </Text>
+                        </View>
+                        <View style={{ flexDirection: 'column', paddingTop: 5 }}>
+                            <Text style={{ fontSize: RFValue(18) }}>
+                                {value.title}
+                            </Text>
+                            <Text style={{ fontSize: RFValue(12) }}>
+                                {value.subtext}
+                            </Text>
+                            <Text style={{ fontSize: RFValue(11) }}>
+                                {value.subtext_mini}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                );
+            }
+        });
+
+        
+    }
+
+   showData();
+
+    setTimeout(() => {
+        firebase.firestore().collection('users')
+            .doc(firebase.auth().currentUser.uid).get()
+            .then((snapshot) => {
+                if (snapshot.exists) {
+                    setData_uid(snapshot.data().address);
+
+                }
+                else {
+                    console.log('User does not exist')
+                }
+            })
+
+    }, 8000);
 
     return (
         <LinearGradient
@@ -91,7 +213,7 @@ export default function Main() {
                 <View style={{ alignItems: 'center' }}>
                     <Animated.View style={[styles.view_news,
                     { width: animatedNewsHeight, }]}>
-                        <News />
+                        <View>{databaseContent}</View>
                     </Animated.View>
                 </View>
             </ScrollView>
