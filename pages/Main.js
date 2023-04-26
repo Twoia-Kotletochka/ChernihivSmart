@@ -6,11 +6,13 @@ import News from '../components/News'
 import Cards from '../components/Cards'
 import { firebase } from '../config'
 
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize"
 import Icon_water from '../assets/icon_news_svg/water.svg'
 import Icon_gas from '../assets/icon_news_svg/gas.svg'
 import Icon_light from '../assets/icon_news_svg/light.svg'
 import Icon_hot_water from '../assets/icon_news_svg/hot_water'
+import Icon_news from '../assets/icon_news_svg/news'
+import Icon_achtung from '../assets/icon_news_svg/achtung'
 
 import { useNavigation } from '@react-navigation/core'
 //header
@@ -49,6 +51,7 @@ export default function Main() {
     const [refreshing, setRefreshing] = useState(false);
     const data_uidArr = [];
     const databaseContent = [];
+    //const push = [];
     //const [databaseContent, setDatabaseContent] = useState([]);
     const [data, setData] = useState(null);
     const [data_uid, setData_uid] = useState(null);
@@ -92,6 +95,12 @@ export default function Main() {
         else if (icon === "hot_water") {
             return <Icon_hot_water style={{ width: '80%', height: '80%' }} />
         }
+        else if(icon === "news"){
+            return <Icon_news style={{ width: '80%', height: '80%' }} />
+        }
+        else if(icon === "achtung"){
+            return <Icon_achtung style={{ width: '80%', height: '80%' }} />
+        }
     }
 
     if (data_uid) {
@@ -107,40 +116,14 @@ export default function Main() {
             </View>
         )
     }
-    async function showData() {
-         Object.keys(data).reverse().forEach((key) => {
-            const value = data[key];
-            console.log(value.title)
-            if (value.street !== undefined) {
-                if (data_uidArr.some(element => element === data[key].street)) {
-                     databaseContent.push(
-                        <TouchableOpacity key={key} style={styles.container2}>
-                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
-                                <View style={styles.icon_board}>
-                                     {iconfunc(value.icon)}
-                                </View>
-                                <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2 }}>
-                                    {value.datefull}
-                                </Text>
-                            </View>
-                            <View style={{ flexDirection: 'column', paddingTop: 5 }}>
-                                <Text style={{ fontSize: RFValue(18) }}>
-                                    {value.title}
-                                </Text>
-                                <Text style={{ fontSize: RFValue(12) }}>
-                                    {value.subtext}
-                                </Text>
-                                <Text style={{ fontSize: RFValue(11) }}>
-                                    {value.subtext_mini}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                    )
-                }
-            }
-            else if (value.street === undefined) {
+
+    Object.keys(data).reverse().forEach((key) => {
+        const value = data[key];
+        console.log(value.title)
+        if (value.street !== undefined) {
+            if (data_uidArr.some(element => element === data[key].street)) {
                 databaseContent.push(
-                    <TouchableOpacity key={key} style={styles.container1}>
+                    <TouchableOpacity key={key} style={styles.container2}>
                         <View style={{ marginLeft: 5, paddingTop: 15 }}>
                             <View style={styles.icon_board}>
                                 {iconfunc(value.icon)}
@@ -161,14 +144,36 @@ export default function Main() {
                             </Text>
                         </View>
                     </TouchableOpacity>
-                );
+                )
             }
-        });
+        }
 
-        
-    }
-
-   showData();
+        else if (value.street === undefined) {
+            databaseContent.push(
+                <TouchableOpacity key={key} style={styles.container1}>
+                    <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                        <View style={styles.icon_board}>
+                            {iconfunc(value.icon)}
+                        </View>
+                        <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2 }}>
+                            {value.datefull}
+                        </Text>
+                    </View>
+                    <View style={{ flexDirection: 'column', paddingTop: 5 }}>
+                        <Text style={{ fontSize: RFValue(18) }}>
+                            {value.title}
+                        </Text>
+                        <Text style={{ fontSize: RFValue(12) }}>
+                            {value.subtext}
+                        </Text>
+                        <Text style={{ fontSize: RFValue(11) }}>
+                            {value.subtext_mini}
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+            );
+        }
+    });
 
     setTimeout(() => {
         firebase.firestore().collection('users')
