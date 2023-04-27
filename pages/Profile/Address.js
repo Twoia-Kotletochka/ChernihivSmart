@@ -81,7 +81,6 @@ const Address = () => {
                     </TouchableOpacity>
                 </View >
             );
-            console.log(value.street)
         })
     }
 

@@ -32,6 +32,7 @@ export const styles_modal = StyleSheet.create({
     },
     buttonClose: {
         backgroundColor: '#2196F3',
+        width:130
     },
     textStyle: {
         color: 'white',
@@ -40,6 +41,6 @@ export const styles_modal = StyleSheet.create({
     },
     modalText: {
         marginBottom: 15,
-        textAlign: 'center',
+        textAlign: 'justify',
     },
 })

@@ -126,6 +126,7 @@ export default function Main() {
 
     Object.keys(data).reverse().forEach((key) => {
         const value = data[key];
+        console.log(value.street)
         if (value.street !== undefined) {
             if (data_uidArr.some(element => element === data[key].street)) {
                 databaseContent.push(
@@ -153,7 +154,6 @@ export default function Main() {
                 )
             }
         }
-
         else if (value.street === undefined) {
             databaseContent.push(
                 <TouchableOpacity key={key} style={styles.container1} onPress={() => showModal(key)}>
@@ -193,7 +193,6 @@ export default function Main() {
                     console.log('User does not exist')
                 }
             })
-
     }, 8000);
 
     return (
@@ -228,11 +227,11 @@ export default function Main() {
                     }}>
                     <View style={styles_modal.centeredView}>
                         <View style={styles_modal.modalView}>
-                            <Text style={styles_modal.modalText}>{data[kkey].title}</Text>
+                            <Text style={styles_modal.modalText}>{data[kkey].discription}</Text>
                             <Pressable
                                 style={[styles_modal.button, styles_modal.buttonClose]}
                                 onPress={() => setModalVisible(!modalVisible)}>
-                                <Text style={styles_modal.textStyle}>Hide Modal</Text>
+                                <Text style={styles_modal.textStyle}>Закрити</Text>
                             </Pressable>
                         </View>
                     </View>
