@@ -6,4 +6,4 @@ cd C:\Users\user\AppData\Local\Android\Sdk\emulator
 .\emulator.exe -list-avds
 .\emulator.exe -avd "Pixel_3_XL_API_31"
 
-eas build -p android --profile preview - білд apk
+eas build -p android --profile preview - білд apk   

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, Component } from 'react'
-import { Text, View, StatusBar, TouchableOpacity, ScrollView, Animated, Alert } from 'react-native'
+import React, { useEffect, useState, useCallback } from 'react'
+import { Text, View, StatusBar, TouchableOpacity, ScrollView, Animated, Alert, RefreshControl } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core'
@@ -42,50 +42,54 @@ const Address = () => {
     const databaseContent = [];
     const navigation = useNavigation()
     const [data, setData] = useState(null);
+    const [refreshing, setRefreshing] = useState(false)
 
 
-    const showaddress = (databaseContent, data) => {
-        firebase.firestore().collection('users')
-            .doc(firebase.auth().currentUser.uid)
-            .get()
-            .then((snapshot) => {
-                if (snapshot.exists) {
-                    setData(snapshot.data().address);
-                }
-                else {
-                    console.log('User does not exist')
-                }
-            })
+    firebase.firestore().collection('users')
+        .doc(firebase.auth().currentUser.uid)
+        .get()
+        .then((snapshot) => {
+            if (snapshot.exists) {
+                setData(snapshot.data().address);
+            }
+            else {
+                console.log('User does not exist')
+            }
+        })
 
-        if (data) {
-            Object.keys(data).sort().forEach((key) => {
-                const value = data[key];
-                databaseContent.push(
-                    <View key={key} style={styles.container2}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={[styles.icon_board, { marginRight: 20 }]}>
-                                <Icon_adres style={{ width: '80%', height: '80%' }} />
-                            </View>
-                            <View>
-                                <Text style={styles.title1}>Вул. - {value.street}</Text>
-                                <View style={{ flexDirection: 'row', }}>
-                                    <Text style={styles.title2}>Дім - {value.house}</Text>
-                                    <Text style={[styles.title2, { marginLeft: 30 }]}>Кв. - {value.rooms}</Text>
-                                </View>
+    if (data) {
+        Object.keys(data).sort().forEach((key) => {
+            const value = data[key];
+            databaseContent.push(
+                <View key={key} style={styles.container2}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={[styles.icon_board, { marginRight: 20 }]}>
+                            <Icon_adres style={{ width: '80%', height: '80%' }} />
+                        </View>
+                        <View>
+                            <Text style={styles.title1}>Вул. - {value.street}</Text>
+                            <View style={{ flexDirection: 'row', }}>
+                                <Text style={styles.title2}>Дім - {value.house}</Text>
+                                <Text style={[styles.title2, { marginLeft: 30 }]}>Кв. - {value.rooms}</Text>
                             </View>
                         </View>
-                        <TouchableOpacity style={{ marginRight: 5 }} onPress={() => delete_address(key)}>
-                            <View style={styles.icon_basket}>
-                                <Icon_basket style={{ width: '54%', height: '54%' }} />
-                            </View>
-                        </TouchableOpacity>
-                    </View >
-                );
-            })
-        }
+                    </View>
+                    <TouchableOpacity style={{ marginRight: 5 }} onPress={() => delete_address(key)}>
+                        <View style={styles.icon_basket}>
+                            <Icon_basket style={{ width: '54%', height: '54%' }} />
+                        </View>
+                    </TouchableOpacity>
+                </View >
+            );
+            console.log(value.street)
+        })
     }
 
-    showaddress(databaseContent, data);
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        setRefreshing(false);
+    }, []);
 
     const go_main = () => {
         navigation.navigate('Profile')
@@ -112,18 +116,23 @@ const Address = () => {
     }
 
     const go_addaddress = () => {
-        Object.keys(data).forEach((key) => {
-            // Цикл по вложенному Map
-            Object.keys(data[key]).forEach(() => {
-                count++;
+        if (data) {
+            Object.keys(data).forEach((key) => {
+                // Цикл по вложенному Map
+                Object.keys(data[key]).forEach(() => {
+                    count++;
+                });
             });
-        });
-        console.log(`Кількість об'єктів всередині map : ${(count / 3)}`);
-        if ((count / 3) >= 5) {
-            Alert.alert('Додано максимальну кількість адрес')
+            console.log(`Кількість об'єктів всередині map : ${(count / 3)}`);
+            if ((count / 3) >= 5) {
+                Alert.alert('Додано максимальну кількість адрес')
+            }
+            else
+                navigation.navigate('AddAddress')
         }
-        else
+        else {
             navigation.navigate('AddAddress')
+        }
     }
 
 
@@ -144,6 +153,12 @@ const Address = () => {
                     [{ nativeEvent: { contentOffset: { y: AnimatedOp } } }],
                     { useNativeDriver: false }
                 )}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
             >
                 <Animated.View style={[styles.profile_containe, { opacity: animateopacityprofile, }]}>
                     <View style={styles.profile_container}>

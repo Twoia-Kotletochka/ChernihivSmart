@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Text, View, StatusBar, TextInput, TouchableOpacity, ScrollView, Animated } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { Entypo } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
 import { firebase } from '../../config'
 import { styles } from '../../styles/profile'
+import { EvilIcons } from '@expo/vector-icons'
 
-import { EvilIcons } from '@expo/vector-icons';
 import Icon_profile from '../../assets/icon_profile.svg'
 import Icon_adres from '../../assets/icon_profile/adres.svg'
 import Icon_card from '../../assets/icon_profile/card.svg'
