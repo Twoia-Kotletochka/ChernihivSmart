@@ -126,7 +126,6 @@ export default function Main() {
 
     Object.keys(data).reverse().forEach((key) => {
         const value = data[key];
-        console.log(value.street)
         if (value.street !== undefined) {
             if (data_uidArr.some(element => element === data[key].street)) {
                 databaseContent.push(

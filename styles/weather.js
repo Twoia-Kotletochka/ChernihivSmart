@@ -38,5 +38,9 @@ export const weather = StyleSheet.create({
         alignItems: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    weatherIcon: {
+        width: 60,
+        height: 60,
+      },
 })
