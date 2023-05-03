@@ -42,5 +42,47 @@ export const weather = StyleSheet.create({
     weatherIcon: {
         width: 60,
         height: 60,
-      },
+    },
+    /////
+    button: {
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderColor: '#ddd',
+    },
+    activeButton: {
+        backgroundColor: '#f0f0f0',
+    },
+    content: {
+        marginTop: 8,
+        color: '#777',
+    },
+    container1: {
+        backgroundColor: '#EEEEEE',
+        marginVertical: 5,
+        marginHorizontal: 16,
+        borderRadius: 10,
+        flexDirection: 'row',
+    },
+    container2: {
+        backgroundColor: '#EEEEEE',
+        marginHorizontal: 16,
+        borderRadius: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBottom: 10
+    },
+    container3: {
+        marginVertical: -20,
+        backgroundColor: '#EEEEEE',
+        marginHorizontal: 16,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginBottom: 10
+    },
 })
