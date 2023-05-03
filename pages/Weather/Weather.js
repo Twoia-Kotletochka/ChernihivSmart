@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { styles } from '../../styles/main'
 import { weather } from '../../styles/weather'
 import { useNavigation } from '@react-navigation/core'
-//import { GetWeather } from './GetWeather';
+import { GetWeather } from './GetWeather';
 
 let AnimatedOp = new Animated.Value(0);
 
@@ -35,23 +35,19 @@ const animatedNewsHeight = AnimatedOp.interpolate({
 });
 
 export default function Weather() {
-    const API_KEY = 'c0a5a7941dd6f563d53298f4c2c53092';
-    const BASE_URL = 'https://api.openweathermap.org/data/2.5/onecall';
-
     const navigation = useNavigation()
     const [weatherData, setWeatherData] = useState(null);
 
     useEffect(() => {
-        axios
-            .get(
-                'https://api.openweathermap.org/data/2.5/forecast?lat=51.5055100&lon=31.2848700&appid=c0a5a7941dd6f563d53298f4c2c53092&units=metric'
-            )
-            .then(response => {
-                if (response.status === 200) {
-                    setWeatherData(response.data);
-                }
-            })
-            .catch(error => console.error(error));
+        async function fetchData() {
+            try {
+                const data = await GetWeather();
+                setWeatherData(data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchData();
     }, []);
 
     const go_main = () => {
@@ -76,18 +72,36 @@ export default function Weather() {
                     )}
                 >
                     <Animated.View style={[weather.weather_contetn, { opacity: animateopacitytemp, }]}>
-                        <Text style={{ color: 'white', alignSelf: 'center', fontSize: 50, }}>{parseInt(weatherData.list[0].main.temp) + "°"}</Text>
-                        <Text style={{ color: 'white', alignSelf: 'center' }}>{weatherData.list[0].weather[0].description}</Text>
+                        <Text style={{ color: 'white', alignContent: 'space-around', fontSize: 50, }}>{parseInt(weatherData.list[0].main.temp) + "°"}</Text>
                         <Image
                             source={{ uri: `https://openweathermap.org/img/w/${weatherData.list[0].weather[0].icon}.png` }}
                             style={weather.weatherIcon}
                         />
                     </Animated.View>
-                    
+
                     <View style={{ alignItems: 'center' }}>
                         <Animated.View style={[styles.view_news,
                         { width: animatedNewsHeight, marginTop: 35, }]}>
-
+                            {weatherData.list.slice(1, 6).map((day) => (
+                                <View key={day.dt} style={styles.dayContainer}>
+                                    {/* <Text style={styles.dayTitle}>{new Date(day.dt * 1000).toLocaleDateString()}</Text> */}
+                                    <Image
+                                        source={{ uri: `https://openweathermap.org/img/w/${day.weather[0].icon}.png` }}
+                                        style={styles.weatherIcon}
+                                    />
+                                     <Text>{day.weather[0].description}</Text>
+                                    <View style={styles.dayDetails}>
+                                        <Text>Мін: {day.main.temp_min}°C</Text>
+                                        {/* <Text>День: {day.main.temp.day}°C</Text>
+                                        <Text>Вечер: {day.main.temp.eve}°C</Text>
+                                        <Text>Ночь: {day.main.temp.night}°C</Text> */}
+                                    </View>
+                                    {/* <View style={styles.dayDetails}>
+                                        <Text>Влажность: {day.humidity}%</Text>
+                                        <Text>Скорость ветра: {day.wind_speed} м/с</Text>
+                                    </View> */}
+                                </View>
+                            ))}
                         </Animated.View>
                     </View>
                 </ScrollView>

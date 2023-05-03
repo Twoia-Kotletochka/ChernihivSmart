@@ -1,10 +1,10 @@
 import React, { useCallback, useState, useEffect } from 'react'
-import { Text, View, StatusBar, ScrollView, Animated, TouchableOpacity, RefreshControl, ActivityIndicator, Modal, Pressable } from 'react-native'
+import { Text, View, StatusBar, ScrollView, Animated, TouchableOpacity, RefreshControl, ActivityIndicator, Modal, Pressable, Image } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { styles } from '../styles/main'
 import { styles_modal } from '../styles/modalMain'
-import News from '../components/News'
 import Cards from '../components/Cards'
+import { GetWeather } from './Weather/GetWeather';
 import { firebase } from '../config'
 
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize"
@@ -52,10 +52,9 @@ export default function Main() {
     const navigation = useNavigation()
     const [refreshing, setRefreshing] = useState(false)
     const [kkey, setKkey] = useState(1)
+    const [weatherData, setWeatherData] = useState(null);
     const data_uidArr = []
     const databaseContent = []
-    //const push = []
-    //const [databaseContent, setDatabaseContent] = useState([])
     const [data, setData] = useState(null)
     const [data_uid, setData_uid] = useState(null)
     const [modalVisible, setModalVisible] = useState(false)
@@ -68,6 +67,18 @@ export default function Main() {
         return () => {
             ref.off('value', listener);
         };
+    }, []);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const data = await GetWeather();
+                setWeatherData(data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchData();
     }, []);
 
     const go_profile = () => {
@@ -255,20 +266,25 @@ export default function Main() {
                         <Icon_profile style={{ width: '60%', height: '60%' }} />
                     </Animated.View>
                 </TouchableOpacity>
+                {weatherData && (
+                    <TouchableOpacity
+                        onPress={go_weather}>
+                        <Animated.View
+                            style={[{ opacity: animateopacityweather },
+                            { flexDirection: 'row', alignItems: "center" }]}>
 
-                <TouchableOpacity
-                    onPress={go_weather}>
-                    <Animated.View
-                        style={[{ opacity: animateopacityweather },
-                        { flexDirection: 'row', alignItems: "center" }]}>
+                            <Text style={styles.degrees_text}>{parseInt(weatherData.list[0].main.temp) + "°"}</Text>
 
-                        <Text style={styles.degrees_text}>15°</Text>
+                            <View style={[styles.weather]}>
+                                <Image
+                                    source={{ uri: `https://openweathermap.org/img/w/${weatherData.list[0].weather[0].icon}.png` }}
+                                    style={{ width: '95%', height: '95%' }}
+                                />
+                            </View>
 
-                        <View style={[styles.weather]}>
-                            <Icon_weather style={{ width: '60%', height: '60%' }} />
-                        </View>
-                    </Animated.View>
-                </TouchableOpacity>
+                        </Animated.View>
+                    </TouchableOpacity>
+                )}
             </View>
 
             <StatusBar
