@@ -273,7 +273,7 @@ export default function Main() {
                             style={[{ opacity: animateopacityweather },
                             { flexDirection: 'row', alignItems: "center" }]}>
 
-                            <Text style={styles.degrees_text}>{parseInt(weatherData.list[0].main.temp) + "°"}</Text>
+                            <Text style={styles.degrees_text}>{Math.round(weatherData.list[0].main.temp)}°</Text>
 
                             <View style={[styles.weather]}>
                                 <Image

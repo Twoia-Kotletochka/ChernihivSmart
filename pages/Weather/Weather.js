@@ -88,57 +88,47 @@ export default function Weather() {
 
             return acc;
         }, {});
-
-        let isFirst = true;
-        let i = 0;
         Object.keys(dailyWeatherDatattonsData).forEach(date => {
-            if (i < 4) {
-                if (isFirst) {
-                    isFirst = false;
-                    return; // пропустить первый элемент
+            //середнє значення
+            //іконки
+            const freqMap = {};
+            let maxCount = 0;
+            let mostFrequent;
+            const icons = dailyWeatherDatattonsData[date].map(item => item.weather[0].icon);
+            icons.forEach(function (item) {
+                freqMap[item] = (freqMap[item] || 0) + 1;
+                if (freqMap[item] > maxCount) {
+                    maxCount = freqMap[item];
+                    mostFrequent = item;
                 }
-                //середнє значення
-                //іконки
-                const freqMap = {};
-                let maxCount = 0;
-                let mostFrequent;
-                const icons = dailyWeatherDatattonsData[date].map(item => item.weather[0].icon);
-                icons.forEach(function (item) {
-                    freqMap[item] = (freqMap[item] || 0) + 1;
-                    if (freqMap[item] > maxCount) {
-                        maxCount = freqMap[item];
-                        mostFrequent = item;
-                    }
-                });
-                //швидкість вітру
-                const windSpeeds = dailyWeatherDatattonsData[date].map(item => item.wind.speed);
-                //тиск
-                const totalPressure = dailyWeatherDatattonsData[date].reduce((accumulator, current) => accumulator + current.main.pressure, 0);
-                //температура
-                const temps = dailyWeatherDatattonsData[date].map(item => item.main.temp);
-                //вологість
-                const humidities = dailyWeatherDatattonsData[date].map(item => item.main.humidity);
-                //темп. відчувається
-                const feels_like = dailyWeatherDatattonsData[date].map(item => item.main.feels_like);
-                //день тижня
-                const dayOfWeek = new Date(date).getDay();
-                buttonsData.push(
-                    {
-                        id: date,
-                        day: daysOfWeek[dayOfWeek],
-                        icon: mostFrequent,
-                        feels_like_max: Math.max(...feels_like),
-                        feels_like_min: Math.min(...feels_like),
-                        temp_min: Math.round(Math.max(...temps)),
-                        temp_max: Math.round(Math.min(...temps)),
-                        humidity_min: Math.min(...humidities),
-                        pressure: Math.round(totalPressure / dailyWeatherDatattonsData[date].length),
-                        speed_max: Math.max(...windSpeeds),
-                    }
-                )
-                console.log(feels_like)
-            }
-            ++i;
+            });
+            //швидкість вітру
+            const windSpeeds = dailyWeatherDatattonsData[date].map(item => item.wind.speed);
+            //тиск
+            const totalPressure = dailyWeatherDatattonsData[date].reduce((accumulator, current) => accumulator + current.main.pressure, 0);
+            //температура
+            const temps = dailyWeatherDatattonsData[date].map(item => item.main.temp);
+            //вологість
+            const humidities = dailyWeatherDatattonsData[date].map(item => item.main.humidity);
+            //темп. відчувається
+            const feels_like = dailyWeatherDatattonsData[date].map(item => item.main.feels_like);
+            //день тижня
+            const dayOfWeek = new Date(date).getDay();
+            buttonsData.push(
+                {
+                    id: date,
+                    day: daysOfWeek[dayOfWeek],
+                    icon: mostFrequent,
+                    feels_like_max: Math.max(...feels_like),
+                    feels_like_min: Math.min(...feels_like),
+                    temp_max: Math.round(Math.max(...temps)),
+                    temp_min: Math.round(Math.min(...temps)),
+                    humidity_min: Math.min(...humidities),
+                    pressure: Math.round(totalPressure / dailyWeatherDatattonsData[date].length),
+                    speed_max: Math.max(...windSpeeds),
+                }
+            )
+            console.log(feels_like)
         });
     }
 
@@ -178,11 +168,11 @@ export default function Weather() {
                                         <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
                                             <View style={{ width: 250, flexDirection: 'row', marginBottom: 5, justifyContent: 'space-between' }}>
                                                 <Text style={{}}>Макс. температура:</Text>
-                                                <Text style={{ fontSize: 16 }}>{weatherData.list[0].main.temp_max}°</Text>
+                                                <Text style={{ fontSize: 16 }}>{buttonsData[0].temp_max}°</Text>
                                             </View>
                                             <View style={{ width: 250, flexDirection: 'row', marginTop: 5, justifyContent: 'space-between' }}>
                                                 <Text style={{}}>Мін. температура:</Text>
-                                                <Text style={{ fontSize: 16 }}>{weatherData.list[0].main.temp_min}°</Text>
+                                                <Text style={{ fontSize: 16 }}>{buttonsData[0].temp_min}°</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -235,7 +225,7 @@ export default function Weather() {
                                                 </Text>
                                             </View>
                                             <Text style={{ paddingTop: 15, paddingBottom: 2, fontSize: 16 }}>
-                                                {button.temp_min}/{button.temp_max}
+                                                {button.temp_max}/{button.temp_min}
                                             </Text>
                                         </View>
                                     </View>
