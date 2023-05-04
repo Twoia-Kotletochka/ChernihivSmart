@@ -39,6 +39,7 @@ export default function Weather() {
     const [weatherData, setWeatherData] = useState(null);
     const [activeButtonId, setActiveButtonId] = useState(null);
     let buttonsData = [];
+    const daysOfWeek = ['Неділя', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', "П'ятниця", 'Субота'];
     useEffect(() => {
         async function fetchData() {
             try {
@@ -72,20 +73,75 @@ export default function Weather() {
     }
 
     if (weatherData) {
-        buttonsData = weatherData.list.slice(1, 7).map((day) => (
-            {
-                id: day.dt,
-                icon: day.weather[0].icon,
-                feels_like: day.main.feels_like,
-                temp_min: day.main.temp_min,
-                temp_max: day.main.temp_max,
-                humidity: day.main.humidity,
-                pressure: day.main.pressure,
-                speed: day.wind.speed,
+        const dailyWeatherDatattonsData = weatherData.list.reduce((acc, item) => {
+            // extract the date from the timestamp
+            const date = item.dt_txt.split(' ')[0];
+
+            // check if there is already a collection of weather data for this date
+            if (!acc[date]) {
+                // create a new collection for this date
+                acc[date] = [item];
+            } else {
+                // add this weather data to the existing collection for this date
+                acc[date].push(item);
             }
-        ))
-        console.log(buttonsData)
+
+            return acc;
+        }, {});
+
+        let isFirst = true;
+        let i = 0;
+        Object.keys(dailyWeatherDatattonsData).forEach(date => {
+            if (i < 4) {
+                if (isFirst) {
+                    isFirst = false;
+                    return; // пропустить первый элемент
+                }
+                //середнє значення
+                //іконки
+                const freqMap = {};
+                let maxCount = 0;
+                let mostFrequent;
+                const icons = dailyWeatherDatattonsData[date].map(item => item.weather[0].icon);
+                icons.forEach(function (item) {
+                    freqMap[item] = (freqMap[item] || 0) + 1;
+                    if (freqMap[item] > maxCount) {
+                        maxCount = freqMap[item];
+                        mostFrequent = item;
+                    }
+                });
+                //швидкість вітру
+                const windSpeeds = dailyWeatherDatattonsData[date].map(item => item.wind.speed);
+                //тиск
+                const totalPressure = dailyWeatherDatattonsData[date].reduce((accumulator, current) => accumulator + current.main.pressure, 0);
+                //температура
+                const temps = dailyWeatherDatattonsData[date].map(item => item.main.temp);
+                //вологість
+                const humidities = dailyWeatherDatattonsData[date].map(item => item.main.humidity);
+                //темп. відчувається
+                const feels_like = dailyWeatherDatattonsData[date].map(item => item.main.feels_like);
+                //день тижня
+                const dayOfWeek = new Date(date).getDay();
+                buttonsData.push(
+                    {
+                        id: date,
+                        day: daysOfWeek[dayOfWeek],
+                        icon: mostFrequent,
+                        feels_like_max: Math.max(...feels_like),
+                        feels_like_min: Math.min(...feels_like),
+                        temp_min: Math.round(Math.max(...temps)),
+                        temp_max: Math.round(Math.min(...temps)),
+                        humidity_min: Math.min(...humidities),
+                        pressure: Math.round(totalPressure / dailyWeatherDatattonsData[date].length),
+                        speed_max: Math.max(...windSpeeds),
+                    }
+                )
+                console.log(feels_like)
+            }
+            ++i;
+        });
     }
+
 
     return (
         <LinearGradient
@@ -105,7 +161,8 @@ export default function Weather() {
                     )}
                 >
                     <Animated.View style={[weather.weather_contetn, { opacity: animateopacitytemp, }]}>
-                        <Text style={{ color: 'white', alignContent: 'space-around', fontSize: 50, }}>{parseInt(weatherData.list[0].main.temp)}°</Text>
+                        <Text style={{ color: 'white', alignContent: 'space-around', fontSize: 50, }}>{Math.round(weatherData.list[0].main.temp)}°</Text>
+                        <Text style={{ color: 'white', alignContent: 'space-around', fontSize: 15, }}>{weatherData.list[0].weather[0].description}</Text>
                     </Animated.View>
 
                     <View style={{ alignItems: 'center' }}>
@@ -132,12 +189,12 @@ export default function Weather() {
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                                         <View style={{ flexDirection: 'column' }}>
                                             <View style={{ paddingBottom: 10 }}>
-                                                <Text style={{ fontSize: 12 }}>Відчуваєьться</Text>
+                                                <Text style={{ fontSize: 12 }}>Відчувається</Text>
                                                 <Text>{weatherData.list[0].main.feels_like}°C</Text>
                                             </View>
                                             <View style={{ paddingBottom: 10 }}>
                                                 <Text style={{ fontSize: 12 }}>Швидкість вітру</Text>
-                                                <Text>{weatherData.list[0].wind.speed} км/год</Text>
+                                                <Text>{weatherData.list[0].wind.speed} м/с</Text>
                                             </View>
                                         </View>
                                         <View style={{ flexDirection: 'column' }}>
@@ -147,7 +204,7 @@ export default function Weather() {
                                             </View>
                                             <View style={{ paddingBottom: 10 }}>
                                                 <Text style={{ fontSize: 12 }}>Тиск</Text>
-                                                <Text>{weatherData.list[0].main.pressure} mbar</Text>
+                                                <Text>{weatherData.list[0].main.pressure} hPa</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -166,39 +223,42 @@ export default function Weather() {
                                 >
                                     <View style={weather.container2}>
                                         <View style={{ paddingTop: 10, paddingBottom: 10, flexDirection: 'row', width: '90%', justifyContent: 'space-between' }}>
-                                            <View style={styles.icon_board}>
-                                                <Image
-                                                    source={{ uri: `https://openweathermap.org/img/w/${button.icon}.png` }}
-                                                    style={{ width: 50, height: 50 }}
-                                                />
+                                            <View style={{ flexDirection: 'row' }}>
+                                                <View style={styles.icon_board}>
+                                                    <Image
+                                                        source={{ uri: `https://openweathermap.org/img/w/${button.icon}.png` }}
+                                                        style={{ width: 50, height: 50 }}
+                                                    />
+                                                </View>
+                                                <Text style={{ fontSize: 16, paddingTop: 12 }}>
+                                                    {button.day}
+                                                </Text>
                                             </View>
-                                            <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2, fontSize: 16 }}>
+                                            <Text style={{ paddingTop: 15, paddingBottom: 2, fontSize: 16 }}>
                                                 {button.temp_min}/{button.temp_max}
                                             </Text>
                                         </View>
                                     </View>
                                     {button.id === activeButtonId &&
                                         <View style={weather.container3}>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                                <View style={{ flexDirection: 'column' }}>
-                                                    <View style={{ paddingBottom: 20, paddingTop: 10 }}>
-                                                        <Text style={{ fontSize: 12 }}>Відчуваєьться</Text>
-                                                        <Text>{button.feels_like}°C</Text>
-                                                    </View>
-                                                    <View style={{ paddingBottom: 10 }}>
-                                                        <Text style={{ fontSize: 12 }}>Швидкість вітру</Text>
-                                                        <Text>{button.speed} км/год</Text>
-                                                    </View>
+                                            <View style={{ flexDirection: 'column' }}>
+                                                <View style={{ paddingBottom: 20, paddingTop: 10 }}>
+                                                    <Text style={{ fontSize: 12 }}>Відчувається</Text>
+                                                    <Text>{button.feels_like_max} / {button.feels_like_min}°C</Text>
                                                 </View>
-                                                <View style={{ flexDirection: 'column' }}>
-                                                    <View style={{ paddingBottom: 20, paddingTop: 10 }}>
-                                                        <Text style={{ fontSize: 12 }}>Вологість</Text>
-                                                        <Text>{button.humidity}%</Text>
-                                                    </View>
-                                                    <View style={{ paddingBottom: 10 }}>
-                                                        <Text style={{ fontSize: 12 }}>Тиск</Text>
-                                                        <Text>{button.pressure} mbar</Text>
-                                                    </View>
+                                                <View style={{ paddingBottom: 10 }}>
+                                                    <Text style={{ fontSize: 12 }}>Швидкість вітру</Text>
+                                                    <Text>{button.speed_max}м/с</Text>
+                                                </View>
+                                            </View>
+                                            <View style={{ flexDirection: 'column' }}>
+                                                <View style={{ paddingBottom: 20, paddingTop: 10 }}>
+                                                    <Text style={{ fontSize: 12 }}>Вологість</Text>
+                                                    <Text>{button.humidity_min}%</Text>
+                                                </View>
+                                                <View style={{ paddingBottom: 10 }}>
+                                                    <Text style={{ fontSize: 12 }}>Тиск</Text>
+                                                    <Text>{button.pressure} hPa</Text>
                                                 </View>
                                             </View>
                                         </View>

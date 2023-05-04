@@ -82,7 +82,7 @@ export const weather = StyleSheet.create({
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         marginBottom: 10
     },
 })
