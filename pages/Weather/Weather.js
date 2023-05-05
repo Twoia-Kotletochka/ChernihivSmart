@@ -114,6 +114,7 @@ export default function Weather() {
             const feels_like = dailyWeatherDatattonsData[date].map(item => item.main.feels_like);
             //день тижня
             const dayOfWeek = new Date(date).getDay();
+            
             buttonsData.push(
                 {
                     id: date,
@@ -128,7 +129,6 @@ export default function Weather() {
                     speed_max: Math.max(...windSpeeds),
                 }
             )
-            console.log(feels_like)
         });
     }
 
@@ -166,11 +166,11 @@ export default function Weather() {
                                             style={{ width: 75, height: 75 }}
                                         />
                                         <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
-                                            <View style={{ width: 250, flexDirection: 'row', marginBottom: 5, justifyContent: 'space-between' }}>
+                                            <View style={{ width: 200, flexDirection: 'row', marginBottom: 5, justifyContent: 'space-between' }}>
                                                 <Text style={{}}>Макс. температура:</Text>
                                                 <Text style={{ fontSize: 16 }}>{buttonsData[0].temp_max}°</Text>
                                             </View>
-                                            <View style={{ width: 250, flexDirection: 'row', marginTop: 5, justifyContent: 'space-between' }}>
+                                            <View style={{ width: 200, flexDirection: 'row', marginTop: 5, justifyContent: 'space-between' }}>
                                                 <Text style={{}}>Мін. температура:</Text>
                                                 <Text style={{ fontSize: 16 }}>{buttonsData[0].temp_min}°</Text>
                                             </View>
@@ -205,7 +205,7 @@ export default function Weather() {
                                 <Text style={{ fontSize: 25 }}>Прогноз на тиждень</Text>
                             </View>
 
-                            {buttonsData.map(button => (
+                            {buttonsData.slice(1).map(button => (
                                 <TouchableOpacity
                                     key={button.id}
                                     onPress={() => handleButtonPress(button.id)}
