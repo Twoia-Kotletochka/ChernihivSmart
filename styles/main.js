@@ -12,8 +12,8 @@ export const styles = StyleSheet.create({
         marginHorizontal: 16,
         borderRadius: 10,
         flexDirection: 'row',
-        borderWidth: 2.5,
-        borderColor:"#4B9CE4"
+        //borderWidth: 2.5,
+        //borderColor:"#4B9CE4"
     },
     container2: {
         backgroundColor: '#EEEEEE',
@@ -21,13 +21,13 @@ export const styles = StyleSheet.create({
         marginHorizontal: 16,
         borderRadius: 10,
         flexDirection: 'row',
-        borderWidth: 2.5,
+        borderWidth: 2,
         borderColor:"#E9B5BC"
     },
     icon_board: {
         width: 50,
         height: 50,
-        backgroundColor: 'white',
+     
         borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',

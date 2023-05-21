@@ -19,7 +19,12 @@ import { useNavigation } from '@react-navigation/core'
 //header
 import Icon_profile from '../assets/icon_profile.svg'
 //weather
-import Icon_weather from '../assets/icon_weather/cloud.svg'
+import Icon_sun from '../assets/icon_cloud_white_svg/sun.svg'
+import Icon_clouds from '../assets/icon_cloud_white_svg/сlouds.svg'
+import Icon_fog from '../assets/icon_cloud_white_svg/fog.svg'
+import Icon_rain from '../assets/icon_cloud_white_svg/rain.svg'
+import Icon_snow from '../assets/icon_cloud_white_svg/snow.svg'
+import Icon_thunderstorm from '../assets/icon_cloud_white_svg/thunderstorm.svg'
 
 let AnimatedOp = new Animated.Value(0);
 
@@ -98,6 +103,26 @@ export default function Main() {
     const showModal = (key) => {
         setKkey(key);
         setModalVisible(true);
+    }
+
+    function getWeatherIcon(code) {
+        if (code === '01d') {
+            return <Icon_sun />
+        } else if (code === '02d') {
+            return <Icon_sun />
+        } else if (code === '03d' || code === '04d') {
+            return <Icon_clouds />
+        } else if (code === '09d' || code === '10d') {
+            return <Icon_rain />
+        } else if (code === '11d' || code === '11n') {
+            return <Icon_thunderstorm />
+        } else if (code === '13d' || code === '13n') {
+            return <Icon_snow />
+        } else if (code === '50d' || code === '50n') {
+            return <Icon_fog />
+        } else {
+            return <Icon_sun />
+        }
     }
 
     const iconfunc = (icon) => {
@@ -276,10 +301,7 @@ export default function Main() {
                             <Text style={styles.degrees_text}>{Math.round(weatherData.list[0].main.temp)}°</Text>
 
                             <View style={[styles.weather]}>
-                                <Image
-                                    source={{ uri: `https://openweathermap.org/img/w/${weatherData.list[0].weather[0].icon}.png` }}
-                                    style={{ width: '95%', height: '95%' }}
-                                />
+                                <View style={{height: 30, width:30}}>{getWeatherIcon(weatherData.list[0].weather[0].icon)}</View>
                             </View>
 
                         </Animated.View>

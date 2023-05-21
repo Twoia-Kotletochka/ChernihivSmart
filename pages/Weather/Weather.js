@@ -1,12 +1,19 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import axios from 'axios'
-import { Text, View, StatusBar, ScrollView, Animated, ActivityIndicator, TouchableOpacity, TouchableHighlight, Image } from 'react-native'
+import { Text, View, StatusBar, ScrollView, Animated, ActivityIndicator, TouchableOpacity, Image } from 'react-native'
 import { Entypo } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient'
 import { styles } from '../../styles/main'
 import { weather } from '../../styles/weather'
 import { useNavigation } from '@react-navigation/core'
 import { GetWeather } from './GetWeather';
+//weather
+import Icon_sun from '../../assets/icon_cloud_white_svg/sun.svg'
+import Icon_clouds from '../../assets/icon_cloud_white_svg/сlouds.svg'
+import Icon_fog from '../../assets/icon_cloud_white_svg/fog.svg'
+import Icon_rain from '../../assets/icon_cloud_white_svg/rain.svg'
+import Icon_snow from '../../assets/icon_cloud_white_svg/snow.svg'
+import Icon_thunderstorm from '../../assets/icon_cloud_white_svg/thunderstorm.svg'
 
 let AnimatedOp = new Animated.Value(0);
 
@@ -40,7 +47,6 @@ export default function Weather() {
     const navigation = useNavigation()
     const [weatherData, setWeatherData] = useState(null);
     const [activeButtonId, setActiveButtonId] = useState(null);
-    const [description, setDescription] = useState("");
     let buttonsData = [];
     const daysOfWeek = ['Неділя', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', "П'ятниця", 'Субота'];
     useEffect(() => {
@@ -73,6 +79,26 @@ export default function Weather() {
                 <ActivityIndicator color='#4BB5F5' size='large' animating={true} style={{ marginTop: 60 }} />
             </View>
         )
+    }
+
+    function getWeatherIcon(code) {
+        if (code === '01d') {
+            return <Icon_sun />
+        } else if (code === '02d') {
+            return <Icon_sun />
+        } else if (code === '03d' || code === '04d') {
+            return <Icon_clouds />
+        } else if (code === '09d' || code === '10d') {
+            return <Icon_rain />
+        } else if (code === '11d' || code === '11n') {
+            return <Icon_thunderstorm />
+        } else if (code === '13d' || code === '13n') {
+            return <Icon_snow />
+        } else if (code === '50d' || code === '50n') {
+            return <Icon_fog />
+        } else {
+            return <Icon_sun />
+        }
     }
 
     function setUkrainianDescription(englishDescription) {
@@ -299,7 +325,7 @@ export default function Weather() {
                 >
                     <Animated.View style={[weather.weather_contetn, { opacity: animateopacitytemp, }]}>
                         <Text style={{ color: 'white', alignContent: 'space-around', fontSize: 50, }}>{Math.round(weatherData.list[0].main.temp)}°</Text>
-                        <Text style={{ color: 'white', textAlign:'center', fontSize: 15, }}>{setUkrainianDescription(weatherData.list[0].weather[0].description)}</Text>
+                        <Text style={{ color: 'white', textAlign: 'center', fontSize: 15, }}>{setUkrainianDescription(weatherData.list[0].weather[0].description)}</Text>
                     </Animated.View>
                     <View style={{ alignItems: 'center' }}>
                         <Animated.View style={[styles.view_news,
@@ -307,10 +333,7 @@ export default function Weather() {
                             <View style={weather.container1}>
                                 <View style={{ flexDirection: 'column', }}>
                                     <View style={{ flexDirection: 'row' }}>
-                                        <Image
-                                            source={{ uri: `https://openweathermap.org/img/w/${weatherData.list[0].weather[0].icon}.png` }}
-                                            style={{ width: 75, height: 75 }}
-                                        />
+                                        <View style={{ height: 80, width: 80, margin:10 }}>{getWeatherIcon(weatherData.list[0].weather[0].icon)}</View>
                                         <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
                                             <View style={{ width: 200, flexDirection: 'row', marginBottom: 5, justifyContent: 'space-between' }}>
                                                 <Text style={{}}>Макс. температура:</Text>
@@ -360,11 +383,9 @@ export default function Weather() {
                                     <View style={weather.container2}>
                                         <View style={{ paddingTop: 10, paddingBottom: 10, flexDirection: 'row', width: '90%', justifyContent: 'space-between' }}>
                                             <View style={{ flexDirection: 'row' }}>
+
                                                 <View style={styles.icon_board}>
-                                                    <Image
-                                                        source={{ uri: `https://openweathermap.org/img/w/${button.icon}.png` }}
-                                                        style={{ width: 50, height: 50 }}
-                                                    />
+                                                    <View style={{ width: 50, height: 50 }}>{getWeatherIcon(button.icon)}</View>
                                                 </View>
                                                 <Text style={{ fontSize: 16, paddingTop: 12 }}>
                                                     {button.day}

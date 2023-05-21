@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View, StatusBar, TextInput, TouchableOpacity, ScrollView, Animated } from 'react-native'
+import { Text, View, StatusBar, Linking, TouchableOpacity, ScrollView, Animated } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Entypo } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
@@ -55,6 +55,10 @@ const Profile = () => {
                 }
             })
     }, [])
+
+    function openTelegram() {
+        Linking.openURL('https://t.me/Twoia_Kotletochka');
+    };
 
     const go_main = () => { navigation.navigate('Main') }
     const signout = () => { firebase.auth().signOut(); navigation.replace('Load'); }
@@ -158,7 +162,7 @@ const Profile = () => {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.container2}>
+                        <TouchableOpacity style={styles.container2} onPress={openTelegram}>
                             <View style={{ marginLeft: 5, paddingTop: 15 }}>
                                 <View style={styles.icon_board}>
                                     {<Icon_support style={{ width: '70%', height: '70%' }} />}
