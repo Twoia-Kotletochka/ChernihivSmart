@@ -34,10 +34,13 @@ const animatedNewsHeight = AnimatedOp.interpolate({
     extrapolate: 'clamp'
 });
 
+
+
 export default function Weather() {
     const navigation = useNavigation()
     const [weatherData, setWeatherData] = useState(null);
     const [activeButtonId, setActiveButtonId] = useState(null);
+    const [description, setDescription] = useState("");
     let buttonsData = [];
     const daysOfWeek = ['Неділя', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', "П'ятниця", 'Субота'];
     useEffect(() => {
@@ -72,6 +75,150 @@ export default function Weather() {
         )
     }
 
+    function setUkrainianDescription(englishDescription) {
+        let description = null;
+        switch (englishDescription.toLowerCase()) {
+            case "clear sky":
+                description = "Ясно";
+                break;
+            case "few clouds":
+                description = "Малохмарно";
+                break;
+            case "scattered clouds":
+                description = "Місцями хмарно";
+                break;
+            case "broken clouds":
+                description = "Похмуро";
+                break;
+            case "overcast clouds":
+                description = "Хмарно";
+                break;
+            case "shower rain":
+                description = "Дощ з проясненнями";
+                break;
+            case "rain":
+                description = "Дощ";
+                break;
+            case "light rain":
+                description = "Слабкий дощ";
+                break;
+            case "moderate rain":
+                description = "Помірний дощ";
+                break;
+            case "heavy intensity rain":
+                description = "Сильний дощ";
+                break;
+            case "very heavy rain":
+                description = "Дуже сильний дощ";
+                break;
+            case "extreme rain":
+                description = "Надзвичайно сильний дощ";
+                break;
+            case "freezing rain":
+                description = "Ожеледиця";
+                break;
+            case "light intensity shower rain":
+                description = "Слабкий дощ з проясненнями";
+                break;
+            case "heavy intensity shower rain":
+                description = "Сильний дощ з проясненнями";
+                break;
+            case "thunderstorm":
+                description = "Гроза";
+                break;
+            case "thunderstorm with light rain":
+                description = "Гроза з легким дощем";
+                break;
+            case "thunderstorm with rain":
+                description = "Гроза з дощем";
+                break;
+            case "thunderstorm with heavy rain":
+                description = "Гроза з сильним дощем";
+                break;
+            case "light thunderstorm":
+                description = "Легка гроза";
+                break;
+            case "heavy thunderstorm":
+                description = "Сильна гроза";
+                break;
+            case "ragged thunderstorm":
+                description = "Локальна гроза";
+                break;
+            case "thunderstorm with light drizzle":
+                description = "Гроза з мінливою мрякою";
+                break;
+            case "thunderstorm with drizzle":
+                description = "Гроза з мрякою";
+                break;
+            case "thunderstorm with heavy drizzle":
+                description = "Гроза із сильною мрякою";
+                break;
+            case "snow":
+                description = "Сніг";
+                break;
+            case "light snow":
+                description = "Слабкий сніг";
+                break;
+            case "heavy snow":
+                description = "Сильний сніг";
+                break;
+            case "sleet":
+                description = "Дощ зі снігом";
+                break;
+            case "shower sleet":
+                description = "Мокрий сніг";
+                break;
+            case "light rain and snow":
+                description = "Слабкий дощ зі снігом";
+                break;
+            case "rain and snow":
+                description = "Дощ із снігом";
+                break;
+            case "light shower snow":
+                description = "Слабкий снігопад";
+                break;
+            case "shower snow":
+                description = "Снігопад";
+                break;
+            case "heavy shower snow":
+                description = "Сильний снігопад";
+                break;
+            case "mist":
+                description = "Туман";
+                break;
+            case "smoke":
+                description = "Дим";
+                break;
+            case "haze":
+                description = "Легкий туман";
+                break;
+            case "sand, dust whirls":
+                description = "Пісок, пилові вихори";
+                break;
+            case "fog":
+                description = "Туман";
+                break;
+            case "sand":
+                description = "Пісок";
+                break;
+            case "dust":
+                description = "Пил";
+                break;
+            case "volcanic ash":
+                description = "Вулканічний попіл";
+                break;
+            case "squalls":
+                description = "Шквали";
+                break;
+            case "tornado":
+                description = "Торнадо";
+                break;
+            default:
+                description = englishDescription;
+        }
+        return description;
+    }
+
     if (weatherData) {
         const dailyWeatherDatattonsData = weatherData.list.reduce((acc, item) => {
             // extract the date from the timestamp
@@ -88,6 +235,7 @@ export default function Weather() {
 
             return acc;
         }, {});
+
         Object.keys(dailyWeatherDatattonsData).forEach(date => {
             //середнє значення
             //іконки
@@ -114,7 +262,7 @@ export default function Weather() {
             const feels_like = dailyWeatherDatattonsData[date].map(item => item.main.feels_like);
             //день тижня
             const dayOfWeek = new Date(date).getDay();
-            
+
             buttonsData.push(
                 {
                     id: date,
@@ -131,7 +279,6 @@ export default function Weather() {
             )
         });
     }
-
 
     return (
         <LinearGradient
@@ -152,9 +299,8 @@ export default function Weather() {
                 >
                     <Animated.View style={[weather.weather_contetn, { opacity: animateopacitytemp, }]}>
                         <Text style={{ color: 'white', alignContent: 'space-around', fontSize: 50, }}>{Math.round(weatherData.list[0].main.temp)}°</Text>
-                        <Text style={{ color: 'white', alignContent: 'space-around', fontSize: 15, }}>{weatherData.list[0].weather[0].description}</Text>
+                        <Text style={{ color: 'white', textAlign:'center', fontSize: 15, }}>{setUkrainianDescription(weatherData.list[0].weather[0].description)}</Text>
                     </Animated.View>
-
                     <View style={{ alignItems: 'center' }}>
                         <Animated.View style={[styles.view_news,
                         { width: animatedNewsHeight, marginTop: 35, }]}>
