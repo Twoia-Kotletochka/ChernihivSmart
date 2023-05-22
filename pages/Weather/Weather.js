@@ -8,12 +8,12 @@ import { weather } from '../../styles/weather'
 import { useNavigation } from '@react-navigation/core'
 import { GetWeather } from './GetWeather';
 //weather
-import Icon_sun from '../../assets/icon_cloud_white_svg/sun.svg'
-import Icon_clouds from '../../assets/icon_cloud_white_svg/сlouds.svg'
-import Icon_fog from '../../assets/icon_cloud_white_svg/fog.svg'
-import Icon_rain from '../../assets/icon_cloud_white_svg/rain.svg'
-import Icon_snow from '../../assets/icon_cloud_white_svg/snow.svg'
-import Icon_thunderstorm from '../../assets/icon_cloud_white_svg/thunderstorm.svg'
+import Icon_sun from '../../assets/icon_cloud_svg/sun.svg'
+import Icon_clouds from '../../assets/icon_cloud_svg/сlouds.svg'
+import Icon_fog from '../../assets/icon_cloud_svg/fog.svg'
+import Icon_rain from '../../assets/icon_cloud_svg/rain.svg'
+import Icon_snow from '../../assets/icon_cloud_svg/snow.svg'
+import Icon_thunderstorm from '../../assets/icon_cloud_svg/thunderstorm.svg'
 
 let AnimatedOp = new Animated.Value(0);
 
@@ -385,7 +385,7 @@ export default function Weather() {
                                             <View style={{ flexDirection: 'row' }}>
 
                                                 <View style={styles.icon_board}>
-                                                    <View style={{ width: 50, height: 50 }}>{getWeatherIcon(button.icon)}</View>
+                                                    <View style={{ width: 40, height: 40 }}>{getWeatherIcon(button.icon)}</View>
                                                 </View>
                                                 <Text style={{ fontSize: 16, paddingTop: 12 }}>
                                                     {button.day}

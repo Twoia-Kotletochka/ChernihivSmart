@@ -22,17 +22,17 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         flexDirection: 'row',
         borderWidth: 2,
-        borderColor:"#E9B5BC"
+        borderColor: "#E9B5BC"
     },
     icon_board: {
         width: 50,
         height: 50,
-     
+        backgroundColor: 'white',
         borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 20,
-
+        borderRadius: 100,
     },
     view_news: {
         borderTopLeftRadius: 20,
