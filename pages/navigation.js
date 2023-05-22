@@ -11,6 +11,9 @@ import Weather from './Weather/Weather'
 import Profile from './Profile/Profile'
 import AddAddress from './Profile/AddAddress'
 import Address from './Profile/Address'
+import Edit_Prodile from './Profile/Edit_Prodile'
+import Edit_name from './Profile/Edit_name'
+import Edit_tel  from './Profile/Edit_tel'
 
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
@@ -70,6 +73,22 @@ export default function Navigate() {
                 component={Address}
                 options={{ headerShown: false }}
             />
+            <Stack.Screen
+                name='Edit_Prodile'
+                component={Edit_Prodile}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='Edit_name'
+                component={Edit_name}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='Edit_tel'
+                component={Edit_tel}
+                options={{ headerShown: false }}
+            />
+
         </Stack.Navigator>
     </NavigationContainer>;
 }

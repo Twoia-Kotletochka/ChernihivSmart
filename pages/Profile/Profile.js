@@ -63,6 +63,7 @@ const Profile = () => {
     const go_main = () => { navigation.navigate('Main') }
     const signout = () => { firebase.auth().signOut(); navigation.replace('Load'); }
     const go_address = () => { navigation.navigate('Address'); }
+    const go_edit_prodile = () => { navigation.navigate('Edit_Prodile'); }
 
     return (
         <LinearGradient
@@ -81,7 +82,7 @@ const Profile = () => {
                     { useNativeDriver: false }
                 )}
             >
-                <Animated.View style={[styles.profile_containe, { opacity: animateopacityprofile, }]}>
+                <Animated.View style={[styles.profile_container, { opacity: animateopacityprofile, }]}>
                     <View style={styles.profile_container}>
                         <View style={styles.profile_container_circle}>
                             <Icon_profile style={{ width: '60%', height: '60%' }} />
@@ -96,7 +97,7 @@ const Profile = () => {
                     { width: animatedNewsHeight, }]}>
                         <Text style={{ fontSize: 24, marginLeft: 20, }}>Налаштування</Text>
                         <TouchableOpacity style={styles.container2} onPress={go_address}>
-                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                            <View style={styles.container2_icon}>
                                 <View style={styles.icon_board}>
                                     {<Icon_adres style={{ width: '80%', height: '80%' }} />}
                                 </View>
@@ -109,7 +110,7 @@ const Profile = () => {
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.container2}>
-                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                            <View style={styles.container2_icon}>
                                 <View style={styles.icon_board}>
                                     {<Icon_card style={{ width: '75%', height: '75%' }} />}
                                 </View>
@@ -122,7 +123,7 @@ const Profile = () => {
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.container2}>
-                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                            <View style={styles.container2_icon}>
                                 <View style={styles.icon_board}>
                                     {<Icon_notification style={{ width: '80%', height: '80%' }} />}
                                 </View>
@@ -135,7 +136,7 @@ const Profile = () => {
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.container2}>
-                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                            <View style={styles.container2_icon}>
                                 <View style={styles.icon_board}>
                                     {<Icon_lock style={{ width: '70%', height: '70%' }} />}
                                 </View>
@@ -150,7 +151,7 @@ const Profile = () => {
                         <Text style={{ fontSize: 24, marginLeft: 20, }}>FAQ</Text>
 
                         <TouchableOpacity style={styles.container2}>
-                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                        <View style={styles.container2_icon}>
                                 <View style={styles.icon_board}>
                                     {<Icon_question style={{ width: '70%', height: '70%' }} />}
                                 </View>
@@ -163,7 +164,7 @@ const Profile = () => {
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.container2} onPress={openTelegram}>
-                            <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                        <View style={styles.container2_icon}>
                                 <View style={styles.icon_board}>
                                     {<Icon_support style={{ width: '70%', height: '70%' }} />}
                                 </View>
@@ -187,9 +188,7 @@ const Profile = () => {
             </ScrollView>
 
             <View style={styles.header}>
-                <TouchableOpacity
-                //onPress={go_profile}
-                >
+                <TouchableOpacity onPress={go_edit_prodile}>
                     <Animated.View style={[styles.editor, { opacity: animateopacityprofil }]}>
                         <EvilIcons name="pencil" size={42} color="white" />
                     </Animated.View>

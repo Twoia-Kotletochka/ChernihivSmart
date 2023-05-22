@@ -8,9 +8,9 @@ export const styles = StyleSheet.create({
     },
     header: {
         width: '90%',
-        marginTop: 5,
+        marginTop: 15,
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         backgroundColor: 'transparent',
         position: 'absolute',
         alignItems: 'center'
@@ -43,6 +43,7 @@ export const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingBottom: 50,
         width: '95%',
+        height: 650,
         paddingTop: 10
     },
     profile_container: {
@@ -50,13 +51,13 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'center',
     },
-    profile_container_circle: {
+    profile_container_card: {
         marginTop: 70,
-        marginBottom: 10,
+        marginBottom: 20,
         backgroundColor: 'white',
-        width: 140,
-        height: 140,
-        borderRadius: 100,
+        width: 320,
+        height: 200,
+        borderRadius: 15,
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
@@ -72,6 +73,15 @@ export const styles = StyleSheet.create({
         fontSize: 14,
     },
     container2: {
+        height: 75,
+        backgroundColor: '#EEEEEE',
+        marginVertical: 5,
+        marginHorizontal: 16,
+        borderRadius: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    container2_static: {
         backgroundColor: '#EEEEEE',
         marginVertical: 5,
         marginHorizontal: 16,
@@ -82,7 +92,7 @@ export const styles = StyleSheet.create({
         fontSize: 18,
     },
     title2: {
-        fontSize: 10,
+        fontSize: 11,
     },
     icon_board: {
         width: 50,
@@ -91,13 +101,43 @@ export const styles = StyleSheet.create({
         borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',
+        marginLeft: 10,
+        marginRight: 15
+    },
+    icon_board_static: {
+        width: 50,
+        height: 50,
+        backgroundColor: 'white',
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
         marginRight: 20,
-
+    },
+    icon_basket: {
+        width: 50,
+        height: 50,
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    icon_cards: {
+        width: 65,
+        height: 65
+    },
+    profile_container_circle: {
+        marginTop: -10,
+        backgroundColor: '#DBD9D9',
+        width: 80,
+        height: 80,
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
     },
     container2_icon: {
         marginLeft: 5,
         flexDirection: 'column',
         justifyContent: 'center',
-        marginLeft: 10
+        marginLeft: 5
     }
 })

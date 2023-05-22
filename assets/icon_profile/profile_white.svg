@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_Шар_2" data-name="Шар 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.43 92.06">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="_настройки_" data-name="настройки +">
+    <g>
+      <path class="cls-1" d="M32.81,42.13h3.82c18.11,0,32.81,14.7,32.81,32.81v10.22c0,3.81-3.09,6.9-6.9,6.9H6.9C3.09,92.06,0,88.97,0,85.15v-10.22C0,56.83,14.7,42.13,32.81,42.13Z"/>
+      <circle class="cls-1" cx="34.91" cy="18.72" r="18.72"/>
+    </g>
+  </g>
+</svg>
