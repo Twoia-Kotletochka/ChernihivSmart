@@ -166,15 +166,37 @@ export default function Main() {
             if (data_uidArr.some(element => element === data[key].street)) {
                 databaseContent.push(
                     <TouchableOpacity key={key} style={styles.container2} onPress={() => showModal(key)}>
-                        <View style={{ marginLeft: 5, paddingTop: 15 }}>
+                        <View style={{ flexDirection: 'row', paddingTop: 5, alignItems: 'center', paddingLeft: 7 }}>
                             <View style={styles.icon_board}>
                                 {iconfunc(value.icon)}
                             </View>
-                            <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2 }}>
-                                {value.datefull}
-                            </Text>
+                            <View style={{ flexDirection: 'column' }}>
+                                <Text style={{ fontSize: RFValue(18) }}>
+                                    {value.title}
+                                </Text>
+                                <Text style={{ fontSize: RFValue(12) }}>
+                                    {value.subtext}
+                                </Text>
+                                <Text style={{ fontSize: RFValue(11) }}>
+                                    {value.subtext_mini}
+                                </Text>
+                            </View>
                         </View>
-                        <View style={{ flexDirection: 'column', paddingTop: 5 }}>
+                        <Text style={{ fontSize: 10, paddingTop: 5, paddingBottom: 5, paddingLeft: 5 }}>
+                            {value.datefull + "   вул." + value.street + " " + value.house}  {value.rooms !== '' ? 'кв.' + value.rooms : ''}
+                        </Text>
+                    </TouchableOpacity>
+                )
+            }
+        }
+        else if (value.street === undefined) {
+            databaseContent.push(
+                <TouchableOpacity key={key} style={styles.container1} onPress={() => showModal(key)}>
+                    <View style={{ flexDirection: 'row', paddingTop: 5, alignItems: 'center', paddingLeft: 7 }}>
+                        <View style={styles.icon_board}>
+                            {iconfunc(value.icon)}
+                        </View>
+                        <View style={{ flexDirection: 'column' }}>
                             <Text style={{ fontSize: RFValue(18) }}>
                                 {value.title}
                             </Text>
@@ -185,32 +207,10 @@ export default function Main() {
                                 {value.subtext_mini}
                             </Text>
                         </View>
-                    </TouchableOpacity>
-                )
-            }
-        }
-        else if (value.street === undefined) {
-            databaseContent.push(
-                <TouchableOpacity key={key} style={styles.container1} onPress={() => showModal(key)}>
-                    <View style={{ marginLeft: 5, paddingTop: 15 }}>
-                        <View style={styles.icon_board}>
-                            {iconfunc(value.icon)}
-                        </View>
-                        <Text style={{ fontSize: 10, paddingTop: 15, paddingBottom: 2 }}>
-                            {value.datefull}
-                        </Text>
                     </View>
-                    <View style={{ flexDirection: 'column', paddingTop: 5 }}>
-                        <Text style={{ fontSize: RFValue(18) }}>
-                            {value.title}
-                        </Text>
-                        <Text style={{ fontSize: RFValue(12) }}>
-                            {value.subtext}
-                        </Text>
-                        <Text style={{ fontSize: RFValue(11) }}>
-                            {value.subtext_mini}
-                        </Text>
-                    </View>
+                    <Text style={{ fontSize: 10, paddingTop: 5, paddingBottom: 5, paddingLeft: 5 }}>
+                        {value.datefull}
+                    </Text>
                 </TouchableOpacity>
             );
         }
@@ -301,7 +301,7 @@ export default function Main() {
                             <Text style={styles.degrees_text}>{Math.round(weatherData.list[0].main.temp)}°</Text>
 
                             <View style={[styles.weather]}>
-                                <View style={{height: 30, width:30}}>{getWeatherIcon(weatherData.list[0].weather[0].icon)}</View>
+                                <View style={{ height: 30, width: 30 }}>{getWeatherIcon(weatherData.list[0].weather[0].icon)}</View>
                             </View>
 
                         </Animated.View>

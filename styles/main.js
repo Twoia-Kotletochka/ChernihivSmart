@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
         marginVertical: 5,
         marginHorizontal: 16,
         borderRadius: 10,
-        flexDirection: 'row',
+        flexDirection: 'column',
         //borderWidth: 2.5,
         //borderColor:"#4B9CE4"
     },
@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
         marginVertical: 5,
         marginHorizontal: 16,
         borderRadius: 10,
-        flexDirection: 'row',
+        flexDirection: 'column',
         borderWidth: 2,
         borderColor: "#E9B5BC"
     },
@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
         borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 20,
+        marginRight: 15,
         borderRadius: 100,
     },
     view_news: {

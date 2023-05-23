@@ -67,7 +67,7 @@ const Address = () => {
                             <Icon_adres style={{ width: '80%', height: '80%' }} />
                         </View>
                         <View>
-                            <Text style={styles.title1}>Вул. - {value.street}</Text>
+                            <Text style={[styles.title1,{fontSize: 12}]}>Вул. - {value.street}</Text>
                             <View style={{ flexDirection: 'row', }}>
                                 <Text style={styles.title2}>Дім - {value.house}</Text>
                                 <Text style={[styles.title2, { marginLeft: 30 }]}>Кв. - {value.rooms}</Text>
