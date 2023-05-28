@@ -142,7 +142,7 @@ export default function Main() {
             return <Icon_news style={{ width: '80%', height: '80%' }} />
         }
         else if (icon === "achtung") {
-            return <Icon_achtung style={{ width: '80%', height: '80%' }} />
+            return <Icon_achtung style={{ width: '100%', height: '100%' }} />
         }
     }
 
