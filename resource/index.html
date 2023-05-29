@@ -2,14 +2,14 @@
 <html>
 
 <head>
-  <title>Firebase ChSmart</title>
+  <title>Firebase CheSmart</title>
 </head>
 
 <body>
   <style>
     body {
-      /* background-color: rgb(221, 203, 203); */
-      background-color: rgb(100, 97, 97);
+      background-color: rgb(221, 203, 203);
+      /* background-color: rgb(100, 97, 97); */
     }
 
     .container {
@@ -46,7 +46,6 @@
     }
   </style>
   <h2>Add news</h1>
-    <!--<input type="text" id="messageid">-->
     <div class="container">
       <div class="column" style="width: 10%;">
         <form>
@@ -145,19 +144,12 @@
 
           var ref = firebase.database().ref("news");
           let num = 0
-          // database.ref('news/').limitToLast(1).once('value')
-          //   .then(function (snapshot) {
-          //     num = Object.keys(snapshot.val())[0];
-          //     lastid = parseInt(num) + 1;
-
-          //   });
 
           let lastid = 0
           database.ref('news/').limitToLast(1).on('child_added', function (snapshot) {
             let num = snapshot.key; //получение ключа последней записи в таблице
             lastid = parseInt(num) + 1
           });
-
 
           var currentDate = new Date();
           var date = currentDate.getDate();
@@ -204,8 +196,6 @@
             };
           }
 
-
-
           console.log(timeString + " " + dateString)
           ref.child(lastid).set(userData);
         }
@@ -242,7 +232,7 @@
               div.appendChild(document.createTextNode(news.rooms));
             }
             div.innerHTML += "<br/>"
-            // Добавление кнопки удаления элемента списка и передача ее ID в функцию удаления
+            // Додавання кнопки видалення елемента списку та надсилання її ID у функцію видалення
             var deleteButton = document.createElement("button");
             deleteButton.appendChild(document.createTextNode("Delete"));
             deleteButton.onclick = function () { deleteItem(childSnapshot.key); };
@@ -254,7 +244,5 @@
           });
         });
       </script>
-      <!-- <div id="data"></div> -->
 </body>
-
 </html>

@@ -262,7 +262,11 @@ export default function Main() {
                     }}>
                     <View style={styles_modal.centeredView}>
                         <View style={styles_modal.modalView}>
-                            <Text style={styles_modal.modalText}>{data[kkey].discription}</Text>
+                            <ScrollView
+                                showsVerticalScrollIndicator={false}
+                            >
+                                <Text style={styles_modal.modalText}>{data[kkey].discription}</Text>
+                            </ScrollView>
                             <Pressable
                                 style={[styles_modal.button, styles_modal.buttonClose]}
                                 onPress={() => setModalVisible(!modalVisible)}>

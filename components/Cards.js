@@ -8,8 +8,7 @@ import Icon_home from '../assets/icon_cards_svg/icon_home.svg'
 import Icon_location from '../assets/icon_cards_svg/icon_location.svg'
 import Icon_parking from '../assets/icon_cards_svg/icon_parking.svg'
 
-
-const News = ({ animateopacitycard }) => {
+const Cards = ({ animateopacitycard }) => {
     const navigation = useNavigation()
     const go_address = () => { navigation.navigate('Address'); }
     const go_weather = () => {navigation.navigate('Weather')}
@@ -55,4 +54,4 @@ const News = ({ animateopacitycard }) => {
     );
 }
 
-export default News;
+export default Cards;
