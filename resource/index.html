@@ -246,3 +246,190 @@
       </script>
 </body>
 </html>
+
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+  <title>Firebase CheSmart</title>
+</head>
+
+<body>
+  <style>
+    body {
+      background-color: rgb(221, 203, 203);
+    }
+
+    .container {
+      display: flex;
+      padding-bottom: 20px;
+    }
+
+    .column {
+      border-right: 0px solid black;
+    }
+
+    .data {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .dat {
+      width: 40px;
+    }
+
+    #newsList {
+      padding-left: 3px;
+      padding-top: 0px;
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    #newsList div {
+      border-bottom: 1px solid black;
+      border-top: 1px solid black;
+      border-left: 1px solid black;
+      padding-left: 5px;
+      width: 300px;
+    }
+  </style>
+
+  <h2>Add news</h2>
+  <div class="container">
+    <div class="column" style="width: 10%;">
+      <form>
+        <input type="radio" name="choice" value="light" id="icon">
+        <label for="light">light</label><br>
+        <input type="radio" name="choice" value="gas" id="icon">
+        <label for="gas">gas</label><br>
+        <input type="radio" name="choice" value="water" id="icon">
+        <label for="water">water</label><br>
+        <input type="radio" name="choice" value="hot_water" id="icon">
+        <label for="hot_water">hot water</label><br>
+        <input type="radio" name="choice" value="news" id="icon">
+        <label for="news">news</label><br>
+        <input type="radio" name="choice" value="achtung" id="icon">
+        <label for="achtung">achtung</label><br>
+      </form>
+    </div>
+
+    <div class="column" style="width: 40%;">
+      <label for="title">Заголовок (макс. символов 25)</label><br>
+      <textarea maxlength="25" id="title" cols="30" rows="1"></textarea><br />
+      <label for="subtext">Підтекст (макс. символов 28)</label><br>
+      <textarea maxlength="28" id="subtext" cols="30" rows="1"></textarea><br />
+      <label for="subtext_mini">Менший підтекст (макс. символов 39)</label><br>
+      <textarea maxlength="39" id="subtext_mini" cols="30" rows="1"></textarea>
+    </div>
+
+    <div class="column" style="width: 30%;">
+      <label for="discription">Детальний опис</label><br>
+      <textarea id="discription" cols="40" rows="3"></textarea><br /><br />
+      <label for="title">Вулиця</label><br>
+      <input maxlength="25" id="street"><br />
+      <label for="subtext">Будинок</label><br>
+      <input maxlength="10" id="house"><br />
+      <label for="subtext_mini">Квартира</label><br>
+      <input maxlength="10" id="rooms">
+    </div>
+  </div>
+
+  <button onclick="addNews()">Додати новину</button>
+  <h2>News list</h2>
+  <ul id="newsList"></ul>
+
+
+   
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
+
+  <script>
+    // Firebase Configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyCt57E8FwSRjKmXDFX88Vbw1XQO8S1Ks2k",
+      authDomain: "chesmart-4e30c.firebaseapp.com",
+      databaseURL: "https://chesmart-4e30c-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "chesmart-4e30c",
+      storageBucket: "chesmart-4e30c.appspot.com",
+      messagingSenderId: "1023454700500",
+      appId: "1:1023454700500:web:b2c66aebbf7f7ba01a2c41",
+      measurementId: "G-4QZH6ZH18E"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    var database = firebase.database();
+    var auth = firebase.auth();
+
+    // Авторизация
+    auth.signInWithEmailAndPassword('your_email@example.com', 'your_password')
+      .then(userCredential => {
+        console.log("Signed in as:", userCredential.user.uid);
+        alert("Успешная авторизация!");
+      })
+      .catch(error => {
+        console.error("Authentication error:", error.message);
+        alert("Ошибка авторизации: " + error.message);
+      });
+
+    function addNews() {
+      var user = firebase.auth().currentUser;
+      if (!user) {
+        alert("You are not authorized to add news.");
+        return;
+      }
+
+      var icon = document.querySelector('input[name="choice"]:checked').value;
+      var title = document.getElementById("title").value;
+      var subtext = document.getElementById("subtext").value;
+      var subtext_mini = document.getElementById("subtext_mini").value;
+      var street = document.getElementById("street").value;
+      var house = document.getElementById("house").value;
+      var rooms = document.getElementById("rooms").value;
+      var discription = document.getElementById("discription").value;
+
+      var currentDate = new Date();
+      var timeString = currentDate.toLocaleTimeString('en-GB').slice(0, 5);
+      var dateString = currentDate.toLocaleDateString('en-GB');
+
+      var userData = {
+        icon, title, subtext, subtext_mini, discription,
+        street, house, rooms,
+        datefull: `${timeString} ${dateString}`
+      };
+
+      database.ref("news").push(userData);
+    }
+
+    function deleteItem(itemId) {
+      database.ref('news/' + itemId).remove();
+    }
+
+    var newsList = document.getElementById("newsList");
+    database.ref('news/').on('value', snapshot => {
+      newsList.innerHTML = '';
+      snapshot.forEach(childSnapshot => {
+        var news = childSnapshot.val();
+        var div = document.createElement("div");
+        div.innerHTML = `
+          <p>${news.icon}</p>
+          <p>Заголовок: ${news.title}</p>
+          <p>Підтекст: ${news.subtext}</p>
+          <p>Менший підтекст: ${news.subtext_mini}</p>
+          <p>Опис: ${news.discription}</p>
+          <p>${news.datefull}</p>
+          ${news.street ? `<p>Вулиця: ${news.street}</p><p>Будинок: ${news.house}</p><p>Квартира: ${news.rooms}</p>` : ''}
+        `;
+
+        var deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.onclick = () => deleteItem(childSnapshot.key);
+        div.appendChild(deleteButton);
+
+        newsList.appendChild(div);
+      });
+    });
+  </script>
+</body>
+
+</html> -->
