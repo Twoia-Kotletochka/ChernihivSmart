@@ -1,20 +1,21 @@
 import React, { useEffect } from 'react'
 import { Text, View, StatusBar, TouchableOpacity, Image, StyleSheet } from 'react-native'
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+// import { getAuth, onAuthStateChanged } from "firebase/auth";
+import  firebase  from '../../config'
 import { useNavigation } from '@react-navigation/core'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function Verify_your_email() {
     const navigation = useNavigation()
-    const auth = getAuth();
+    // const auth = getAuth();
 
     const signout = () => {
-        auth.signOut()
+        firebase.auth().signOut();
         navigation.replace('Login')
     }
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
+        const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
             if (user.emailVerified === true) {
                 navigation.replace('Main')
             }

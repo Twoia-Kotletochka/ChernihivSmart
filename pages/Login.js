@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Text, View, StatusBar, TextInput, Image, TouchableOpacity, SafeAreaView, ActivityIndicator, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/core'
 import { LoginStyle } from '../styles/login';
-import { firebase } from '../config'
+import  firebase  from '../config'
 
 const Login = () => {
     const navigation = useNavigation()

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Text, View, StatusBar, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
-import { firebase } from '../../config'
+import firebase from '../../config'
 import { style } from '../../styles/addaddress';
 import { MaterialIcons } from '@expo/vector-icons';
 

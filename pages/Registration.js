@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { SafeAreaView, Text, View, StatusBar, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { RegistrationStyle } from '../styles/registration';
 import { useNavigation } from '@react-navigation/core'
-import { firebase } from '../config'
+import firebase from '../config'
 
 const Registration = () => {
     const [email, setEmail] = useState('')

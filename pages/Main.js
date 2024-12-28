@@ -5,7 +5,7 @@ import { styles } from '../styles/main'
 import { styles_modal } from '../styles/modalMain'
 import Cards from '../components/Cards'
 import { GetWeather } from './Weather/GetWeather';
-import { firebase } from '../config'
+import firebase from '../config'
 
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize"
 import Icon_water from '../assets/icon_news_svg/water.svg'

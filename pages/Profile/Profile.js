@@ -3,7 +3,7 @@ import { Text, View, StatusBar, Linking, TouchableOpacity, ScrollView, Animated 
 import { LinearGradient } from 'expo-linear-gradient'
 import { Entypo } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/core'
-import { firebase } from '../../config'
+import  firebase  from '../../config'
 import { styles } from '../../styles/profile'
 import { EvilIcons } from '@expo/vector-icons'
 
