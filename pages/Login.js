@@ -3,6 +3,7 @@ import { Text, View, StatusBar, TextInput, Image, TouchableOpacity, SafeAreaView
 import { useNavigation } from '@react-navigation/core'
 import { LoginStyle } from '../styles/login';
 import  firebase  from '../config'
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = () => {
     const navigation = useNavigation()

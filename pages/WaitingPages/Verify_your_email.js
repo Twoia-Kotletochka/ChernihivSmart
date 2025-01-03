@@ -11,7 +11,7 @@ export default function Verify_your_email() {
 
     const signout = () => {
         firebase.auth().signOut();
-        navigation.replace('Login')
+        navigation.replace('Login');
     }
 
     useEffect(() => {
